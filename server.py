@@ -48,8 +48,8 @@ def run_scan_background():
         global scan_running, scan_last_run, scan_last_error
         try:
             result = subprocess.run(
-                [sys.executable, os.path.join(BASE_DIR, "run_pipeline.py")],
-                capture_output=True, text=True, timeout=300, cwd=BASE_DIR,
+                [sys.executable, os.path.join(BASE_DIR, "run_pipeline.py"), "--quick", "--no-clear"],
+                capture_output=True, text=True, timeout=280, cwd=BASE_DIR,
             )
             scan_last_run = datetime.now().isoformat()
             if result.returncode != 0:

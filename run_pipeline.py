@@ -67,7 +67,7 @@ def load_prices(verdicts):
 
 
 def run_once(args) -> int:
-    if not args.no_clear:
+    if not getattr(args, "no_clear", True) and not args.quick:
         clear_bus()
     else:
         ensure_dirs()
@@ -80,16 +80,18 @@ def run_once(args) -> int:
     regime = MacroRegime.current_regime()
     print("    regime:", regime)
 
-    print("[1-a] sentiment analysis")
-    SentimentAgent().execute()
-    time.sleep(0.5)
+    quick = getattr(args, "quick", True)
+    if not quick:
+        print("[1-a] sentiment analysis")
+        SentimentAgent().execute()
+        time.sleep(0.5)
 
-    print("[1-b] pattern recognition")
-    PatternAgent().execute()
-    time.sleep(0.5)
+        print("[1-b] pattern recognition")
+        PatternAgent().execute()
+        time.sleep(0.5)
 
-    print("[1-c] correlation monitoring")
-    CorrelationAgent().execute(coins=["BTC", "ETH", "SOL", "ADA", "AVAX", "LINK", "XRP"])
+        print("[1-c] correlation monitoring")
+        CorrelationAgent().execute(coins=["BTC", "ETH", "SOL", "ADA", "AVAX"])
 
     print("[1-d] discovery")
     MicroCapFinder().execute()
@@ -208,6 +210,10 @@ def main():
     )
     ap.add_argument("--coin", help="Extra coin symbol for news focus")
     ap.add_argument("--no-clear", action="store_true", help="Keep prior signals")
+    ap.add_argument(
+        "--quick", action="store_true", default=True,
+        help="Skip slow agents (sentiment, pattern, correlation) for cloud/faster runs",
+    )
     args = ap.parse_args()
 
     if args.loop:
