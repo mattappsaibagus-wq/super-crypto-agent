@@ -1,0 +1,18 @@
+# Render deployment configuration for Super Crypto Agent
+# https://render.com/docs/deploy-flask
+services:
+  - type: web
+    name: super-crypto-agent
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn server:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+    healthCheckPath: /health
+    autoDeploy:
+      branch: main
+    # Free tier supports 750 hours/month
+    plan: free
+    # Auto-deploy from the main branch on GitHub
+    # Connect this repo to your Render account after creating it
