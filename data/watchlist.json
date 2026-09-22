@@ -1,0 +1,15 @@
+{
+  "holdings": [
+    { "symbol": "BTC", "amount": 0.05, "cost_basis_usd": 58000 },
+    { "symbol": "ETH", "amount": 0.5,  "cost_basis_usd": 3200 }
+  ],
+  "watchlist": ["SOL", "AVAX", "LINK"],
+  "risk": {
+    "max_position_pct": 5.0,
+    "max_total_exposure_pct": 20.0,
+    "max_concurrent_buys": 5,
+    "circuit_breaker_drawdown_pct": 25.0,
+    "stop_loss_pct": 15.0,
+    "take_profit_pct": 45.0
+  }
+}
