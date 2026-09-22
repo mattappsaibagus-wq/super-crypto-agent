@@ -25,6 +25,7 @@ from supercrypto.config import KNOWN_IDS
 from supercrypto.core.base import api_get, coin_id_for
 
 COINGECKO_BASE = "https://api.coingecko.com/api/v3"
+BINANCE_BASE = "https://data-api.binance.vision/api/v3"
 CG_API_KEY = os.environ.get("COINGECKO_API_KEY", "").strip()
 
 # Pre-fetched market data cache (updated on each scan)
@@ -862,18 +863,44 @@ def api_agents():
     return jsonify({"agents": AGENTS_DATA, "snapshots": get_agent_memory_snapshot()})
 
 
-TICKER_TO_CG = dict(KNOWN_IDS)
-TICKER_TO_CG.update({
-    k.upper(): v for k, v in KNOWN_IDS.items()
-})
+_TICKER_TO_CG = dict(KNOWN_IDS)
+_TICKER_TO_CG.update({k.upper(): v for k, v in KNOWN_IDS.items()})
 
+# Binance pair mapping for chart fallback (CoinGecko rate-limits Render IPs)
+BN_BINANCE_PAIRS = {
+    "BTC": "BTCUSDT", "ETH": "ETHUSDT", "BNB": "BNBUSDT", "SOL": "SOLUSDT",
+    "XRP": "XRPUSDT", "ADA": "ADAUSDT", "DOGE": "DOGEUSDT", "AVAX": "AVAXUSDT",
+    "LINK": "LINKUSDT", "DOT": "DOTUSDT", "MATIC": "POLUSDT", "POL": "POLUSDT",
+    "LTC": "LTCUSDT", "NEAR": "NEARUSDT", "APT": "APTUSDT", "ARB": "ARBUSDT",
+    "OP": "OPUSDT", "SUI": "SUIUSDT", "UNI": "UNIUSDT", "AAVE": "AAVEUSDT",
+    "MKR": "MKRUSDT", "PEPE": "PEPEUSDT", "SHIB": "SHIBUSDT", "BONK": "BONKUSDT",
+    "TRX": "TRXUSDT", "FIL": "FILUSDT", "ATOM": "ATOMUSDT", "INJ": "INJUSDT",
+}
+_INTERVAL_MAP = {"1d": 60, "7d": 3600, "30d": 86400, "1y": 86400}
 _INTERVAL_DAYS = {"1d": 1, "7d": 7, "30d": 30, "1y": 365}
+
+
+def _binance_chart(symbol: str, interval: str) -> list:
+    pair = BN_BINANCE_PAIRS.get(symbol.upper())
+    if not pair:
+        return []
+    klines = _binance_klines(pair, _INTERVAL_MAP.get(interval, 60))
+    return [{"t": k[0], "price": float(k[4])} for k in klines]
+
+
+def _binance_klines(pair: str, interval_sec: int, limit: int = 500):
+    interval_map = {60: "1m", 3600: "1h", 86400: "1d"}
+    binterval = interval_map.get(interval_sec, "1d")
+    data = api_get(f"{BINANCE_BASE}/klines", params={"symbol": pair, "interval": binterval, "limit": limit}, tries=2)
+    if isinstance(data, list):
+        return data
+    return []
 
 
 def _cg_id_for_coin(symbol: str) -> str:
     s = symbol.upper()
-    if s in TICKER_TO_CG:
-        return TICKER_TO_CG[s]
+    if s in _TICKER_TO_CG:
+        return _TICKER_TO_CG[s]
     cid = coin_id_for(s)
     return cid or s.lower()
 
@@ -896,44 +923,70 @@ def api_coin(symbol: str):
             "price": c.get("current_price"),
             "change_24h": c.get("price_change_percentage_24h"),
             "change_7d": c.get("price_change_percentage_7d"),
-            "ath": c.get("ath", {}).get("usd"),
+            "ath": c.get("ath"),
             "ath_change": c.get("ath_change_percentage"),
             "market_cap": c.get("market_cap"),
             "volume_24h": c.get("total_volume"),
             "circulating_supply": c.get("circulating_supply"),
             "total_supply": c.get("total_supply"),
+            "source": "markets_cache",
         }
         _cached_set(cache_key, result)
         return jsonify(result)
 
-    # Fallback: fetch individual coin
+    # Fallback: fetch individual coin, then Binance 24h ticker
     cid = _cg_id_for_coin(symbol)
     params = {"localization": "false", "tickers": "false",
               "community_data": "false", "developer_data": "false", "sparkline": "false"}
     if CG_API_KEY:
         params["x_cg_demo_api_key"] = CG_API_KEY
     data = api_get(f"{COINGECKO_BASE}/coins/{cid}", params=params, tries=2)
-    if not isinstance(data, dict) or "market_data" not in data:
-        return jsonify({"error": "coin not found"}), 404
-    md = data.get("market_data", {})
-    ch24 = md.get("price_change_percentage_24h")
-    ch7 = md.get("price_change_percentage_7d") or (md.get("price_change_percentage_7d_in_currency") or {}).get("usd")
-    ch30 = md.get("price_change_percentage_30d") or (md.get("price_change_percentage_30d_in_currency") or {}).get("usd")
-    result = {
-        "symbol": data.get("symbol", "").upper(),
-        "name": data.get("name", ""),
-        "image": (data.get("image") or {}).get("large", ""),
-        "price": md.get("current_price", {}).get("usd"),
-        "change_24h": ch24 if isinstance(ch24, (int, float)) else (ch24 or {}).get("usd"),
-        "change_7d": ch7,
-        "change_30d": ch30,
-        "ath": md.get("ath", {}).get("usd"),
-        "ath_change": md.get("ath_change_percentage"),
-        "market_cap": md.get("market_cap", {}).get("usd"),
-        "volume_24h": md.get("total_volume", {}).get("usd"),
-        "circulating_supply": md.get("circulating_supply"),
-        "total_supply": md.get("total_supply"),
-    }
+    if isinstance(data, dict) and "market_data" in data:
+        md = data.get("market_data", {})
+        ch24 = md.get("price_change_percentage_24h")
+        ch7 = md.get("price_change_percentage_7d") or (md.get("price_change_percentage_7d_in_currency") or {}).get("usd")
+        ch30 = md.get("price_change_percentage_30d") or (md.get("price_change_percentage_30d_in_currency") or {}).get("usd")
+        result = {
+            "symbol": data.get("symbol", "").upper(),
+            "name": data.get("name", ""),
+            "image": (data.get("image") or {}).get("large", ""),
+            "price": md.get("current_price", {}).get("usd"),
+            "change_24h": ch24 if isinstance(ch24, (int, float)) else (ch24 or {}).get("usd"),
+            "change_7d": ch7,
+            "change_30d": ch30,
+            "ath": md.get("ath", {}).get("usd"),
+            "ath_change": md.get("ath_change_percentage"),
+            "market_cap": md.get("market_cap", {}).get("usd"),
+            "volume_24h": md.get("total_volume", {}).get("usd"),
+            "circulating_supply": md.get("circulating_supply"),
+            "total_supply": md.get("total_supply"),
+            "source": "coingecko",
+        }
+    else:
+        # Binance fallback for 24h ticker
+        pair = BN_BINANCE_PAIRS.get(symbol.upper())
+        if pair:
+            bn_data = api_get(f"{BINANCE_BASE}/ticker/24hr", params={"symbol": pair}, tries=1)
+            if isinstance(bn_data, dict):
+                result = {
+                    "symbol": symbol.upper(),
+                    "name": symbol.upper(),
+                    "image": "",
+                    "price": float(bn_data.get("lastPrice", 0)),
+                    "change_24h": float(bn_data.get("priceChangePercent", 0)),
+                    "change_7d": None,
+                    "ath": None,
+                    "ath_change": None,
+                    "market_cap": float(bn_data.get("quoteVolume", 0)) * 100,
+                    "volume_24h": float(bn_data.get("quoteVolume", 0)),
+                    "circulating_supply": None,
+                    "total_supply": None,
+                    "source": "binance",
+                }
+            else:
+                result = {"error": "coin not found"}
+        else:
+            result = {"error": "coin not found"}
     _cached_set(cache_key, result)
     return jsonify(result)
 
@@ -959,6 +1012,18 @@ def api_chart(symbol: str):
         tries=2,
     )
     if not isinstance(data, dict) or "prices" not in data:
+        # Fallback: Binance (more rate-limit tolerant on cloud hosts)
+        bn_prices = _binance_chart(symbol, interval)
+        if bn_prices:
+            result = {
+                "symbol": symbol.upper(),
+                "interval": interval,
+                "days": days,
+                "prices": bn_prices,
+                "source": "binance",
+            }
+            _cached_set(cache_key, result)
+            return jsonify(result)
         return jsonify({"error": "chart data not found"}), 404
     prices = data.get("prices", [])
     result = {
