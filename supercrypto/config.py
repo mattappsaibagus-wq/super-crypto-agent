@@ -45,12 +45,17 @@ KNOWN_IDS = {
 
 ALL_SIGNALS = frozenset({
     "microcap_opportunity",
+    "strong_volume_ratio", "low_liquidity_risk", "age_signal",
+    "trending_boost", "dex_listing",
     "whale_up", "whale_down",
     "whale_onchain", "whale_onchain_down",
+    "volume_spike", "price_move", "momentum", "liquidity_depth", "sustainability",
     "news_event", "news_bullish", "news_bearish",
     "sentiment_shot", "sentiment_bear",
     "pattern_bullish", "pattern_bearish",
     "dd_result",
+    "liquidity_health", "holder_concentration", "volume_depth",
+    "age_survivorship", "market_traction",
     "correlation_spike", "correlation_dump",
     "advisor_buy", "advisor_watch", "advisor_avoid", "advisor_hold",
     "regime_risk_on", "regime_neutral", "regime_risk_off",
