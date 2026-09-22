@@ -27,8 +27,27 @@ from supercrypto.core.base import api_get, coin_id_for
 COINGECKO_BASE = "https://api.coingecko.com/api/v3"
 CG_API_KEY = os.environ.get("COINGECKO_API_KEY", "").strip()
 
-# Simple in-memory cache for chart/coin data (60s TTL)
-_chart_cache = {}
+# Pre-fetched market data cache (updated on each scan)
+_market_cache = {}
+
+
+def prewarm_market_cache():
+    """Pre-fetch top markets so coin lookups survive CoinGecko rate limits."""
+    global _market_cache
+    try:
+        params = {"vs_currency": "usd", "order": "market_cap_desc", "per_page": 100, "sparkline": "false"}
+        if CG_API_KEY:
+            params["x_cg_demo_api_key"] = CG_API_KEY
+        data = api_get(f"{COINGECKO_BASE}/coins/markets", params=params, tries=3)
+        if isinstance(data, list):
+            for c in data:
+                sym = c.get("symbol", "").upper()
+                _market_cache[sym] = c
+    except Exception:
+        pass
+
+
+prewarm_market_cache()
 
 
 def _cached_get(key: str, ttl: int = 60):
@@ -40,6 +59,9 @@ def _cached_get(key: str, ttl: int = 60):
 
 def _cached_set(key: str, data):
     _chart_cache[key] = {"data": data, "t": time.time()}
+
+
+_chart_cache = {}
 DATA_DIR = os.path.join(BASE_DIR, "data")
 REPORTS_DIR = os.path.join(DATA_DIR, "reports")
 SIGNALS_FILE = os.path.join(DATA_DIR, "signals.json")
@@ -76,6 +98,7 @@ def run_scan_background():
         except Exception as e:
             scan_last_error = str(e)
         finally:
+            prewarm_market_cache()
             scan_running = False
 
     threading.Thread(target=_worker, daemon=True).start()
@@ -857,16 +880,36 @@ def _cg_id_for_coin(symbol: str) -> str:
 
 @app.route("/api/coin/<symbol>")
 def api_coin(symbol: str):
-    cache_key = f"coin:{symbol.upper()}"
-    cached = _cached_get(cache_key)
+    symbol = symbol.upper()
+    cache_key = f"coin:{symbol}"
+    cached = _cached_get(cache_key, ttl=300)
     if cached is not None:
         return jsonify(cached)
 
+    # Try market cache first (pre-warmed on startup)
+    if symbol in _market_cache:
+        c = _market_cache[symbol]
+        result = {
+            "symbol": c.get("symbol", "").upper(),
+            "name": c.get("name", ""),
+            "image": c.get("image", ""),
+            "price": c.get("current_price"),
+            "change_24h": c.get("price_change_percentage_24h"),
+            "change_7d": c.get("price_change_percentage_7d"),
+            "ath": c.get("ath", {}).get("usd"),
+            "ath_change": c.get("ath_change_percentage"),
+            "market_cap": c.get("market_cap"),
+            "volume_24h": c.get("total_volume"),
+            "circulating_supply": c.get("circulating_supply"),
+            "total_supply": c.get("total_supply"),
+        }
+        _cached_set(cache_key, result)
+        return jsonify(result)
+
+    # Fallback: fetch individual coin
     cid = _cg_id_for_coin(symbol)
-    params = {
-        "localization": "false", "tickers": "false",
-        "community_data": "false", "developer_data": "false", "sparkline": "false",
-    }
+    params = {"localization": "false", "tickers": "false",
+              "community_data": "false", "developer_data": "false", "sparkline": "false"}
     if CG_API_KEY:
         params["x_cg_demo_api_key"] = CG_API_KEY
     data = api_get(f"{COINGECKO_BASE}/coins/{cid}", params=params, tries=2)
