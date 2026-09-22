@@ -25,6 +25,21 @@ from supercrypto.config import KNOWN_IDS
 from supercrypto.core.base import api_get, coin_id_for
 
 COINGECKO_BASE = "https://api.coingecko.com/api/v3"
+CG_API_KEY = os.environ.get("COINGECKO_API_KEY", "").strip()
+
+# Simple in-memory cache for chart/coin data (60s TTL)
+_chart_cache = {}
+
+
+def _cached_get(key: str, ttl: int = 60):
+    entry = _chart_cache.get(key)
+    if entry and time.time() - entry["t"] < ttl:
+        return entry["data"]
+    return None
+
+
+def _cached_set(key: str, data):
+    _chart_cache[key] = {"data": data, "t": time.time()}
 DATA_DIR = os.path.join(BASE_DIR, "data")
 REPORTS_DIR = os.path.join(DATA_DIR, "reports")
 SIGNALS_FILE = os.path.join(DATA_DIR, "signals.json")
@@ -842,26 +857,26 @@ def _cg_id_for_coin(symbol: str) -> str:
 
 @app.route("/api/coin/<symbol>")
 def api_coin(symbol: str):
-    import time as _time
+    cache_key = f"coin:{symbol.upper()}"
+    cached = _cached_get(cache_key)
+    if cached is not None:
+        return jsonify(cached)
+
     cid = _cg_id_for_coin(symbol)
-    data = api_get(
-        f"{COINGECKO_BASE}/coins/{cid}",
-        params={
-            "localization": "false",
-            "tickers": "false",
-            "community_data": "false",
-            "developer_data": "false",
-            "sparkline": "false",
-        },
-        tries=2,
-    )
+    params = {
+        "localization": "false", "tickers": "false",
+        "community_data": "false", "developer_data": "false", "sparkline": "false",
+    }
+    if CG_API_KEY:
+        params["x_cg_demo_api_key"] = CG_API_KEY
+    data = api_get(f"{COINGECKO_BASE}/coins/{cid}", params=params, tries=2)
     if not isinstance(data, dict) or "market_data" not in data:
         return jsonify({"error": "coin not found"}), 404
     md = data.get("market_data", {})
     ch24 = md.get("price_change_percentage_24h")
     ch7 = md.get("price_change_percentage_7d") or (md.get("price_change_percentage_7d_in_currency") or {}).get("usd")
     ch30 = md.get("price_change_percentage_30d") or (md.get("price_change_percentage_30d_in_currency") or {}).get("usd")
-    return jsonify({
+    result = {
         "symbol": data.get("symbol", "").upper(),
         "name": data.get("name", ""),
         "image": (data.get("image") or {}).get("large", ""),
@@ -875,18 +890,26 @@ def api_coin(symbol: str):
         "volume_24h": md.get("total_volume", {}).get("usd"),
         "circulating_supply": md.get("circulating_supply"),
         "total_supply": md.get("total_supply"),
-    })
+    }
+    _cached_set(cache_key, result)
+    return jsonify(result)
 
 
 @app.route("/api/chart/<symbol>")
 def api_chart(symbol: str):
     interval = __import__("flask").request.args.get("interval", "1d")
     days = _INTERVAL_DAYS.get(interval, 1)
+    cache_key = f"chart:{symbol.upper()}:{days}"
+    cached = _cached_get(cache_key)
+    if cached is not None:
+        return jsonify(cached)
+
     cid = _cg_id_for_coin(symbol)
     params = {"vs_currency": "usd", "days": days}
-    # CoinGecko: interval=daily only valid for days >= 2
     if days >= 2:
         params["interval"] = "daily"
+    if CG_API_KEY:
+        params["x_cg_demo_api_key"] = CG_API_KEY
     data = api_get(
         f"{COINGECKO_BASE}/coins/{cid}/market_chart",
         params=params,
@@ -895,12 +918,14 @@ def api_chart(symbol: str):
     if not isinstance(data, dict) or "prices" not in data:
         return jsonify({"error": "chart data not found"}), 404
     prices = data.get("prices", [])
-    return jsonify({
+    result = {
         "symbol": symbol.upper(),
         "interval": interval,
         "days": days,
         "prices": [{"t": p[0], "price": round(p[1], 4)} for p in prices],
-    })
+    }
+    _cached_set(cache_key, result)
+    return jsonify(result)
 
 
 if __name__ == "__main__":
