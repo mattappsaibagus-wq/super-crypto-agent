@@ -21,6 +21,10 @@ from datetime import datetime
 from flask import Flask, jsonify, render_template_string, send_from_directory
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+from supercrypto.config import KNOWN_IDS
+from supercrypto.core.base import api_get, coin_id_for
+
+COINGECKO_BASE = "https://api.coingecko.com/api/v3"
 DATA_DIR = os.path.join(BASE_DIR, "data")
 REPORTS_DIR = os.path.join(DATA_DIR, "reports")
 SIGNALS_FILE = os.path.join(DATA_DIR, "signals.json")
@@ -491,11 +495,265 @@ async function loadAttribution() {
   } catch(e) {}
 }
 
-loadReport();
+loadReportWithClick();
 loadSignals();
 loadAttribution();
 </script>
-</body>
+
+<!-- Coin Detail Modal with Chart -->
+<div class="modal-overlay" id="coinModal" hidden>
+  <div class="modal-content" id="coinModalContent">
+    <div class="modal-header">
+      <h3 id="modalCoinName">Coin</h3>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="market-stats" id="modalStats"></div>
+      <div class="chart-wrap">
+        <canvas id="coinChart" width="800" height="400"></canvas>
+      </div>
+      <div class="timeframes" id="modalTimeframes"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); display: none; align-items: center;
+    justify-content: center; z-index: 1000; padding: 20px;
+  }
+  .modal-overlay:not([hidden]) { display: flex; }
+  .modal-content {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; max-width: 800px; width: 100%; max-height: 85vh;
+    overflow-y: auto; position: relative;
+  }
+  .modal-header {
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .modal-header h3 { font-size: 1.2rem; font-weight: 600; color: var(--text); }
+  .modal-close {
+    background: none; border: none; font-size: 1.8rem; line-height: 1;
+    color: var(--muted); cursor: pointer; padding: 4px 8px;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--text); }
+  .modal-body { padding: 20px; }
+  .chart-wrap { margin: 16px 0; }
+  .timeframes { display: flex; gap: 6px; margin-top: 12px; }
+  .tf-btn {
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text); border-radius: 6px; padding: 6px 12px;
+    font-family: var(--font-data); font-size: 0.75rem; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tf-btn:hover { background: var(--accent); color: #171710; }
+  .tf-btn.active { background: var(--accent); color: #171710; }
+  .stat-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    margin-bottom: 12px;
+  }
+  .stat-item {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px; text-align: center;
+  }
+  .stat-label { font-size: 0.65rem; color: var(--muted); letter-spacing: .04em; }
+  .stat-value { font-size: 0.85rem; font-weight: 600; margin-top: 2px; }
+  .gain { color: var(--green); }
+  .loss { color: var(--red); }
+  .flat { color: var(--muted); }
+</style>
+
+<script>
+let coinChart = null;
+const COIN_INTERVALS = [
+  {label: "1D", value: "1d"},
+  {label: "7D", value: "7d"},
+  {label: "30D", value: "30d"},
+  {label: "1Y", value: "1y"},
+];
+
+function fmtPrice(v) {
+  if (v == null || !Number.isFinite(v)) return "—";
+  if (v >= 1000) return "$" + v.toLocaleString(undefined, {maximumFractionDigits: 0});
+  if (v >= 1) return "$" + v.toFixed(2);
+  return "$" + v.toFixed(4);
+}
+function fmtPct(v) {
+  if (v == null || !Number.isFinite(v)) return "—";
+  return (v > 0 ? "+" : "") + v.toFixed(1) + "%";
+}
+
+async function loadCoinData(symbol) {
+  try {
+    const r = await fetch(`/api/coin/${encodeURIComponent(symbol)}`);
+    if (!r.ok) throw new Error("coin not found");
+    return await r.json();
+  } catch(e) {
+    console.warn("coin data error:", e);
+    return null;
+  }
+}
+
+async function loadCoinChart(symbol, interval) {
+  try {
+    const r = await fetch(`/api/chart/${encodeURIComponent(symbol)}?interval=${interval}`);
+    if (!r.ok) throw new Error("chart not found");
+    return await r.json();
+  } catch(e) {
+    console.warn("chart error:", e);
+    return null;
+  }
+}
+
+function renderStats(data) {
+  const stats = document.getElementById("modalStats");
+  if (!data) {
+    stats.innerHTML = '<div class="stat-item"><div class="stat-value">Data unavailable</div></div>';
+    return;
+  }
+  stats.innerHTML = `
+    <div class="stat-grid">
+      <div class="stat-item"><div class="stat-label">Price</div><div class="stat-value">${fmtPrice(data.price)}</div></div>
+      <div class="stat-item"><div class="stat-label">24h Change</div><div class="stat-value ${data.change_24h > 0 ? 'gain' : data.change_24h < 0 ? 'loss' : 'flat'}">${fmtPct(data.change_24h)}</div></div>
+      <div class="stat-item"><div class="stat-label">7d Change</div><div class="stat-value ${data.change_7d > 0 ? 'gain' : data.change_7d < 0 ? 'loss' : 'flat'}">${fmtPct(data.change_7d)}</div></div>
+      <div class="stat-item"><div class="stat-label">Market Cap</div><div class="stat-value">${data.market_cap ? fmtPrice(data.market_cap) : '—'}</div></div>
+      <div class="stat-item"><div class="stat-label">24h Volume</div><div class="stat-value">${data.volume_24h ? fmtPrice(data.volume_24h) : '—'}</div></div>
+      <div class="stat-item"><div class="stat-label">ATH</div><div class="stat-value">${data.ath ? fmtPrice(data.ath) : '—'}</div></div>
+    </div>
+  `;
+}
+
+function drawChart(prices, interval) {
+  const ctx = document.getElementById('coinChart').getContext('2d');
+  if (coinChart) coinChart.destroy();
+  const ds = prices.map(p => ({x: new Date(p.t), y: p.price}));
+  coinChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: interval.toUpperCase(),
+        data: ds,
+        borderColor: ds[ds.length-1]?.y >= ds[0]?.y ? '#7fc49a' : '#dd8b83',
+        backgroundColor: 'rgba(127,196,154,0.08)',
+        borderWidth: 2,
+        pointRadius: 0,
+        fill: true,
+        tension: 0.3,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      parsing: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => `$${ctx.raw.y.toFixed(2)}`
+          }
+        }
+      },
+      scales: {
+        x: { type: 'time', time: {tooltipFormat: 'PPpp'}, ticks: {color: '#98a49e', maxTicks: 6}, grid: {display: false}},
+        y: { position: 'right', ticks: {color: '#98a49e', callback: v => '$' + v.toLocaleString()}, grid: {color: 'rgba(139,148,158,0.1)'}},
+      }
+    }
+  });
+}
+
+function renderTimeframes(symbol, activeInterval) {
+  const tf = document.getElementById("modalTimeframes");
+  tf.innerHTML = COIN_INTERVALS.map(iv =>
+    `<button class="tf-btn ${iv.value === activeInterval ? 'active' : ''}" onclick="showCoin('${symbol}', '${iv.value}')">${iv.label}</button>`
+  ).join('');
+}
+
+async function showCoin(symbol, interval) {
+  document.getElementById("coinModal").hidden = false;
+  document.getElementById("modalCoinName").textContent = symbol;
+  document.getElementById("modalClose").onclick = () => {
+    document.getElementById("coinModal").hidden = true;
+    if (coinChart) coinChart.destroy();
+  };
+
+  // Close on outside click
+  document.getElementById("coinModal").onclick = (e) => {
+    if (e.target === document.getElementById("coinModal")) {
+      document.getElementById("coinModal").hidden = true;
+      if (coinChart) coinChart.destroy();
+    }
+  };
+
+  const data = await loadCoinData(symbol);
+  renderStats(data);
+
+  const chart = await loadCoinChart(symbol, interval);
+  if (chart && chart.prices) {
+    drawChart(chart.prices, interval);
+  } else {
+    const ctx = document.getElementById('coinChart').getContext('2d');
+    if (coinChart) coinChart.destroy();
+    ctx.clearRect(0, 0, 800, 400);
+    ctx.font = '14px monospace';
+    ctx.fillStyle = '#98a49e';
+    ctx.fillText('Chart data unavailable — CoinGecko API limits', 20, 40);
+  }
+  renderTimeframes(symbol, interval);
+}
+
+// Make cards clickable
+async function loadReportWithClick() {
+  try {
+    const r = await fetch('/api/report');
+    const data = await r.json();
+    if (!data.report) {
+      document.getElementById('cards').innerHTML = '<div class="empty">No report yet</div>';
+      return;
+    }
+    document.getElementById('updated').textContent =
+      'Last scan: ' + new Date(data.timestamp).toLocaleString();
+
+    const cards = data.cards || [];
+    let buy=0, watch=0, sell=0, avoid=0;
+    cards.forEach(c => {
+      if (c.action==='BUY') buy++;
+      else if (c.action==='WATCH') watch++;
+      else if (c.action==='SELL') sell++;
+      else if (c.action==='AVOID') avoid++;
+    });
+
+    if (cards.length) {
+      document.getElementById('summaryRow').style.display = 'grid';
+      document.getElementById('buyCount').innerHTML = buy + '<br><small>BUY</small>';
+      document.getElementById('watchCount').innerHTML = watch + '<br><small>WATCH</small>';
+      document.getElementById('sellCount').innerHTML = sell + '<br><small>SELL</small>';
+      document.getElementById('avoidCount').innerHTML = avoid + '<br><small>AVOID</small>';
+    }
+
+    let html = '';
+    cards.slice(0, 12).forEach(c => {
+      const badgeClass = c.action === 'BUY' ? 'badge-buy' :
+                         c.action === 'WATCH' ? 'badge-watch' :
+                         c.action === 'SELL' ? 'badge-sell' : 'badge-avoid';
+      const details = (c.details||[]).map(d => '<li>' + d + '</li>').join('');
+      html += '<div class="card" onclick="showCoin(\'' + c.coin + '\', \'1d\')">' +
+        '<div class="card-header">' +
+          '<span class="coin-name">' + c.coin + '</span>' +
+          '<span class="action-badge ' + badgeClass + '">' + c.action + '</span>' +
+        '</div>' +
+        '<ul class="card-details">' + details + '</ul>' +
+      '</div>';
+    });
+    document.getElementById('cards').innerHTML = html || '<div class="empty">No results</div>';
+  } catch(e) {
+    document.getElementById('cards').innerHTML = '<div class="empty">Failed to load report</div>';
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </html>"""
 
 
@@ -564,6 +822,85 @@ def api_attribution():
 @app.route("/api/agents")
 def api_agents():
     return jsonify({"agents": AGENTS_DATA, "snapshots": get_agent_memory_snapshot()})
+
+
+TICKER_TO_CG = dict(KNOWN_IDS)
+TICKER_TO_CG.update({
+    k.upper(): v for k, v in KNOWN_IDS.items()
+})
+
+_INTERVAL_DAYS = {"1d": 1, "7d": 7, "30d": 30, "1y": 365}
+
+
+def _cg_id_for_coin(symbol: str) -> str:
+    s = symbol.upper()
+    if s in TICKER_TO_CG:
+        return TICKER_TO_CG[s]
+    cid = coin_id_for(s)
+    return cid or s.lower()
+
+
+@app.route("/api/coin/<symbol>")
+def api_coin(symbol: str):
+    import time as _time
+    cid = _cg_id_for_coin(symbol)
+    data = api_get(
+        f"{COINGECKO_BASE}/coins/{cid}",
+        params={
+            "localization": "false",
+            "tickers": "false",
+            "community_data": "false",
+            "developer_data": "false",
+            "sparkline": "false",
+        },
+        tries=2,
+    )
+    if not isinstance(data, dict) or "market_data" not in data:
+        return jsonify({"error": "coin not found"}), 404
+    md = data.get("market_data", {})
+    ch24 = md.get("price_change_percentage_24h")
+    ch7 = md.get("price_change_percentage_7d") or (md.get("price_change_percentage_7d_in_currency") or {}).get("usd")
+    ch30 = md.get("price_change_percentage_30d") or (md.get("price_change_percentage_30d_in_currency") or {}).get("usd")
+    return jsonify({
+        "symbol": data.get("symbol", "").upper(),
+        "name": data.get("name", ""),
+        "image": (data.get("image") or {}).get("large", ""),
+        "price": md.get("current_price", {}).get("usd"),
+        "change_24h": ch24 if isinstance(ch24, (int, float)) else (ch24 or {}).get("usd"),
+        "change_7d": ch7,
+        "change_30d": ch30,
+        "ath": md.get("ath", {}).get("usd"),
+        "ath_change": md.get("ath_change_percentage"),
+        "market_cap": md.get("market_cap", {}).get("usd"),
+        "volume_24h": md.get("total_volume", {}).get("usd"),
+        "circulating_supply": md.get("circulating_supply"),
+        "total_supply": md.get("total_supply"),
+    })
+
+
+@app.route("/api/chart/<symbol>")
+def api_chart(symbol: str):
+    interval = __import__("flask").request.args.get("interval", "1d")
+    days = _INTERVAL_DAYS.get(interval, 1)
+    cid = _cg_id_for_coin(symbol)
+    params = {"vs_currency": "usd", "days": days}
+    # CoinGecko: interval=daily only valid for days >= 2
+    if days >= 2:
+        params["interval"] = "daily"
+    data = api_get(
+        f"{COINGECKO_BASE}/coins/{cid}/market_chart",
+        params=params,
+        tries=2,
+    )
+    if not isinstance(data, dict) or "prices" not in data:
+        return jsonify({"error": "chart data not found"}), 404
+    prices = data.get("prices", [])
+    return jsonify({
+        "symbol": symbol.upper(),
+        "interval": interval,
+        "days": days,
+        "prices": [{"t": p[0], "price": round(p[1], 4)} for p in prices],
+    })
 
 
 if __name__ == "__main__":
