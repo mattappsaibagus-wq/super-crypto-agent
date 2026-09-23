@@ -43,7 +43,7 @@ KNOWN_IDS = {
     "WIF": "dogwifcoin", "JUP": "jupiter-exchange-solana",
     # Microcap coins that appear in verdicts (resolved via coin_master_list fallback)
     "PRL": "pearl-2", "EDEL": "edel", "SUIT": "dog-in-a-suit",
-    "USELESS": "useless", "STONK": "stonk-protocol", "SONIC": "sonic-1",
+    "USELESS": "useless-3", "STONK": "stonk-3", "SONIC": "sonic-1",
     "TAO": "bittensor", "ZEC": "zcash", "SUSHI": "sushi",
     "FTM": "fantom", "HBAR": "hedera", "SEI": "sei-2", "PYTH": "pyth-network",
     "STRK": "starknet-2", "KAS": "kaspa", "RNDR": "render-token",
