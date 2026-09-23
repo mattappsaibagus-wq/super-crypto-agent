@@ -552,6 +552,7 @@ loadAttribution();
         <canvas id="coinChart" width="800" height="400"></canvas>
       </div>
       <div class="timeframes" id="modalTimeframes"></div>
+      <div id="chartNote" style="font-size:.7rem;color:var(--muted);margin-top:8px"></div>
     </div>
   </div>
 </div>
@@ -729,16 +730,17 @@ async function showCoin(symbol, interval) {
   const data = await loadCoinData(symbol);
   renderStats(data);
 
-  const chart = await loadCoinChart(symbol, interval);
-  if (chart && chart.prices) {
+    const chart = await loadCoinChart(symbol, interval);
+  if (chart && chart.prices && chart.prices.length > 0) {
     drawChart(chart.prices, interval);
+    document.getElementById("chartNote").textContent = "Data via " + (chart.source || "coingecko");
   } else {
     const ctx = document.getElementById('coinChart').getContext('2d');
     if (coinChart) coinChart.destroy();
     ctx.clearRect(0, 0, 800, 400);
     ctx.font = '14px monospace';
     ctx.fillStyle = '#98a49e';
-    ctx.fillText('Chart data unavailable — CoinGecko API limits', 20, 40);
+    ctx.fillText('Chart unavailable â set COINGECKO_API_KEY in Render env', 20, 40);
   }
   renderTimeframes(symbol, interval);
 }
