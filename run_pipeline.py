@@ -103,7 +103,6 @@ def run_once(args) -> int:
     DueDiligence().execute()
 
     # On-chain agents need API keys — skip entirely if absent
-    from supercrypto.config import ETHERSCAN_API, COINGECKO_API_KEY
     if os.environ.get("ETHERSCAN_API_KEY"):
         print("[2b] on-chain holders")
         OnChainHolder().execute()

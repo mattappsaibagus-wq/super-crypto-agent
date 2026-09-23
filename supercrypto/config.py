@@ -123,3 +123,7 @@ DEFAULT_MCAP_MAX = 50_000_000
 
 API_TRIES = 2
 API_TIMEOUT = 10
+
+# Optional API keys (set via environment variables)
+COINGECKO_API_KEY = os.environ.get("COINGECKO_API_KEY", "").strip()
+ETHERSCAN_API_KEY = os.environ.get("ETHERSCAN_API_KEY", "").strip()
