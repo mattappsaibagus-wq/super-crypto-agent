@@ -5,7 +5,7 @@ from __future__ import annotations
 import time
 
 from supercrypto.config import COINGECKO_BASE, DEXSCREENER_SEARCH
-from supercrypto.core.base import BaseAgent, api_get
+from supercrypto.core.base import BaseAgent, api_get, fetch_markets
 
 
 class MicroCapFinder(BaseAgent):
@@ -74,19 +74,7 @@ class MicroCapFinder(BaseAgent):
                     }
                 )
 
-        coins = (
-            api_get(
-                f"{COINGECKO_BASE}/coins/markets",
-                params={
-                    "vs_currency": "usd",
-                    "order": "market_cap_desc",
-                    "per_page": 250,
-                    "page": 4,
-                    "sparkline": "false",
-                },
-            )
-            or []
-        )
+        coins = fetch_markets(per_page=50)
         if not isinstance(coins, list):
             coins = []
         for c in coins:

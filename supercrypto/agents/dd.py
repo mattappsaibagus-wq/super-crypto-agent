@@ -9,7 +9,7 @@ ox-alpha defined holder_concentration and market_traction as weights but
 from __future__ import annotations
 
 from supercrypto.config import COINGECKO_BASE, DEXSCREENER_SEARCH
-from supercrypto.core.base import BaseAgent, api_get, coin_id_for
+from supercrypto.core.base import BaseAgent, api_get, coin_id_for, fetch_markets
 from supercrypto.core.scoring import score_dd
 
 
@@ -68,30 +68,36 @@ class DueDiligence(BaseAgent):
 
     def _fetch_coin_info(self, symbol: str, coin_id: str = None) -> dict:
         info = {
-            "mcap": 0,
-            "vol": 0,
-            "ath_change_pct": 0,
-            "price": 0,
-            "rank": None,
-            "change_7d": None,
-            "change_30d": None,
-            "pair_count": 0,
-            "top_pair_liq_share": 1.0,
+            "mcap": 0, "vol": 0, "ath_change_pct": 0, "price": 0,
+            "rank": None, "change_7d": None, "change_30d": None,
+            "pair_count": 0, "top_pair_liq_share": 1.0,
         }
+        # Try the shared markets cache first (avoids individual API calls)
+        markets = fetch_markets(per_page=200)
+        for c in markets:
+            if c.get("symbol", "").upper() == symbol.upper():
+                info.update({
+                    "mcap": c.get("market_cap", 0),
+                    "vol": c.get("total_volume", 0),
+                    "price": c.get("current_price", 0),
+                    "rank": c.get("market_cap_rank"),
+                    "change_7d": c.get("price_change_percentage_7d"),
+                    "change_30d": c.get("price_change_percentage_30d"),
+                    "rag_status": "indexed",
+                })
+                return info
+
         cid = coin_id or coin_id_for(symbol)
         if not cid:
             info["rag_status"] = "unknown_to_major_indexers"
             return info
-        payload = api_get(
-            f"{COINGECKO_BASE}/coins/{cid}",
-            params={
-                "localization": "false",
-                "tickers": "false",
-                "market_data": "true",
-                "community_data": "false",
-                "developer_data": "false",
-            },
-        )
+        params = {"localization": "false", "tickers": "false",
+                  "market_data": "true", "community_data": "false",
+                  "developer_data": "false"}
+        from supercrypto.config import COINGECKO_API_KEY
+        if COINGECKO_API_KEY:
+            params["x_cg_demo_api_key"] = COINGECKO_API_KEY
+        payload = api_get(f"{COINGECKO_BASE}/coins/{cid}", params=params)
         if not isinstance(payload, dict) or "market_data" not in payload:
             info["rag_status"] = "indexed_unverified"
             return info

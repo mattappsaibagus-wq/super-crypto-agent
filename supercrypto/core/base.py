@@ -57,40 +57,55 @@ def api_get(url: str, params: Optional[dict] = None, tries: int = API_TRIES):
     return None
 
 
-_master_list = None
-_ranked_map = None
+# Shared markets cache: fetched once per process, reused by all agents
+_markets_cache = None
+_markets_cache_time = 0
+
+
+def fetch_markets(per_page: int = 50) -> list:
+    """Fetch and cache CoinGecko markets. Shared across all agents in one run."""
+    global _markets_cache, _markets_cache_time
+    now = time.time()
+    if _markets_cache is None or now - _markets_cache_time > 120:
+        data = api_get(
+            f"{COINGECKO_BASE}/coins/markets",
+            params={
+                "vs_currency": "usd",
+                "order": "market_cap_desc",
+                "per_page": per_page,
+                "page": 1,
+                "sparkline": "false",
+            },
+        )
+        if isinstance(data, list):
+            _markets_cache = data
+            _markets_cache_time = now
+        elif _markets_cache:
+            _markets_cache_time = now  # keep stale cache a bit longer
+        else:
+            return []
+    return _markets_cache
 
 
 def coin_master_list() -> list:
-    global _master_list
+    _master_list = getattr(coin_master_list, "_cache", None)
     if _master_list is None:
         data = api_get(f"{COINGECKO_BASE}/coins/list")
         if isinstance(data, list) and data:
             _master_list = data
+            coin_master_list._cache = _master_list
         else:
             return []
     return _master_list
 
 
 def ranked_coin_ids() -> dict:
-    global _ranked_map
-    if _ranked_map is None:
-        data = api_get(
-            f"{COINGECKO_BASE}/coins/markets",
-            params={
-                "vs_currency": "usd",
-                "order": "market_cap_desc",
-                "per_page": 200,
-                "page": 1,
-                "sparkline": "false",
-            },
-        )
-        ranked = {}
-        if isinstance(data, list):
-            for c in data:
-                ranked.setdefault(c["symbol"].upper(), c["id"])
-        _ranked_map = ranked
-    return _ranked_map
+    data = fetch_markets(per_page=200)
+    ranked = {}
+    if isinstance(data, list):
+        for c in data:
+            ranked.setdefault(c["symbol"].upper(), c["id"])
+    return ranked
 
 
 def coin_id_for(symbol: str) -> Optional[str]:

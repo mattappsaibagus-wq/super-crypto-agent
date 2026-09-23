@@ -12,7 +12,7 @@ import time
 from typing import Optional
 
 from supercrypto.config import COINGECKO_BASE, ETHERSCAN_API, DEXSCREENER_TOKEN
-from supercrypto.core.base import BaseAgent, api_get
+from supercrypto.core.base import BaseAgent, api_get, fetch_markets
 from supercrypto.core.scoring import score_whale
 
 
@@ -150,16 +150,7 @@ class WhaleDetector(BaseAgent):
 
     def _fetch_market(self):
         coins = []
-        data = api_get(
-            f"{COINGECKO_BASE}/coins/markets",
-            params={
-                "vs_currency": "usd",
-                "order": "volume_desc",
-                "per_page": 100,
-                "page": 1,
-                "sparkline": "false",
-            },
-        )
+        data = fetch_markets(per_page=50)
         if not isinstance(data, list):
             return coins
         for c in data:

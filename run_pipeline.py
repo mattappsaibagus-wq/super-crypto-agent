@@ -95,20 +95,20 @@ def run_once(args) -> int:
 
     print("[1-d] discovery")
     MicroCapFinder().execute()
-    time.sleep(0.4)
     WhaleDetector().execute()
-    time.sleep(0.4)
     NewsScanner().execute(coins=[args.coin.upper()] if args.coin else None)
     print("    done in %.1fs" % (time.time() - t0))
 
     print("[2] due diligence")
     DueDiligence().execute()
 
-    print("[2b] on-chain holders (skipped if no ETHERSCAN_API_KEY)")
-    OnChainHolder().execute()
-
-    print("[2c] whale on-chain transfers (skipped if no ETHERSCAN_API_KEY)")
-    WhaleDetector()._onchain_transfers()
+    # On-chain agents need API keys — skip entirely if absent
+    from supercrypto.config import ETHERSCAN_API, COINGECKO_API_KEY
+    if os.environ.get("ETHERSCAN_API_KEY"):
+        print("[2b] on-chain holders")
+        OnChainHolder().execute()
+        print("[2c] whale on-chain transfers")
+        WhaleDetector()._onchain_transfers()
 
     print("[3] meta-learner")
     MetaLearner().execute()

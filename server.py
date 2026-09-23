@@ -99,7 +99,7 @@ def run_scan_background():
         except Exception as e:
             scan_last_error = str(e)
         finally:
-            prewarm_market_cache()
+prewarm_market_cache()  # non-blocking best-effort fetch
             scan_running = False
 
     threading.Thread(target=_worker, daemon=True).start()
@@ -827,6 +827,8 @@ BN_BINANCE_PAIRS = {
     "OP": "OPUSDT", "SUI": "SUIUSDT", "UNI": "UNIUSDT", "AAVE": "AAVEUSDT",
     "MKR": "MKRUSDT", "PEPE": "PEPEUSDT", "SHIB": "SHIBUSDT", "BONK": "BONKUSDT",
     "TRX": "TRXUSDT", "FIL": "FILUSDT", "ATOM": "ATOMUSDT", "INJ": "INJUSDT",
+    "HBAR": "HBARUSDT", "ICP": "ICPUSDT", "STX": "STXUSDT", "IMX": "IMXUSDT",
+    "THETA": "THETAUSDT", "ETHEREUMNAME": "ETHUSDT",
 }
 _INTERVAL_MAP = {"1d": 60, "7d": 3600, "30d": 86400, "1y": 86400}
 _INTERVAL_DAYS = {"1d": 1, "7d": 7, "30d": 30, "1y": 365}
