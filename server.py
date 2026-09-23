@@ -851,6 +851,7 @@ BN_BINANCE_PAIRS = {
     "QNT": "QNTUSDT", "TIA": "TIAUSDT", "STRK": "STRKUSDT", "WLD": "WLDUSDT",
     "PYTH": "PYTHUSDT", "JUP": "JUPUSDT", "WIF": "WIFUSDT", "ICP": "ICPUSDT",
     "RNDR": "RNDRUSDT", "SNX": "SNXUSDT", "GRT": "GRTUSDT", "CRV": "CRVUSDT",
+    "LIT": "LITUSDT", "STX": "STXUSDT", "KSM": "KSMUSDT",
 }
 
 _BN_KNOWN = set(BN_BINANCE_PAIRS.keys())
@@ -862,10 +863,7 @@ def _binance_chart(symbol: str, interval: str) -> list:
     pair = BN_BINANCE_PAIRS.get(symbol.upper())
     if not pair:
         # Try symbolUSDT pattern for unknown coins
-        if symbol.upper() in _BN_KNOWN:
-            pair = f"{symbol.upper()}USDT"
-        else:
-            return []
+        pair = f"{symbol.upper()}USDT"
     if not pair:
         return []
     klines = _binance_klines(pair, _INTERVAL_MAP.get(interval, 60))
@@ -968,9 +966,29 @@ def api_coin(symbol: str):
                     "source": "binance",
                 }
             else:
-                result = {"error": "coin not found"}
+             result = {"error": "coin not found"}
         else:
-            result = {"error": "coin not found"}
+            # Try dynamic symbolUSDT pair
+            pair = f"{symbol.upper()}USDT"
+            bn_data = api_get(f"{BINANCE_BASE}/ticker/24hr", params={"symbol": pair}, tries=1)
+            if isinstance(bn_data, dict) and "lastPrice" in bn_data:
+                result = {
+                    "symbol": symbol.upper(),
+                    "name": symbol.upper(),
+                    "image": "",
+                    "price": float(bn_data.get("lastPrice", 0)),
+                    "change_24h": float(bn_data.get("priceChangePercent", 0)),
+                    "change_7d": None,
+                    "ath": None,
+                    "ath_change": None,
+                    "market_cap": float(bn_data.get("quoteVolume", 0)) * 100,
+                    "volume_24h": float(bn_data.get("quoteVolume", 0)),
+                    "circulating_supply": None,
+                    "total_supply": None,
+                    "source": "binance",
+                }
+            else:
+                result = {"error": "coin not found"}
     _cached_set(cache_key, result)
     return jsonify(result)
 
