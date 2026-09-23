@@ -77,6 +77,77 @@ def prewarm_market_cache():
         save_market_cache()
 
 
+def prewarm_microcap_cache():
+    """Fetch individual coin data for microcaps not in top-250 markets."""
+    from supercrypto.core.base import coin_id_for
+    md_path, _ = get_latest_report()
+    if not md_path:
+        return
+    cards = parse_report_cards(md_path)
+    for card in cards:
+        symbol = card.get("coin", "").upper()
+        if not symbol or symbol in _market_cache:
+            continue
+        cid = _cg_id_for_coin(symbol)
+        if cid == symbol.lower():
+            cid = coin_id_for(symbol) or cid
+        params = {"localization": "false", "tickers": "false",
+                  "community_data": "false", "developer_data": "false", "sparkline": "false"}
+        if CG_API_KEY:
+            params["x_cg_demo_api_key"] = CG_API_KEY
+        data = api_get(f"{COINGECKO_BASE}/coins/{cid}", params=params, tries=2)
+        if isinstance(data, dict) and "market_data" in data:
+            md = data.get("market_data", {})
+            _market_cache[symbol] = {
+                "symbol": data.get("symbol", symbol).upper(),
+                "name": data.get("name", ""),
+                "image": (data.get("image") or {}).get("large", ""),
+                "current_price": md.get("current_price", {}).get("usd"),
+                "price_change_percentage_24h": md.get("price_change_percentage_24h"),
+                "price_change_percentage_7d": md.get("price_change_percentage_7d") or (md.get("price_change_percentage_7d_in_currency") or {}).get("usd"),
+                "ath": md.get("ath", {}).get("usd"),
+                "ath_change_percentage": md.get("ath_change_percentage"),
+                "market_cap": md.get("market_cap", {}).get("usd"),
+                "total_volume": md.get("total_volume", {}).get("usd"),
+                "circulating_supply": md.get("circulating_supply"),
+                "total_supply": md.get("total_supply"),
+            }
+        time.sleep(1.5)  # respect free-tier rate limits
+    save_market_cache()
+
+
+def prewarm_chart_cache():
+    """Pre-fetch 7D chart data for all coins in the latest report."""
+    md_path, _ = get_latest_report()
+    if not md_path:
+        return
+    cards = parse_report_cards(md_path)
+    for card in cards:
+        symbol = card.get("coin", "").upper()
+        if not symbol:
+            continue
+        # Fetch 7D chart — use Binance for known pairs, CoinGecko otherwise
+        bn_prices = _binance_chart(symbol, "7d")
+        if bn_prices and len(bn_prices) >= 2:
+            _cached_set(f"chart:{symbol}:7", {
+                "symbol": symbol, "interval": "7d", "days": 7,
+                "prices": bn_prices, "source": "binance",
+            })
+            continue
+        cid = _cg_id_for_coin(symbol)
+        params = {"vs_currency": "usd", "days": 7}
+        if CG_API_KEY:
+            params["x_cg_demo_api_key"] = CG_API_KEY
+        data = api_get(f"{COINGECKO_BASE}/coins/{cid}/market_chart", params=params, tries=2)
+        if isinstance(data, dict) and "prices" in data:
+            prices = [{"t": p[0], "price": round(p[1], 4)} for p in data.get("prices", []) if p[1] > 0]
+            _cached_set(f"chart:{symbol}:7", {
+                "symbol": symbol, "interval": "7d", "days": 7,
+                "prices": prices, "source": "coingecko",
+            })
+        time.sleep(1.5)
+
+
 def _cached_get(key: str, ttl: int = 60):
     entry = _chart_cache.get(key)
     if entry and time.time() - entry["t"] < ttl:
@@ -115,7 +186,10 @@ def run_scan_background():
         except Exception as e:
             scan_last_error = str(e)
         finally:
-            prewarm_market_cache()  # non-blocking best-effort fetch
+            load_market_cache()
+            prewarm_market_cache()  # top 250 markets
+            prewarm_microcap_cache()  # microcaps in report
+            prewarm_chart_cache()     # 7D charts for report coins
             scan_running = False
 
     threading.Thread(target=_worker, daemon=True).start()
@@ -771,28 +845,6 @@ def health_check():
     return jsonify({"status": "ok", "service": "super-crypto-agent"})
 
 
-@app.route("/api/debug")
-def api_debug():
-    from supercrypto.core.base import api_get
-    cid = "edel"
-    params = {"localization": "false", "tickers": "false",
-              "community_data": "false", "developer_data": "false", "sparkline": "false"}
-    if CG_API_KEY:
-        params["x_cg_demo_api_key"] = CG_API_KEY
-    raw = None
-    try:
-        import requests as _r
-        resp = _r.get(f"{COINGECKO_BASE}/coins/{cid}", params=params, timeout=10)
-        raw = {"status": resp.status_code, "text_len": len(resp.text)}
-        try:
-            raw["json"] = resp.json()
-        except Exception as e:
-            raw["json_err"] = str(e)[:200]
-    except Exception as e:
-        raw = {"error": str(e)[:200]}
-    return jsonify({"CG_API_KEY_set": bool(CG_API_KEY), "CG_API_KEY_len": len(CG_API_KEY), "cid": cid, "raw": raw})
-
-
 @app.route("/")
 def dashboard():
     return render_template_string(DASHBOARD_HTML, agent_count=len(AGENTS_DATA))
@@ -1020,7 +1072,7 @@ def api_chart(symbol: str):
     interval = __import__("flask").request.args.get("interval", "1d")
     days = _INTERVAL_DAYS.get(interval, 1)
     cache_key = f"chart:{symbol.upper()}:{days}"
-    cached = _cached_get(cache_key)
+    cached = _cached_get(cache_key, ttl=3600)
     if cached is not None:
         return jsonify(cached)
 
