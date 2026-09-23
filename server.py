@@ -391,6 +391,11 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
     padding: 12px 16px; background: var(--surface); border-radius: 12px;
     margin-bottom: 16px; font-family: var(--font-data); font-size: .8rem;
   }
+  .disclaimer {
+    background: rgba(255, 255, 255, .03); border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 10px; padding: 12px 16px; margin: 16px 0;
+    font-size: .72rem; line-height: 1.5; color: var(--muted);
+  }
   .badge-count {
     background: rgba(213, 184, 120, .12); color: var(--accent);
     padding: 2px 10px; border-radius: 12px; font-size: .75rem;
@@ -453,6 +458,10 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
 </style>
 </head>
 <body>
+
+<div class="disclaimer">
+  ⚠️ Disclaimer: This tool provides market intelligence signals for informational and educational purposes only. It is a personal research tool — not financial advice. Cryptocurrency markets are highly volatile; you may lose some or all of your invested capital. Past performance does not indicate future results. You are solely responsible for your investment decisions.
+</div>
 
 <header>
   <h1>Super Crypto Agent</h1>
