@@ -33,7 +33,7 @@ KNOWN_IDS = {
     "BTC": "bitcoin", "ETH": "ethereum", "BNB": "binancecoin",
     "XRP": "ripple", "ADA": "cardano", "DOGE": "dogecoin", "SOL": "solana",
     "TRX": "tron", "DOT": "polkadot", "LINK": "chainlink",
-    "MATIC": "matic-network", "LTC": "litecoin", "AVAX": "avalanche-2",
+    "MATIC": "polygon", "LTC": "litecoin", "AVAX": "avalanche-2",
     "UNI": "uniswap", "XLM": "stellar", "ATOM": "cosmos",
     "FIL": "filecoin", "NEAR": "near", "ARB": "arbitrum", "OP": "optimism",
     "BCH": "bitcoin-cash", "SUI": "sui", "TON": "the-open-network",
@@ -41,6 +41,12 @@ KNOWN_IDS = {
     "ENA": "ethena", "HNT": "helium",
     "USDT": "tether", "USDC": "usd-coin", "DAI": "dai",
     "WIF": "dogwifcoin", "JUP": "jupiter-exchange-solana",
+    # Microcap coins that appear in verdicts (resolved via coin_master_list fallback)
+    "PRL": "pearl-2", "EDEL": "edel", "SUIT": "dog-in-a-suit",
+    "USELESS": "useless", "STONK": "stonk-protocol", "SONIC": "sonic-1",
+    "TAO": "bittensor", "ZEC": "zcash", "SUSHI": "sushi",
+    "FTM": "fantom", "HBAR": "hedera", "SEI": "sei-2", "PYTH": "pyth-network",
+    "STRK": "starknet-2", "KAS": "kaspa", "RNDR": "render-token",
 }
 
 ALL_SIGNALS = frozenset({
