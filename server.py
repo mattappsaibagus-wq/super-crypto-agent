@@ -99,7 +99,7 @@ def run_scan_background():
         except Exception as e:
             scan_last_error = str(e)
         finally:
-prewarm_market_cache()  # non-blocking best-effort fetch
+            prewarm_market_cache()  # non-blocking best-effort fetch
             scan_running = False
 
     threading.Thread(target=_worker, daemon=True).start()
@@ -954,40 +954,41 @@ def api_chart(symbol: str):
     if cached is not None:
         return jsonify(cached)
 
+    # Try Binance first (most reliable on Render's shared IP)
+    bn_prices = _binance_chart(symbol, interval)
+    if bn_prices and len(bn_prices) >= 2:
+        result = {
+            "symbol": symbol.upper(), "interval": interval, "days": days,
+            "prices": bn_prices, "source": "binance",
+        }
+        _cached_set(cache_key, result)
+        return jsonify(result)
+
+    # Fallback: CoinGecko with a short timeout (1 try only)
     cid = _cg_id_for_coin(symbol)
     params = {"vs_currency": "usd", "days": days}
     if days >= 2:
         params["interval"] = "daily"
     if CG_API_KEY:
         params["x_cg_demo_api_key"] = CG_API_KEY
-    data = api_get(
-        f"{COINGECKO_BASE}/coins/{cid}/market_chart",
-        params=params,
-        tries=2,
-    )
-    if not isinstance(data, dict) or "prices" not in data:
-        # Fallback: Binance (more rate-limit tolerant on cloud hosts)
-        bn_prices = _binance_chart(symbol, interval)
-        if bn_prices:
-            result = {
-                "symbol": symbol.upper(),
-                "interval": interval,
-                "days": days,
-                "prices": bn_prices,
-                "source": "binance",
-            }
-            _cached_set(cache_key, result)
-            return jsonify(result)
-        return jsonify({"error": "chart data not found"}), 404
-    prices = data.get("prices", [])
-    result = {
-        "symbol": symbol.upper(),
-        "interval": interval,
-        "days": days,
-        "prices": [{"t": p[0], "price": round(p[1], 4)} for p in prices],
-    }
-    _cached_set(cache_key, result)
-    return jsonify(result)
+    try:
+        import requests as _req
+        r = _req.get(f"{COINGECKO_BASE}/coins/{cid}/market_chart", params=params, timeout=8)
+        if r.status_code == 200:
+            data = r.json()
+            if isinstance(data, dict) and "prices" in data:
+                prices = data.get("prices", [])
+                result = {
+                    "symbol": symbol.upper(), "interval": interval, "days": days,
+                    "prices": [{"t": p[0], "price": round(p[1], 4)} for p in prices if p[1] > 0],
+                    "source": "coingecko",
+                }
+                _cached_set(cache_key, result)
+                return jsonify(result)
+    except Exception:
+        pass
+
+    return jsonify({"error": "chart data unavailable", "symbol": symbol.upper()}), 404
 
 
 if __name__ == "__main__":
