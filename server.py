@@ -771,6 +771,28 @@ def health_check():
     return jsonify({"status": "ok", "service": "super-crypto-agent"})
 
 
+@app.route("/api/debug")
+def api_debug():
+    from supercrypto.core.base import api_get
+    cid = "edel"
+    params = {"localization": "false", "tickers": "false",
+              "community_data": "false", "developer_data": "false", "sparkline": "false"}
+    if CG_API_KEY:
+        params["x_cg_demo_api_key"] = CG_API_KEY
+    raw = None
+    try:
+        import requests as _r
+        resp = _r.get(f"{COINGECKO_BASE}/coins/{cid}", params=params, timeout=10)
+        raw = {"status": resp.status_code, "text_len": len(resp.text)}
+        try:
+            raw["json"] = resp.json()
+        except Exception as e:
+            raw["json_err"] = str(e)[:200]
+    except Exception as e:
+        raw = {"error": str(e)[:200]}
+    return jsonify({"CG_API_KEY_set": bool(CG_API_KEY), "CG_API_KEY_len": len(CG_API_KEY), "cid": cid, "raw": raw})
+
+
 @app.route("/")
 def dashboard():
     return render_template_string(DASHBOARD_HTML, agent_count=len(AGENTS_DATA))
