@@ -20,6 +20,7 @@ from supercrypto.config import (
     ALL_SIGNALS,
     API_TIMEOUT,
     API_TRIES,
+    COINGECKO_API_KEY,
     COINGECKO_BASE,
     DATA_DIR,
     KNOWN_IDS,
@@ -67,16 +68,11 @@ def fetch_markets(per_page: int = 50) -> list:
     global _markets_cache, _markets_cache_time
     now = time.time()
     if _markets_cache is None or now - _markets_cache_time > 120:
-        data = api_get(
-            f"{COINGECKO_BASE}/coins/markets",
-            params={
-                "vs_currency": "usd",
-                "order": "market_cap_desc",
-                "per_page": per_page,
-                "page": 1,
-                "sparkline": "false",
-            },
-        )
+        params = {"vs_currency": "usd", "order": "market_cap_desc",
+                  "per_page": per_page, "page": 1, "sparkline": "false"}
+        if COINGECKO_API_KEY:
+            params["x_cg_demo_api_key"] = COINGECKO_API_KEY
+        data = api_get(f"{COINGECKO_BASE}/coins/markets", params=params)
         if isinstance(data, list):
             _markets_cache = data
             _markets_cache_time = now
@@ -90,7 +86,10 @@ def fetch_markets(per_page: int = 50) -> list:
 def coin_master_list() -> list:
     _master_list = getattr(coin_master_list, "_cache", None)
     if _master_list is None:
-        data = api_get(f"{COINGECKO_BASE}/coins/list")
+        params = {}
+        if COINGECKO_API_KEY:
+            params["x_cg_demo_api_key"] = COINGECKO_API_KEY
+        data = api_get(f"{COINGECKO_BASE}/coins/list", params=params or None)
         if isinstance(data, list) and data:
             _master_list = data
             coin_master_list._cache = _master_list
