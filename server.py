@@ -827,8 +827,22 @@ BN_BINANCE_PAIRS = {
     "OP": "OPUSDT", "SUI": "SUIUSDT", "UNI": "UNIUSDT", "AAVE": "AAVEUSDT",
     "MKR": "MKRUSDT", "PEPE": "PEPEUSDT", "SHIB": "SHIBUSDT", "BONK": "BONKUSDT",
     "TRX": "TRXUSDT", "FIL": "FILUSDT", "ATOM": "ATOMUSDT", "INJ": "INJUSDT",
-    "HBAR": "HBARUSDT", "ICP": "ICPUSDT", "STX": "STXUSDT", "IMX": "IMXUSDT",
-    "THETA": "THETAUSDT", "ETHEREUMNAME": "ETHUSDT",
+    "ZEC": "ZECUSDT", "PENGU": "PENGUUSDT", "PRL": "PEARLUSDT", "EDEL": "EDELUSDT",
+    "ETC": "ETCUSDT", "TAO": "TAOUSDT", "STONK": "", "USELESS": "",
+    "SUSHI": "SUSHIUSDT", "FTM": "FTMUSDT", "HBAR": "HBARUSDT", "SEI": "SEIUSDT",
+    "IMX": "IMXUSDT", "THETA": "THETAUSDT", "CFX": "CFXUSDT", "KAS": "KASUSDT",
+    "QNT": "QNTUSDT", "TIA": "TIAUSDT", "STRK": "STRKUSDT", "WLD": "WLDUSDT",
+    "PYTH": "PYTHUSDT", "JUP": "JUPUSDT", "WIF": "WIFUSDT",
+}
+
+# Coins we know are on Binance - use symbolUSDT pattern
+_BN_KNOWN = {
+    "BTC", "ETH", "BNB", "SOL", "XRP", "ADA", "DOGE", "AVAX", "LINK", "DOT",
+    "MATIC", "POL", "LTC", "NEAR", "APT", "ARB", "OP", "SUI", "UNI", "AAVE",
+    "MKR", "PEPE", "SHIB", "BONK", "TRX", "FIL", "ATOM", "INJ", "ZEC",
+    "PENGU", "PRL", "EDEL", "ETC", "TAO", "SUSHI", "FTM", "HBAR", "SEI",
+    "IMX", "THETA", "CFX", "KAS", "QNT", "TIA", "STRK", "WLD", "PYTH", "JUP",
+    "WIF", "ICP", "RNDR", "IMX", "MKR", "SNX", "GRT", "CRV", "KSM",
 }
 _INTERVAL_MAP = {"1d": 60, "7d": 3600, "30d": 86400, "1y": 86400}
 _INTERVAL_DAYS = {"1d": 1, "7d": 7, "30d": 30, "1y": 365}
@@ -836,6 +850,12 @@ _INTERVAL_DAYS = {"1d": 1, "7d": 7, "30d": 30, "1y": 365}
 
 def _binance_chart(symbol: str, interval: str) -> list:
     pair = BN_BINANCE_PAIRS.get(symbol.upper())
+    if not pair:
+        # Try symbolUSDT pattern for unknown coins
+        if symbol.upper() in _BN_KNOWN:
+            pair = f"{symbol.upper()}USDT"
+        else:
+            return []
     if not pair:
         return []
     klines = _binance_klines(pair, _INTERVAL_MAP.get(interval, 60))
