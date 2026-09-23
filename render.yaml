@@ -16,3 +16,6 @@ services:
     plan: free
     # Auto-deploy from the main branch on GitHub
     # Connect this repo to your Render account after creating it
+    envVars:
+      - key: COINGECKO_API_KEY
+        sync: false
