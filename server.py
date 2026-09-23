@@ -458,51 +458,51 @@ function pollStatus() {
 }
 
 async function loadReport() {
-  try {
-    const r = await fetch('/api/report');
-    const data = await r.json();
-    if (!data.report) {
-      document.getElementById('cards').innerHTML = '<div class="empty">No report yet</div>';
-      return;
+    try {
+        const r = await fetch('/api/report');
+        const data = await r.json();
+        if (!data.report) {
+            document.getElementById('cards').innerHTML = '<div class="empty">No report yet â run a scan to get started</div>';
+            return;
+        }
+        document.getElementById('updated').textContent =
+            'Last scan: ' + new Date(data.timestamp).toLocaleString();
+
+        const cards = data.cards || [];
+        let buy=0, watch=0, sell=0, avoid=0;
+        cards.forEach(c => {
+            if (c.action==='BUY') buy++;
+            else if (c.action==='WATCH') watch++;
+            else if (c.action==='SELL') sell++;
+            else if (c.action==='AVOID') avoid++;
+        });
+
+        if (cards.length) {
+            document.getElementById('summaryRow').style.display = 'grid';
+            document.getElementById('buyCount').innerHTML = buy + '<br><small>BUY</small>';
+            document.getElementById('watchCount').innerHTML = watch + '<br><small>WATCH</small>';
+            document.getElementById('sellCount').innerHTML = sell + '<br><small>SELL</small>';
+            document.getElementById('avoidCount').innerHTML = avoid + '<br><small>AVOID</small>';
+        }
+
+        let html = '';
+        cards.slice(0, 12).forEach(c => {
+            const badgeClass = c.action === 'BUY' ? 'badge-buy' :
+                               c.action === 'WATCH' ? 'badge-watch' :
+                               c.action === 'SELL' ? 'badge-sell' : 'badge-avoid';
+            const details = (c.details||[]).map(d => '<li>' + d + '</li>').join('');
+            html += '<div class="card" onclick="showCoin(\'' + c.coin + '\', \'1d\')">' +
+                '<div class="card-header">' +
+                  '<span class="coin-name">' + c.coin + '</span>' +
+                  '<span class="action-badge ' + badgeClass + '">' + c.action + '</span>' +
+                '</div>' +
+                '<ul class="card-details">' + details + '</ul>' +
+              '</div>';
+        });
+        document.getElementById('cards').innerHTML = html || '<div class="empty">No results</div>';
+    } catch(e) {
+        document.getElementById('cards').innerHTML = '<div class="empty">Failed to load report</div>';
     }
-    document.getElementById('updated').textContent =
-      'Last scan: ' + new Date(data.timestamp).toLocaleString();
-
-    const cards = data.cards || [];
-    let buy=0, watch=0, sell=0, avoid=0;
-    cards.forEach(c => {
-      if (c.action==='BUY') buy++;
-      else if (c.action==='WATCH') watch++;
-      else if (c.action==='SELL') sell++;
-      else if (c.action==='AVOID') avoid++;
-    });
-
-    if (cards.length) {
-      document.getElementById('summaryRow').style.display = 'grid';
-      document.getElementById('buyCount').innerHTML = buy + '<br><small>BUY</small>';
-      document.getElementById('watchCount').innerHTML = watch + '<br><small>WATCH</small>';
-      document.getElementById('sellCount').innerHTML = sell + '<br><small>SELL</small>';
-      document.getElementById('avoidCount').innerHTML = avoid + '<br><small>AVOID</small>';
-    }
-
-    let html = '';
-    cards.slice(0, 12).forEach(c => {
-      const badgeClass = c.action === 'BUY' ? 'badge-buy' :
-                         c.action === 'WATCH' ? 'badge-watch' :
-                         c.action === 'SELL' ? 'badge-sell' : 'badge-avoid';
-      const details = (c.details||[]).map(d => '<li>' + d + '</li>').join('');
-      html += '<div class="card">' +
-        '<div class="card-header">' +
-          '<span class="coin-name">' + c.coin + '</span>' +
-          '<span class="action-badge ' + badgeClass + '">' + c.action + '</span>' +
-        '</div>' +
-        '<ul class="card-details">' + details + '</ul>' +
-      '</div>';
-    });
-    document.getElementById('cards').innerHTML = html || '<div class="empty">No results</div>';
-  } catch(e) {
-    document.getElementById('cards').innerHTML = '<div class="empty">Failed to load report</div>';
-  }
 }
 
 async function loadSignals() {
@@ -534,7 +534,7 @@ async function loadAttribution() {
   } catch(e) {}
 }
 
-loadReportWithClick();
+loadReport();
 loadSignals();
 loadAttribution();
 </script>
@@ -742,57 +742,9 @@ async function showCoin(symbol, interval) {
   }
   renderTimeframes(symbol, interval);
 }
-
-// Make cards clickable
-async function loadReportWithClick() {
-  try {
-    const r = await fetch('/api/report');
-    const data = await r.json();
-    if (!data.report) {
-      document.getElementById('cards').innerHTML = '<div class="empty">No report yet</div>';
-      return;
-    }
-    document.getElementById('updated').textContent =
-      'Last scan: ' + new Date(data.timestamp).toLocaleString();
-
-    const cards = data.cards || [];
-    let buy=0, watch=0, sell=0, avoid=0;
-    cards.forEach(c => {
-      if (c.action==='BUY') buy++;
-      else if (c.action==='WATCH') watch++;
-      else if (c.action==='SELL') sell++;
-      else if (c.action==='AVOID') avoid++;
-    });
-
-    if (cards.length) {
-      document.getElementById('summaryRow').style.display = 'grid';
-      document.getElementById('buyCount').innerHTML = buy + '<br><small>BUY</small>';
-      document.getElementById('watchCount').innerHTML = watch + '<br><small>WATCH</small>';
-      document.getElementById('sellCount').innerHTML = sell + '<br><small>SELL</small>';
-      document.getElementById('avoidCount').innerHTML = avoid + '<br><small>AVOID</small>';
-    }
-
-    let html = '';
-    cards.slice(0, 12).forEach(c => {
-      const badgeClass = c.action === 'BUY' ? 'badge-buy' :
-                         c.action === 'WATCH' ? 'badge-watch' :
-                         c.action === 'SELL' ? 'badge-sell' : 'badge-avoid';
-      const details = (c.details||[]).map(d => '<li>' + d + '</li>').join('');
-      html += '<div class="card" onclick="showCoin(\'' + c.coin + '\', \'1d\')">' +
-        '<div class="card-header">' +
-          '<span class="coin-name">' + c.coin + '</span>' +
-          '<span class="action-badge ' + badgeClass + '">' + c.action + '</span>' +
-        '</div>' +
-        '<ul class="card-details">' + details + '</ul>' +
-      '</div>';
-    });
-    document.getElementById('cards').innerHTML = html || '<div class="empty">No results</div>';
-  } catch(e) {
-    document.getElementById('cards').innerHTML = '<div class="empty">Failed to load report</div>';
-  }
-}
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.2.0/dist/index.min.js"></script>
 </html>"""
 
 
