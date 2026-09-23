@@ -827,23 +827,15 @@ BN_BINANCE_PAIRS = {
     "OP": "OPUSDT", "SUI": "SUIUSDT", "UNI": "UNIUSDT", "AAVE": "AAVEUSDT",
     "MKR": "MKRUSDT", "PEPE": "PEPEUSDT", "SHIB": "SHIBUSDT", "BONK": "BONKUSDT",
     "TRX": "TRXUSDT", "FIL": "FILUSDT", "ATOM": "ATOMUSDT", "INJ": "INJUSDT",
-    "ZEC": "ZECUSDT", "PENGU": "PENGUUSDT", "PRL": "PEARLUSDT", "EDEL": "EDELUSDT",
-    "ETC": "ETCUSDT", "TAO": "TAOUSDT", "STONK": "", "USELESS": "",
+    "ZEC": "ZECUSDT", "PENGU": "PENGUUSDT", "ETC": "ETCUSDT", "TAO": "TAOUSDT",
     "SUSHI": "SUSHIUSDT", "FTM": "FTMUSDT", "HBAR": "HBARUSDT", "SEI": "SEIUSDT",
     "IMX": "IMXUSDT", "THETA": "THETAUSDT", "CFX": "CFXUSDT", "KAS": "KASUSDT",
     "QNT": "QNTUSDT", "TIA": "TIAUSDT", "STRK": "STRKUSDT", "WLD": "WLDUSDT",
-    "PYTH": "PYTHUSDT", "JUP": "JUPUSDT", "WIF": "WIFUSDT",
+    "PYTH": "PYTHUSDT", "JUP": "JUPUSDT", "WIF": "WIFUSDT", "ICP": "ICPUSDT",
+    "RNDR": "RNDRUSDT", "SNX": "SNXUSDT", "GRT": "GRTUSDT", "CRV": "CRVUSDT",
 }
 
-# Coins we know are on Binance - use symbolUSDT pattern
-_BN_KNOWN = {
-    "BTC", "ETH", "BNB", "SOL", "XRP", "ADA", "DOGE", "AVAX", "LINK", "DOT",
-    "MATIC", "POL", "LTC", "NEAR", "APT", "ARB", "OP", "SUI", "UNI", "AAVE",
-    "MKR", "PEPE", "SHIB", "BONK", "TRX", "FIL", "ATOM", "INJ", "ZEC",
-    "PENGU", "PRL", "EDEL", "ETC", "TAO", "SUSHI", "FTM", "HBAR", "SEI",
-    "IMX", "THETA", "CFX", "KAS", "QNT", "TIA", "STRK", "WLD", "PYTH", "JUP",
-    "WIF", "ICP", "RNDR", "IMX", "MKR", "SNX", "GRT", "CRV", "KSM",
-}
+_BN_KNOWN = set(BN_BINANCE_PAIRS.keys())
 _INTERVAL_MAP = {"1d": 60, "7d": 3600, "30d": 86400, "1y": 86400}
 _INTERVAL_DAYS = {"1d": 1, "7d": 7, "30d": 30, "1y": 365}
 
