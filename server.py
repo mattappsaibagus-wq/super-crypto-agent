@@ -28,27 +28,53 @@ COINGECKO_BASE = "https://api.coingecko.com/api/v3"
 BINANCE_BASE = "https://data-api.binance.vision/api/v3"
 CG_API_KEY = os.environ.get("COINGECKO_API_KEY", "").strip()
 
-# Pre-fetched market data cache (updated on each scan)
+# Shared in-memory caches
+_chart_cache = {}
 _market_cache = {}
+
+app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+REPORTS_DIR = os.path.join(DATA_DIR, "reports")
+SIGNALS_FILE = os.path.join(DATA_DIR, "signals.json")
+ATTRIB_DIR = os.path.join(DATA_DIR, "attribution")
+MEMORY_DIR = os.path.join(DATA_DIR, "memory")
+_cache_file = os.path.join(DATA_DIR, "market_cache.json")
+
+
+def load_market_cache():
+    """Load market cache from disk if it exists."""
+    global _market_cache
+    if os.path.exists(_cache_file):
+        try:
+            with open(_cache_file) as f:
+                _market_cache = json.load(f)
+        except (OSError, json.JSONDecodeError):
+            pass
+
+
+def save_market_cache():
+    """Save market cache to disk for persistence across restarts."""
+    os.makedirs(DATA_DIR, exist_ok=True)
+    try:
+        with open(_cache_file, "w") as f:
+            json.dump(_market_cache, f)
+    except (OSError, TypeError):
+        pass
 
 
 def prewarm_market_cache():
     """Pre-fetch top markets so coin lookups survive CoinGecko rate limits."""
     global _market_cache
-    try:
-        params = {"vs_currency": "usd", "order": "market_cap_desc", "per_page": 100, "sparkline": "false"}
-        if CG_API_KEY:
-            params["x_cg_demo_api_key"] = CG_API_KEY
-        data = api_get(f"{COINGECKO_BASE}/coins/markets", params=params, tries=3)
-        if isinstance(data, list):
-            for c in data:
-                sym = c.get("symbol", "").upper()
-                _market_cache[sym] = c
-    except Exception:
-        pass
-
-
-prewarm_market_cache()
+    params = {"vs_currency": "usd", "order": "market_cap_desc", "per_page": 250, "sparkline": "false"}
+    if CG_API_KEY:
+        params["x_cg_demo_api_key"] = CG_API_KEY
+    data = api_get(f"{COINGECKO_BASE}/coins/markets", params=params, tries=3)
+    if isinstance(data, list) and data:
+        for c in data:
+            sym = c.get("symbol", "").upper()
+            _market_cache[sym] = c
+        save_market_cache()
 
 
 def _cached_get(key: str, ttl: int = 60):
@@ -60,16 +86,6 @@ def _cached_get(key: str, ttl: int = 60):
 
 def _cached_set(key: str, data):
     _chart_cache[key] = {"data": data, "t": time.time()}
-
-
-_chart_cache = {}
-DATA_DIR = os.path.join(BASE_DIR, "data")
-REPORTS_DIR = os.path.join(DATA_DIR, "reports")
-SIGNALS_FILE = os.path.join(DATA_DIR, "signals.json")
-ATTRIB_DIR = os.path.join(DATA_DIR, "attribution")
-MEMORY_DIR = os.path.join(DATA_DIR, "memory")
-
-app = Flask(__name__)
 
 # ── Scan state ──────────────────────────────────────────────────────────
 scan_lock = threading.Lock()
@@ -978,29 +994,23 @@ def api_chart(symbol: str):
         _cached_set(cache_key, result)
         return jsonify(result)
 
-    # Fallback: CoinGecko with a short timeout (1 try only)
+    # Fallback: CoinGecko (with retries via api_get for rate-limit handling)
     cid = _cg_id_for_coin(symbol)
     params = {"vs_currency": "usd", "days": days}
     if days >= 2:
         params["interval"] = "daily"
     if CG_API_KEY:
         params["x_cg_demo_api_key"] = CG_API_KEY
-    try:
-        import requests as _req
-        r = _req.get(f"{COINGECKO_BASE}/coins/{cid}/market_chart", params=params, timeout=8)
-        if r.status_code == 200:
-            data = r.json()
-            if isinstance(data, dict) and "prices" in data:
-                prices = data.get("prices", [])
-                result = {
-                    "symbol": symbol.upper(), "interval": interval, "days": days,
-                    "prices": [{"t": p[0], "price": round(p[1], 4)} for p in prices if p[1] > 0],
-                    "source": "coingecko",
-                }
-                _cached_set(cache_key, result)
-                return jsonify(result)
-    except Exception:
-        pass
+    data = api_get(f"{COINGECKO_BASE}/coins/{cid}/market_chart", params=params, tries=3)
+    if isinstance(data, dict) and "prices" in data:
+        prices = data.get("prices", [])
+        result = {
+            "symbol": symbol.upper(), "interval": interval, "days": days,
+            "prices": [{"t": p[0], "price": round(p[1], 4)} for p in prices if p[1] > 0],
+            "source": "coingecko",
+        }
+        _cached_set(cache_key, result)
+        return jsonify(result)
 
     return jsonify({"error": "chart data unavailable", "symbol": symbol.upper()}), 404
 
