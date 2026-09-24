@@ -705,11 +705,14 @@ loadAttribution();
     </div>
     <div class="modal-body">
       <div class="market-stats" id="modalStats"></div>
+      <div class="timeframes" id="modalTimeframes"></div>
+      <label class="vol-toggle"><input type="checkbox" id="volToggle" checked> Vol</label>
       <div class="chart-wrap">
         <canvas id="coinChart" width="800" height="400"></canvas>
       </div>
-      <div class="timeframes" id="modalTimeframes"></div>
-      <div id="chartNote" style="font-size:.7rem;color:var(--muted);margin-top:8px"></div>
+      <div class="ohlc-readout" id="ohlcReadout"></div>
+      <div class="ohlc-stats-grid" id="ohlcStatsGrid"></div>
+      <div id="chartNote" style="font-size:.7rem;color:var(--muted);margin-top:8px;text-align:center"></div>
     </div>
   </div>
 </div>
@@ -761,6 +764,23 @@ loadAttribution();
   .gain { color: var(--green); }
   .loss { color: var(--red); }
   .flat { color: var(--muted); }
+  .vol-toggle {
+    display: inline-flex; align-items: center; gap: 6px; font-size: .78rem;
+    color: var(--muted); margin: 10px 0 4px; cursor: pointer; user-select: none;
+  }
+  .vol-toggle input { accent-color: var(--accent); cursor: pointer; }
+  .ohlc-readout {
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline;
+    font: 600 .82rem/1 var(--font-data); color: var(--muted); margin-top: 10px;
+  }
+  .ohlc-readout b { color: var(--text); font-weight: 700; margin-right: 3px; }
+  .ohlc-readout .pct { font-weight: 700; }
+  .ohlc-stats-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px;
+  }
+  @media (max-width: 560px) {
+    .ohlc-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
 </style>
 
 <script>
@@ -769,6 +789,7 @@ const COIN_INTERVALS = [
   {label: "1D", value: "1d"},
   {label: "7D", value: "7d"},
   {label: "30D", value: "30d"},
+  {label: "90D", value: "90d"},
   {label: "1Y", value: "1y"},
 ];
 
@@ -883,42 +904,117 @@ function renderStats(data) {
   `;
 }
 
-function drawChart(prices, interval) {
+async function loadCoinOHLC(symbol, interval) {
+  try {
+    const r = await fetch(`/api/ohlc/${encodeURIComponent(symbol)}?interval=${interval}`);
+    if (!r.ok) throw new Error("ohlc not found");
+    return await r.json();
+  } catch(e) {
+    console.warn("ohlc error:", e);
+    return null;
+  }
+}
+
+let lastCandles = null;
+let lastCandleInterval = '1d';
+
+function cssVar(name, fallback) {
+  const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return v || fallback;
+}
+
+function drawCandlestickChart(candles, interval, showVolume) {
   const ctx = document.getElementById('coinChart').getContext('2d');
   if (coinChart) coinChart.destroy();
-  const ds = prices.map(p => ({x: new Date(p.t), y: p.price}));
+
+  const upColor = cssVar('--green', '#7fc49a');
+  const downColor = cssVar('--red', '#dd8b83');
+  const gridColor = 'rgba(139,148,158,0.1)';
+  const tickColor = cssVar('--muted', '#98a49e');
+
+  const ohlcData = candles.map(c => ({ x: c.t, o: c.o, h: c.h, l: c.l, c: c.c }));
+  const hasVolume = showVolume && candles.some(c => c.v != null);
+
+  const datasets = [{
+    label: interval.toUpperCase(),
+    data: ohlcData,
+    color: { up: upColor, down: downColor, unchanged: tickColor },
+    borderColor: { up: upColor, down: downColor, unchanged: tickColor },
+    yAxisID: 'y',
+  }];
+
+  const scales = {
+    x: { type: 'time', time: { tooltipFormat: 'PPpp' }, ticks: { color: tickColor, maxTicksLimit: 7 }, grid: { display: false } },
+    y: { position: 'right', ticks: { color: tickColor, callback: v => '$' + v.toLocaleString(undefined, {maximumFractionDigits: 6}) }, grid: { color: gridColor } },
+  };
+
+  if (hasVolume) {
+    datasets.push({
+      type: 'bar',
+      label: 'Volume',
+      data: candles.map(c => ({ x: c.t, y: c.v || 0 })),
+      backgroundColor: candles.map(c => c.c >= c.o ? upColor + '4d' : downColor + '4d'), // ~30% alpha
+      yAxisID: 'volume',
+      order: 2,
+    });
+    // Volume occupies only the bottom ~22% of the chart by giving its axis
+    // a much taller max than the actual data needs.
+    const maxVol = Math.max(...candles.map(c => c.v || 0), 1);
+    scales.volume = { position: 'left', display: false, min: 0, max: maxVol * 4.5 };
+  }
+
   coinChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      datasets: [{
-        label: interval.toUpperCase(),
-        data: ds,
-        borderColor: ds[ds.length-1]?.y >= ds[0]?.y ? '#7fc49a' : '#dd8b83',
-        backgroundColor: 'rgba(127,196,154,0.08)',
-        borderWidth: 2,
-        pointRadius: 0,
-        fill: true,
-        tension: 0.3,
-      }]
-    },
+    type: 'candlestick',
+    data: { datasets },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      parsing: false,
       plugins: {
         legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: ctx => `$${ctx.raw.y.toFixed(2)}`
-          }
-        }
       },
-      scales: {
-        x: { type: 'time', time: {tooltipFormat: 'PPpp'}, ticks: {color: '#98a49e', maxTicks: 6}, grid: {display: false}},
-        y: { position: 'right', ticks: {color: '#98a49e', callback: v => '$' + v.toLocaleString()}, grid: {color: 'rgba(139,148,158,0.1)'}},
-      }
+      scales,
     }
   });
+}
+
+function renderOhlcReadout(candles) {
+  const el = document.getElementById('ohlcReadout');
+  if (!candles || candles.length === 0) { el.innerHTML = ''; return; }
+  const last = candles[candles.length - 1];
+  const first = candles[0];
+  const pct = first.o ? ((last.c - first.o) / first.o) * 100 : 0;
+  const pctClass = pct > 0 ? 'gain' : pct < 0 ? 'loss' : 'flat';
+  el.innerHTML =
+    `<span>O <b>${fmtPrice(last.o)}</b></span>` +
+    `<span>H <b>${fmtPrice(last.h)}</b></span>` +
+    `<span>L <b>${fmtPrice(last.l)}</b></span>` +
+    `<span>C <b>${fmtPrice(last.c)}</b></span>` +
+    `<span class="pct ${pctClass}">${fmtPct(pct)}</span>`;
+}
+
+function renderOhlcStats(periodCandles, dayCandles, interval) {
+  const grid = document.getElementById('ohlcStatsGrid');
+  if (!dayCandles || dayCandles.length === 0) { grid.innerHTML = ''; return; }
+
+  const hi24 = Math.max(...dayCandles.map(c => c.h));
+  const lo24 = Math.min(...dayCandles.map(c => c.l));
+  const chg24 = dayCandles[0].o ? ((dayCandles[dayCandles.length-1].c - dayCandles[0].o) / dayCandles[0].o) * 100 : 0;
+
+  let periodChg = chg24;
+  if (periodCandles && periodCandles.length > 0 && periodCandles[0].o) {
+    const pf = periodCandles[0], pl = periodCandles[periodCandles.length - 1];
+    periodChg = ((pl.c - pf.o) / pf.o) * 100;
+  }
+  const periodLabel = (COIN_INTERVALS.find(iv => iv.value === interval) || {label: interval.toUpperCase()}).label;
+
+  const tile = (label, value, cls) =>
+    `<div class="stat-item"><div class="stat-label">${label}</div><div class="stat-value ${cls||''}">${value}</div></div>`;
+
+  grid.innerHTML =
+    tile('24H HIGH', fmtPrice(hi24)) +
+    tile('24H LOW', fmtPrice(lo24)) +
+    tile(periodLabel + ' CHANGE', fmtPct(periodChg), periodChg > 0 ? 'gain' : periodChg < 0 ? 'loss' : 'flat') +
+    tile('24H CHANGE', fmtPct(chg24), chg24 > 0 ? 'gain' : chg24 < 0 ? 'loss' : 'flat');
 }
 
 function renderTimeframes(symbol, activeInterval) {
@@ -947,23 +1043,44 @@ async function showCoin(symbol, interval) {
   const data = await loadCoinData(symbol);
   renderStats(data);
 
-    const chart = await loadCoinChart(symbol, interval);
-  if (chart && chart.prices && chart.prices.length > 0) {
-    drawChart(chart.prices, interval);
-    document.getElementById("chartNote").textContent = "Data via " + (chart.source || "coingecko");
+  // The 24H HIGH/LOW/CHANGE tiles always reflect the real last-24h window
+  // regardless of which timeframe tab is selected, so on the 1D tab we
+  // reuse that single fetch for both; any other tab needs its own fetch
+  // plus a second one just for the always-on 24h tiles.
+  const [ohlc, dayOhlc] = interval === '1d'
+    ? await Promise.all([loadCoinOHLC(symbol, '1d'), Promise.resolve(null)])
+    : await Promise.all([loadCoinOHLC(symbol, interval), loadCoinOHLC(symbol, '1d')]);
+
+  if (ohlc && ohlc.candles && ohlc.candles.length > 0) {
+    lastCandles = ohlc.candles;
+    lastCandleInterval = interval;
+    const showVolume = document.getElementById('volToggle').checked;
+    drawCandlestickChart(ohlc.candles, interval, showVolume);
+    renderOhlcReadout(ohlc.candles);
+    renderOhlcStats(ohlc.candles, (dayOhlc && dayOhlc.candles) || ohlc.candles, interval);
+    document.getElementById("chartNote").textContent = "Live OHLC candles · Powered by " + (ohlc.source === 'binance' ? 'Binance' : 'CoinGecko');
   } else {
-    const ctx = document.getElementById('coinChart').getContext('2d');
+    lastCandles = null;
     if (coinChart) coinChart.destroy();
+    document.getElementById('ohlcReadout').innerHTML = '';
+    document.getElementById('ohlcStatsGrid').innerHTML = '';
+    const ctx = document.getElementById('coinChart').getContext('2d');
     ctx.clearRect(0, 0, 800, 400);
     ctx.font = '14px monospace';
     ctx.fillStyle = '#98a49e';
-    ctx.fillText('Chart unavailable â set COINGECKO_API_KEY in Render env', 20, 40);
+    ctx.fillText('Chart unavailable — set COINGECKO_API_KEY in Render env', 20, 40);
+    document.getElementById("chartNote").textContent = "";
   }
   renderTimeframes(symbol, interval);
 }
+
+document.getElementById('volToggle').addEventListener('change', (e) => {
+  if (lastCandles) drawCandlestickChart(lastCandles, lastCandleInterval, e.target.checked);
+});
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.2.0/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
 </html>"""
 
 
@@ -1056,8 +1173,8 @@ BN_BINANCE_PAIRS = {
 }
 
 _BN_KNOWN = set(BN_BINANCE_PAIRS.keys())
-_INTERVAL_MAP = {"1d": 60, "7d": 3600, "30d": 86400, "1y": 86400}
-_INTERVAL_DAYS = {"1d": 1, "7d": 7, "30d": 30, "1y": 365}
+_INTERVAL_MAP = {"1d": 1800, "7d": 3600, "30d": 86400, "90d": 86400, "1y": 86400}
+_INTERVAL_DAYS = {"1d": 1, "7d": 7, "30d": 30, "90d": 90, "1y": 365}
 
 
 def _binance_chart(symbol: str, interval: str) -> list:
@@ -1067,12 +1184,49 @@ def _binance_chart(symbol: str, interval: str) -> list:
         pair = f"{symbol.upper()}USDT"
     if not pair:
         return []
-    klines = _binance_klines(pair, _INTERVAL_MAP.get(interval, 60))
+    klines = _binance_klines(pair, _INTERVAL_MAP.get(interval, 1800))
     return [{"t": k[0], "price": float(k[4])} for k in klines]
 
 
+def _binance_chart_ohlc(symbol: str, interval: str) -> list:
+    """Same Binance klines as _binance_chart, but keeping the full OHLCV
+    tuple instead of discarding everything but the close price. Binance's
+    /klines endpoint already returns real candlestick data - there was no
+    need for a second network call to get this."""
+    pair = BN_BINANCE_PAIRS.get(symbol.upper())
+    if not pair:
+        pair = f"{symbol.upper()}USDT"
+    if not pair:
+        return []
+    klines = _binance_klines(pair, _INTERVAL_MAP.get(interval, 1800))
+    return [
+        {"t": k[0], "o": float(k[1]), "h": float(k[2]), "l": float(k[3]),
+         "c": float(k[4]), "v": float(k[5])}
+        for k in klines
+    ]
+
+
+def _coingecko_ohlc(symbol: str, interval: str) -> list:
+    """Fallback OHLC source for coins not on Binance. CoinGecko's dedicated
+    /coins/{id}/ohlc endpoint (distinct from /market_chart) returns real
+    open/high/low/close - just no volume, which the frontend handles by
+    simply not drawing a volume panel when v is null."""
+    cid = _cg_id_for_coin(symbol)
+    days = _INTERVAL_DAYS.get(interval, 1)
+    params = {"vs_currency": "usd", "days": days}
+    if CG_API_KEY:
+        params["x_cg_demo_api_key"] = CG_API_KEY
+    data = api_get(f"{COINGECKO_BASE}/coins/{cid}/ohlc", params=params, tries=2)
+    if isinstance(data, list):
+        return [
+            {"t": row[0], "o": row[1], "h": row[2], "l": row[3], "c": row[4], "v": None}
+            for row in data if isinstance(row, list) and len(row) >= 5
+        ]
+    return []
+
+
 def _binance_klines(pair: str, interval_sec: int, limit: int = 500):
-    interval_map = {60: "1m", 3600: "1h", 86400: "1d"}
+    interval_map = {60: "1m", 1800: "30m", 3600: "1h", 86400: "1d"}
     binterval = interval_map.get(interval_sec, "1d")
     data = api_get(f"{BINANCE_BASE}/klines", params={"symbol": pair, "interval": binterval, "limit": limit}, tries=2)
     if isinstance(data, list):
@@ -1232,6 +1386,33 @@ def api_chart(symbol: str):
         return jsonify(result)
 
     return jsonify({"error": "chart data unavailable", "symbol": symbol.upper()}), 404
+
+
+@app.route("/api/ohlc/<symbol>")
+def api_ohlc(symbol: str):
+    """Real candlestick (open/high/low/close/volume) data, distinct from
+    /api/chart which only ever returns a close-price line series."""
+    interval = __import__("flask").request.args.get("interval", "1d")
+    if interval not in _INTERVAL_MAP:
+        interval = "1d"
+    cache_key = f"ohlc:{symbol.upper()}:{interval}"
+    ttl = 180 if interval == "1d" else 900
+    cached = _cached_get(cache_key, ttl=ttl)
+    if cached is not None:
+        return jsonify(cached)
+
+    candles = _binance_chart_ohlc(symbol, interval)
+    source = "binance"
+    if not candles or len(candles) < 2:
+        candles = _coingecko_ohlc(symbol, interval)
+        source = "coingecko"
+
+    if not candles:
+        return jsonify({"error": "OHLC data unavailable", "symbol": symbol.upper()}), 404
+
+    result = {"symbol": symbol.upper(), "interval": interval, "candles": candles, "source": source}
+    _cached_set(cache_key, result)
+    return jsonify(result)
 
 
 if __name__ == "__main__":
