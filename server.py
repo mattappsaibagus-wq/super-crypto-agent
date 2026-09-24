@@ -468,6 +468,19 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
   .badge-watch { background: rgba(214,185,119,.15); color: var(--yellow); }
   .badge-sell { background: rgba(221,139,131,.15); color: var(--red); }
   .badge-avoid { background: rgba(221,139,131,.15); color: var(--red-dark); }
+  .card-price-row {
+    display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; min-height: 22px;
+    font: 600 .95rem/1 var(--font-data);
+  }
+  .card-price-row .px { color: var(--text, #eee); }
+  .card-price-row .chg { font-size: .78rem; font-weight: 700; }
+  .card-price-row .chg.gain { color: var(--green); }
+  .card-price-row .chg.loss { color: var(--red); }
+  .card-price-row .chg.flat { color: var(--muted); }
+  .card-spark { width: 100%; height: 44px; margin-bottom: 12px; display: block; }
+  .card-spark .spark-line { fill: none; stroke-width: 1.75; }
+  .card-spark .spark-fill { stroke: none; }
+  .card-spark.is-loading { opacity: .25; }
   .card-details { color: var(--muted); font-size: .82rem; }
   .card-details li { margin-bottom: 4px; list-style: none; }
   .card-details li::before { content: "· "; color: var(--accent); }
@@ -618,20 +631,32 @@ async function loadReport() {
         }
 
         let html = '';
+        const symbols = [];
         cards.slice(0, 12).forEach(c => {
             const badgeClass = c.action === 'BUY' ? 'badge-buy' :
                                c.action === 'WATCH' ? 'badge-watch' :
                                c.action === 'SELL' ? 'badge-sell' : 'badge-avoid';
             const details = (c.details||[]).map(d => '<li>' + d + '</li>').join('');
-            html += '<div class="card" onclick="showCoin(\'' + c.coin + '\', \'1d\')">' +
+            const sym = c.coin;
+            symbols.push(sym);
+            html += '<div class="card" onclick="showCoin(\'' + sym + '\', \'1d\')">' +
                 '<div class="card-header">' +
-                  '<span class="coin-name">' + c.coin + '</span>' +
+                  '<span class="coin-name">' + sym + '</span>' +
                   '<span class="action-badge ' + badgeClass + '">' + c.action + '</span>' +
                 '</div>' +
+                '<div class="card-price-row" id="price-' + sym + '"></div>' +
+                '<svg class="card-spark is-loading" id="spark-' + sym + '" viewBox="0 0 100 32" preserveAspectRatio="none"></svg>' +
                 '<ul class="card-details">' + details + '</ul>' +
               '</div>';
         });
         document.getElementById('cards').innerHTML = html || '<div class="empty">No results</div>';
+
+        // Price + sparkline hydrate progressively after the list itself is
+        // already visible, so a slow/cold chart fetch never delays the
+        // initial render. These mostly hit the server's warm cache (see
+        // prewarm_chart_cache/prewarm_microcap_cache) so they're normally
+        // near-instant, but staying async keeps things resilient either way.
+        symbols.forEach(sym => hydrateCardChart(sym));
     } catch(e) {
         document.getElementById('cards').innerHTML = '<div class="empty">Failed to load report</div>';
     }
@@ -778,6 +803,66 @@ async function loadCoinChart(symbol, interval) {
     console.warn("chart error:", e);
     return null;
   }
+}
+
+// Builds a compact SVG area-sparkline from a price series — deliberately not
+// Chart.js here: up to 12 of these render at once on the list, and a full
+// Chart.js instance per card (with its own canvas, animation loop, and
+// resize observer) is needless overhead for something this small. A plain
+// <polyline> + gradient fill gets the same "premium" look at a fraction of
+// the cost, and there's zero risk of 12 concurrent chart instances
+// stepping on each other.
+function sparklineSVG(prices, gradientId) {
+  const pts = (prices || []).map(p => p.price).filter(v => Number.isFinite(v));
+  if (pts.length < 2) return { svg: '', isGain: null };
+
+  const min = Math.min(...pts), max = Math.max(...pts);
+  const span = (max - min) || 1;
+  const w = 100, h = 32, pad = 2;
+  const stepX = (w - pad * 2) / (pts.length - 1);
+  const coords = pts.map((v, i) => {
+    const x = pad + i * stepX;
+    const y = pad + (1 - (v - min) / span) * (h - pad * 2);
+    return [x, y];
+  });
+  const isGain = pts[pts.length - 1] >= pts[0];
+  const lineColor = isGain ? 'var(--green)' : 'var(--red)';
+  const linePath = coords.map((c, i) => (i === 0 ? 'M' : 'L') + c[0].toFixed(2) + ',' + c[1].toFixed(2)).join(' ');
+  const fillPath = linePath + ` L${coords[coords.length-1][0].toFixed(2)},${h} L${coords[0][0].toFixed(2)},${h} Z`;
+
+  const svg =
+    `<defs><linearGradient id="${gradientId}" x1="0" y1="0" x2="0" y2="1">` +
+      `<stop offset="0%" stop-color="${lineColor}" stop-opacity="0.32"/>` +
+      `<stop offset="100%" stop-color="${lineColor}" stop-opacity="0"/>` +
+    `</linearGradient></defs>` +
+    `<path class="spark-fill" d="${fillPath}" fill="url(#${gradientId})"/>` +
+    `<path class="spark-line" d="${linePath}" stroke="${lineColor}"/>`;
+  return { svg, isGain };
+}
+
+async function hydrateCardChart(symbol) {
+  const priceEl = document.getElementById('price-' + symbol);
+  const sparkEl = document.getElementById('spark-' + symbol);
+  if (!priceEl || !sparkEl) return;
+
+  const [coin, chart] = await Promise.all([
+    loadCoinData(symbol),
+    loadCoinChart(symbol, '7d'),
+  ]);
+
+  if (coin && coin.price != null) {
+    const chg = coin.change_24h;
+    const chgClass = chg > 0 ? 'gain' : chg < 0 ? 'loss' : 'flat';
+    priceEl.innerHTML =
+      '<span class="px">' + fmtPrice(coin.price) + '</span>' +
+      '<span class="chg ' + chgClass + '">' + fmtPct(chg) + '</span>';
+  }
+
+  if (chart && chart.prices && chart.prices.length >= 2) {
+    const { svg } = sparklineSVG(chart.prices, 'spark-grad-' + symbol.replace(/[^A-Za-z0-9]/g, ''));
+    sparkEl.innerHTML = svg;
+  }
+  sparkEl.classList.remove('is-loading');
 }
 
 function renderStats(data) {
