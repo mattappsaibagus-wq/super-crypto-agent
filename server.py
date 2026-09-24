@@ -960,7 +960,7 @@ function drawCandlestickChart(candles, interval, showVolume) {
     // Volume occupies only the bottom ~22% of the chart by giving its axis
     // a much taller max than the actual data needs.
     const maxVol = Math.max(...candles.map(c => c.v || 0), 1);
-    scales.volume = { position: 'left', display: false, min: 0, max: maxVol * 4.5 };
+    scales.volume = { type: 'linear', position: 'left', display: false, min: 0, max: maxVol * 4.5 };
   }
 
   coinChart = new Chart(ctx, {
@@ -1052,13 +1052,24 @@ async function showCoin(symbol, interval) {
     : await Promise.all([loadCoinOHLC(symbol, interval), loadCoinOHLC(symbol, '1d')]);
 
   if (ohlc && ohlc.candles && ohlc.candles.length > 0) {
-    lastCandles = ohlc.candles;
-    lastCandleInterval = interval;
-    const showVolume = document.getElementById('volToggle').checked;
-    drawCandlestickChart(ohlc.candles, interval, showVolume);
-    renderOhlcReadout(ohlc.candles);
-    renderOhlcStats(ohlc.candles, (dayOhlc && dayOhlc.candles) || ohlc.candles, interval);
-    document.getElementById("chartNote").textContent = "Live OHLC candles · Powered by " + (ohlc.source === 'binance' ? 'Binance' : 'CoinGecko');
+    try {
+      lastCandles = ohlc.candles;
+      lastCandleInterval = interval;
+      const showVolume = document.getElementById('volToggle').checked;
+      drawCandlestickChart(ohlc.candles, interval, showVolume);
+      renderOhlcReadout(ohlc.candles);
+      renderOhlcStats(ohlc.candles, (dayOhlc && dayOhlc.candles) || ohlc.candles, interval);
+      document.getElementById("chartNote").textContent = "Live OHLC candles \u00b7 Powered by " + (ohlc.source === 'binance' ? 'Binance' : 'CoinGecko');
+    } catch (err) {
+      // A rendering bug here must never take the rest of the modal down
+      // with it (timeframe tabs, close button) - log it and show a plain
+      // message instead of leaving the chart area silently blank.
+      console.error('candlestick render error:', err);
+      lastCandles = null;
+      document.getElementById('ohlcReadout').innerHTML = '';
+      document.getElementById('ohlcStatsGrid').innerHTML = '';
+      document.getElementById("chartNote").textContent = "Chart render error \u2014 see console";
+    }
   } else {
     lastCandles = null;
     if (coinChart) coinChart.destroy();
@@ -1068,7 +1079,7 @@ async function showCoin(symbol, interval) {
     ctx.clearRect(0, 0, 800, 400);
     ctx.font = '14px monospace';
     ctx.fillStyle = '#98a49e';
-    ctx.fillText('Chart unavailable — set COINGECKO_API_KEY in Render env', 20, 40);
+    ctx.fillText('Chart unavailable \u2014 set COINGECKO_API_KEY in Render env', 20, 40);
     document.getElementById("chartNote").textContent = "";
   }
   renderTimeframes(symbol, interval);
