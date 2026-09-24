@@ -78,12 +78,23 @@ def prewarm_market_cache():
 
 
 def prewarm_microcap_cache():
-    """Fetch individual coin data for microcaps not in top-250 markets."""
+    """Fetch market data for microcaps not in top-250 markets.
+
+    Previously issued one /coins/{id} request per missing coin, each
+    followed by a flat 1.5s sleep - for a report with 30+ microcaps that
+    alone was 45-90+ seconds. CoinGecko's /coins/markets endpoint accepts
+    a comma-separated `ids` parameter and returns up to 250 coins in a
+    single response, so this now does one batched call (chunked at 250
+    ids) instead of N sequential ones.
+    """
     from supercrypto.core.base import coin_id_for
     md_path, _ = get_latest_report()
     if not md_path:
         return
     cards = parse_report_cards(md_path)
+
+    missing_ids = []
+    id_to_symbol = {}
     for card in cards:
         symbol = card.get("coin", "").upper()
         if not symbol or symbol in _market_cache:
@@ -91,49 +102,58 @@ def prewarm_microcap_cache():
         cid = _cg_id_for_coin(symbol)
         if cid == symbol.lower():
             cid = coin_id_for(symbol) or cid
-        params = {"localization": "false", "tickers": "false",
-                  "community_data": "false", "developer_data": "false", "sparkline": "false"}
+        if cid:
+            missing_ids.append(cid)
+            id_to_symbol[cid] = symbol
+
+    if not missing_ids:
+        return
+
+    for i in range(0, len(missing_ids), 250):
+        chunk = missing_ids[i:i + 250]
+        params = {"vs_currency": "usd", "ids": ",".join(chunk),
+                  "order": "market_cap_desc", "per_page": 250, "sparkline": "false"}
         if CG_API_KEY:
             params["x_cg_demo_api_key"] = CG_API_KEY
-        data = api_get(f"{COINGECKO_BASE}/coins/{cid}", params=params, tries=2)
-        if isinstance(data, dict) and "market_data" in data:
-            md = data.get("market_data", {})
-            _market_cache[symbol] = {
-                "symbol": data.get("symbol", symbol).upper(),
-                "name": data.get("name", ""),
-                "image": (data.get("image") or {}).get("large", ""),
-                "current_price": md.get("current_price", {}).get("usd"),
-                "price_change_percentage_24h": md.get("price_change_percentage_24h"),
-                "price_change_percentage_7d": md.get("price_change_percentage_7d") or (md.get("price_change_percentage_7d_in_currency") or {}).get("usd"),
-                "ath": md.get("ath", {}).get("usd"),
-                "ath_change_percentage": md.get("ath_change_percentage"),
-                "market_cap": md.get("market_cap", {}).get("usd"),
-                "total_volume": md.get("total_volume", {}).get("usd"),
-                "circulating_supply": md.get("circulating_supply"),
-                "total_supply": md.get("total_supply"),
-            }
-        time.sleep(1.5)  # respect free-tier rate limits
+        data = api_get(f"{COINGECKO_BASE}/coins/markets", params=params, tries=3)
+        if isinstance(data, list):
+            for c in data:
+                cid = c.get("id", "")
+                symbol = id_to_symbol.get(cid) or c.get("symbol", "").upper()
+                _market_cache[symbol] = c
+        if i + 250 < len(missing_ids):
+            time.sleep(1.0)  # brief pacing only between chunks, not per coin
     save_market_cache()
 
 
 def prewarm_chart_cache():
-    """Pre-fetch 7D chart data for all coins in the latest report."""
+    """Pre-fetch 7D chart data for all coins in the latest report.
+
+    Runs Binance-first fetches (the common case) concurrently via a small
+    thread pool - Binance's public API tolerates far more concurrency than
+    CoinGecko's free tier, so this no longer pays a 1.5s penalty per coin
+    for the coins that resolve there. Only the CoinGecko fallback path
+    (uncommon - unlisted/new coins) still sleeps between its own calls,
+    scoped per-worker so it doesn't serialize the whole batch.
+    """
+    from concurrent.futures import ThreadPoolExecutor
+
     md_path, _ = get_latest_report()
     if not md_path:
         return
     cards = parse_report_cards(md_path)
-    for card in cards:
-        symbol = card.get("coin", "").upper()
-        if not symbol:
-            continue
-        # Fetch 7D chart — use Binance for known pairs, CoinGecko otherwise
+    symbols = [c.get("coin", "").upper() for c in cards if c.get("coin")]
+    if not symbols:
+        return
+
+    def _prewarm_one(symbol):
         bn_prices = _binance_chart(symbol, "7d")
         if bn_prices and len(bn_prices) >= 2:
             _cached_set(f"chart:{symbol}:7", {
                 "symbol": symbol, "interval": "7d", "days": 7,
                 "prices": bn_prices, "source": "binance",
             })
-            continue
+            return
         cid = _cg_id_for_coin(symbol)
         params = {"vs_currency": "usd", "days": 7}
         if CG_API_KEY:
@@ -145,7 +165,10 @@ def prewarm_chart_cache():
                 "symbol": symbol, "interval": "7d", "days": 7,
                 "prices": prices, "source": "coingecko",
             })
-        time.sleep(1.5)
+        time.sleep(1.5)  # only paid by coins that actually fell through to CoinGecko
+
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        list(pool.map(_prewarm_one, symbols))
 
 
 def _cached_get(key: str, ttl: int = 60):
@@ -186,11 +209,21 @@ def run_scan_background():
         except Exception as e:
             scan_last_error = str(e)
         finally:
+            # The scan's actual output (recommendations) is ready at this
+            # point. Everything below is cache-warming for coin-detail and
+            # chart pages, which already have live-fetch fallbacks for a
+            # cache miss (see /api/coin, /api/chart) - it's a nice-to-have
+            # speed boost for later page loads, not a requirement, so it no
+            # longer holds the UI in "running" state.
+            scan_running = False
+
+        try:
             load_market_cache()
             prewarm_market_cache()  # top 250 markets
-            prewarm_microcap_cache()  # microcaps in report
-            prewarm_chart_cache()     # 7D charts for report coins
-            scan_running = False
+            prewarm_microcap_cache()  # microcaps in report (batched)
+            prewarm_chart_cache()     # 7D charts for report coins (parallelized)
+        except Exception:
+            pass  # best-effort cache warming; never let this resurrect an error state
 
     threading.Thread(target=_worker, daemon=True).start()
     return {"status": "started"}
