@@ -21,7 +21,7 @@ from datetime import datetime
 from flask import Flask, jsonify, render_template_string, send_from_directory
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-from supercrypto.config import KNOWN_IDS
+from supercrypto.config import JST, KNOWN_IDS, now_jst
 from supercrypto.core.base import api_get, coin_id_for
 
 COINGECKO_BASE = "https://api.coingecko.com/api/v3"
@@ -203,7 +203,7 @@ def run_scan_background():
                 [sys.executable, os.path.join(BASE_DIR, "run_pipeline.py"), "--quick", "--no-clear"],
                 capture_output=True, text=True, timeout=280, cwd=BASE_DIR,
             )
-            scan_last_run = datetime.now().isoformat()
+            scan_last_run = now_jst().isoformat(timespec="seconds")
             if result.returncode != 0:
                 scan_last_error = result.stderr[-500:] if result.stderr else "unknown error"
         except Exception as e:
@@ -485,6 +485,8 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
   .card-details li { margin-bottom: 4px; list-style: none; }
   .card-details li::before { content: "· "; color: var(--accent); }
   .empty { text-align: center; padding: 40px; color: var(--muted); }
+  .scan-time { display: inline-block; margin-top: 18px; padding: 6px 14px; border: 1px solid var(--border); background: var(--surface); border-radius: 999px; color: var(--muted); font-size: .85rem; }
+  .scan-time strong { color: var(--text); font-weight: 600; }
   .updated { margin-top: 24px; text-align: center; color: var(--muted); font-size: .75rem; }
   h2.section-title { font-size: 1.1rem; margin: 28px 0 14px; }
   .attribution-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
@@ -512,6 +514,7 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
 <header>
   <h1>Super Crypto Agent</h1>
   <p>⚡ Auto-scanning crypto markets with {{ agent_count }} specialized agents — BUY / WATCH / AVOID verdicts updated live</p>
+  <div class="scan-time" id="scanTime">🕒 Last scan: <strong>—</strong></div>
 </header>
 
 <div class="status-bar">
@@ -602,6 +605,19 @@ function pollStatus() {
   }, 3000);
 }
 
+// Every scan time on the page is shown in Japan Standard Time, regardless of
+// the viewer's browser timezone or the server's (UTC) clock.
+function formatJST(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    if (isNaN(d)) return iso;
+    const p = Object.fromEntries(new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
+    }).formatToParts(d).map(x => [x.type, x.value]));
+    return `${p.year}-${p.month}-${p.day} ${p.hour}:${p.minute}:${p.second} JST`;
+}
+
 async function loadReport() {
     try {
         const r = await fetch('/api/report');
@@ -610,8 +626,9 @@ async function loadReport() {
             document.getElementById('cards').innerHTML = '<div class="empty">No report yet â run a scan to get started</div>';
             return;
         }
-        document.getElementById('updated').textContent =
-            'Last scan: ' + new Date(data.timestamp).toLocaleString();
+        const scanJst = formatJST(data.timestamp);
+        document.getElementById('updated').textContent = 'Last scan: ' + scanJst;
+        document.getElementById('scanTime').innerHTML = '🕒 Last scan: <strong>' + scanJst + '</strong>';
 
         const cards = data.cards || [];
         let buy=0, watch=0, sell=0, avoid=0;
@@ -1140,9 +1157,10 @@ def api_report():
         ts = None
         fname = os.path.basename(path).replace("report_", "").replace(".md", "")
         try:
-            ts = datetime.strptime(fname, "%Y%m%d_%H%M%S").isoformat()
+            # Report filenames are written in JST (see advisor._write_report)
+            ts = datetime.strptime(fname, "%Y%m%d_%H%M%S").replace(tzinfo=JST).isoformat()
         except Exception:
-            ts = datetime.now().isoformat()
+            ts = datetime.fromtimestamp(os.path.getmtime(path), JST).isoformat(timespec="seconds")
         return jsonify({"report": md, "cards": parse_report_cards(md), "timestamp": ts})
     return jsonify({"report": None, "cards": [], "timestamp": None})
 

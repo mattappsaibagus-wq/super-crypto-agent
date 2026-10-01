@@ -10,7 +10,6 @@ Run: python3 run_pipeline.py [--loop N] [--coin SYMBOL]
 from __future__ import annotations
 
 import argparse
-import datetime
 import json
 import os
 import sys
@@ -33,7 +32,7 @@ from supercrypto.agents.onchain import OnChainHolder
 from supercrypto.agents.pattern import PatternAgent
 from supercrypto.agents.sentiment import SentimentAgent
 from supercrypto.agents.whale import WhaleDetector
-from supercrypto.config import COINGECKO_BASE, DATA_DIR, SIGNALS_FILE, WATCHLIST_FILE
+from supercrypto.config import COINGECKO_BASE, DATA_DIR, SIGNALS_FILE, WATCHLIST_FILE, now_jst
 from supercrypto.core.attribution import AttributionEngine
 from supercrypto.core.base import api_get, coin_id_for, ensure_dirs
 from supercrypto.core.paper import PaperTrader
@@ -220,7 +219,7 @@ def main():
         while True:
             print(
                 "=== cycle %s ==="
-                % datetime.datetime.now().isoformat(timespec="seconds")
+                % now_jst().isoformat(timespec="seconds")
             )
             run_once(args)
             print("sleeping %.1fh..." % args.loop)
