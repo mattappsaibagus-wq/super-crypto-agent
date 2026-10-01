@@ -5,6 +5,7 @@ sharing, and new agent types (sentiment, pattern, correlation, meta-learner).
 """
 
 import os
+from datetime import datetime, timedelta, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(ROOT, "data")
@@ -13,6 +14,17 @@ MEMORY_DIR = os.path.join(DATA_DIR, "memory")
 REPORTS_DIR = os.path.join(DATA_DIR, "reports")
 WATCHLIST_FILE = os.path.join(DATA_DIR, "watchlist.json")
 PAPER_FILE = os.path.join(DATA_DIR, "paper_portfolio.json")
+
+# All user-facing scan times are shown in Japan Standard Time. Japan has no
+# DST, so a fixed +09:00 offset is exact and needs no tzdata package. The
+# server itself (e.g. Render) runs in UTC, so never use naive datetime.now()
+# for anything a user will see.
+JST = timezone(timedelta(hours=9), "JST")
+
+
+def now_jst():
+    """Current time as a timezone-aware datetime in Japan Standard Time."""
+    return datetime.now(JST)
 
 COINGECKO_BASE = "https://api.coingecko.com/api/v3"
 COINGECKO_GLOBAL = "https://api.coingecko.com/api/v3/global"
