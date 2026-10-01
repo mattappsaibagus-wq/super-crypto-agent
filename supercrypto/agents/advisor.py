@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import json
 import os
-from datetime import datetime
 
 from supercrypto.config import (
     BUY_SCORE_THRESHOLD,
@@ -18,6 +17,7 @@ from supercrypto.config import (
     HOLDER_RED_FLAG_CUT,
     REPORTS_DIR,
     WATCHLIST_FILE,
+    now_jst,
 )
 from supercrypto.core.base import BaseAgent
 from supercrypto.core.scoring import score_verdict
@@ -175,7 +175,8 @@ class InvestmentAdvisor(BaseAgent):
         return verdicts
 
     def _write_report(self, verdicts, regime):
-        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        generated = now_jst()
+        ts = generated.strftime("%Y%m%d_%H%M%S")
         os.makedirs(REPORTS_DIR, exist_ok=True)
         path = os.path.join(REPORTS_DIR, "report_{}.md".format(ts))
         summary = {"BUY": 0, "HOLD": 0, "WATCH": 0, "AVOID": 0}
@@ -183,7 +184,7 @@ class InvestmentAdvisor(BaseAgent):
             summary[v["action"]] = summary.get(v["action"], 0) + 1
         with open(path, "w") as f:
             f.write("# alpha-forge — Investment Report\n\n")
-            f.write("Generated: {}\n\n".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+            f.write("Generated: {} JST\n\n".format(generated.strftime("%Y-%m-%d %H:%M:%S")))
             f.write("Regime: **{}**\n\n".format(regime))
             f.write("| Action | Count |\n|--------|-------|\n")
             for k in ("BUY", "HOLD", "WATCH", "AVOID"):
