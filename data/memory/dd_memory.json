@@ -49,6 +49,56 @@
       "timestamp": "2026-10-02T11:26:27.097970+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "QNT",
+      "signal": "dd_result",
+      "confidence": 0.84,
+      "raw_confidence": 0.84,
+      "price": 248.6,
+      "timestamp": "2026-10-02T16:53:36.425964+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "NEAR",
+      "signal": "dd_result",
+      "confidence": 0.84,
+      "raw_confidence": 0.84,
+      "price": 4.82,
+      "timestamp": "2026-10-02T16:53:36.426470+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "AAVE",
+      "signal": "dd_result",
+      "confidence": 0.84,
+      "raw_confidence": 0.84,
+      "price": 184.19,
+      "timestamp": "2026-10-02T16:53:36.427173+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PONS",
+      "signal": "dd_result",
+      "confidence": 0.83,
+      "raw_confidence": 0.83,
+      "price": 0.515302,
+      "timestamp": "2026-10-02T16:53:36.427717+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "BTC",
+      "signal": "dd_result",
+      "confidence": 0.76,
+      "raw_confidence": 0.76,
+      "price": 85239,
+      "timestamp": "2026-10-02T16:53:36.428264+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -92,9 +142,18 @@
     "advisor_watch": 0.5,
     "regime_risk_on": 0.5,
     "advisor_avoid": 0.5,
-    "sentiment_shot": 0.5
+    "sentiment_shot": 0.5,
+    "active_addresses_fade": 0.5,
+    "fresh_funding": 0.5,
+    "social_spike": 0.5,
+    "active_addresses_spike": 0.5,
+    "oi_buildup": 0.5,
+    "oi_flush": 0.5,
+    "dev_activity_up": 0.5,
+    "funding_squeeze": 0.5,
+    "funding_overheated": 0.5
   },
-  "runs": 5,
+  "runs": 10,
   "accuracy_history": [],
   "calibration": {
     "bins": {},
@@ -143,7 +202,16 @@
       "advisor_watch": 0.5,
       "regime_risk_on": 0.5,
       "advisor_avoid": 0.5,
-      "sentiment_shot": 0.5
+      "sentiment_shot": 0.5,
+      "active_addresses_fade": 0.5,
+      "fresh_funding": 0.5,
+      "social_spike": 0.5,
+      "active_addresses_spike": 0.5,
+      "oi_buildup": 0.5,
+      "oi_flush": 0.5,
+      "dev_activity_up": 0.5,
+      "funding_squeeze": 0.5,
+      "funding_overheated": 0.5
     },
     "neutral": {
       "liquidity_depth": 0.5,
@@ -186,7 +254,16 @@
       "advisor_watch": 0.5,
       "regime_risk_on": 0.5,
       "advisor_avoid": 0.5,
-      "sentiment_shot": 0.5
+      "sentiment_shot": 0.5,
+      "active_addresses_fade": 0.5,
+      "fresh_funding": 0.5,
+      "social_spike": 0.5,
+      "active_addresses_spike": 0.5,
+      "oi_buildup": 0.5,
+      "oi_flush": 0.5,
+      "dev_activity_up": 0.5,
+      "funding_squeeze": 0.5,
+      "funding_overheated": 0.5
     },
     "risk_off": {
       "liquidity_depth": 0.5,
@@ -229,7 +306,16 @@
       "advisor_watch": 0.5,
       "regime_risk_on": 0.5,
       "advisor_avoid": 0.5,
-      "sentiment_shot": 0.5
+      "sentiment_shot": 0.5,
+      "active_addresses_fade": 0.5,
+      "fresh_funding": 0.5,
+      "social_spike": 0.5,
+      "active_addresses_spike": 0.5,
+      "oi_buildup": 0.5,
+      "oi_flush": 0.5,
+      "dev_activity_up": 0.5,
+      "funding_squeeze": 0.5,
+      "funding_overheated": 0.5
     }
   },
   "agent_stats": {}

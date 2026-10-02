@@ -9,6 +9,16 @@
       "timestamp": "2026-10-02T11:26:14.560975+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "SUIT",
+      "signal": "microcap_opportunity",
+      "confidence": 0.65,
+      "raw_confidence": 0.65,
+      "price": 0.0002817,
+      "timestamp": "2026-10-02T16:53:15.186776+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -52,9 +62,18 @@
     "advisor_watch": 0.5,
     "regime_risk_on": 0.5,
     "advisor_avoid": 0.5,
-    "sentiment_shot": 0.5
+    "sentiment_shot": 0.5,
+    "active_addresses_fade": 0.5,
+    "fresh_funding": 0.5,
+    "social_spike": 0.5,
+    "active_addresses_spike": 0.5,
+    "oi_buildup": 0.5,
+    "oi_flush": 0.5,
+    "dev_activity_up": 0.5,
+    "funding_squeeze": 0.5,
+    "funding_overheated": 0.5
   },
-  "runs": 1,
+  "runs": 2,
   "accuracy_history": [],
   "calibration": {
     "bins": {},
@@ -103,7 +122,16 @@
       "advisor_watch": 0.5,
       "regime_risk_on": 0.5,
       "advisor_avoid": 0.5,
-      "sentiment_shot": 0.5
+      "sentiment_shot": 0.5,
+      "active_addresses_fade": 0.5,
+      "fresh_funding": 0.5,
+      "social_spike": 0.5,
+      "active_addresses_spike": 0.5,
+      "oi_buildup": 0.5,
+      "oi_flush": 0.5,
+      "dev_activity_up": 0.5,
+      "funding_squeeze": 0.5,
+      "funding_overheated": 0.5
     },
     "neutral": {
       "liquidity_depth": 0.5,
@@ -146,7 +174,16 @@
       "advisor_watch": 0.5,
       "regime_risk_on": 0.5,
       "advisor_avoid": 0.5,
-      "sentiment_shot": 0.5
+      "sentiment_shot": 0.5,
+      "active_addresses_fade": 0.5,
+      "fresh_funding": 0.5,
+      "social_spike": 0.5,
+      "active_addresses_spike": 0.5,
+      "oi_buildup": 0.5,
+      "oi_flush": 0.5,
+      "dev_activity_up": 0.5,
+      "funding_squeeze": 0.5,
+      "funding_overheated": 0.5
     },
     "risk_off": {
       "liquidity_depth": 0.5,
@@ -189,7 +226,16 @@
       "advisor_watch": 0.5,
       "regime_risk_on": 0.5,
       "advisor_avoid": 0.5,
-      "sentiment_shot": 0.5
+      "sentiment_shot": 0.5,
+      "active_addresses_fade": 0.5,
+      "fresh_funding": 0.5,
+      "social_spike": 0.5,
+      "active_addresses_spike": 0.5,
+      "oi_buildup": 0.5,
+      "oi_flush": 0.5,
+      "dev_activity_up": 0.5,
+      "funding_squeeze": 0.5,
+      "funding_overheated": 0.5
     }
   },
   "agent_stats": {}
