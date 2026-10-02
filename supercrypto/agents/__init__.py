@@ -4,10 +4,16 @@ from supercrypto.agents.sentiment import SentimentAgent
 from supercrypto.agents.pattern import PatternAgent
 from supercrypto.agents.correlation import CorrelationAgent
 from supercrypto.agents.meta_learner import MetaLearner
+from supercrypto.agents.santiment import SantimentActivity
+from supercrypto.agents.derivatives import DerivativesFlow
+from supercrypto.agents.fundraising import FundraisingAgent
 
 __all__ = [
     "SentimentAgent",
     "PatternAgent",
     "CorrelationAgent",
     "MetaLearner",
+    "SantimentActivity",
+    "DerivativesFlow",
+    "FundraisingAgent",
 ]

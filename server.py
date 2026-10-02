@@ -556,6 +556,9 @@ const AGENTS = [
   {name: "On-Chain Holders", emoji: "⛓️", key: "onchain"},
   {name: "Macro Regime", emoji: "🌐", key: "macro"},
   {name: "Meta-Learner", emoji: "🧠", key: "meta"},
+  {name: "Santiment Activity", emoji: "🛰️", key: "santiment"},
+  {name: "Derivatives Flow", emoji: "📉", key: "derivatives"},
+  {name: "Fresh Funding", emoji: "💰", key: "fundraising"},
 ];
 
 function renderAgents() {
@@ -1132,6 +1135,9 @@ AGENTS_DATA = [
     {"name": "On-Chain Holders", "emoji": "⛓️", "key": "onchain"},
     {"name": "Macro Regime", "emoji": "🌐", "key": "macro"},
     {"name": "Meta-Learner", "emoji": "🧠", "key": "meta"},
+    {"name": "Santiment Activity", "emoji": "🛰️", "key": "santiment"},
+    {"name": "Derivatives Flow", "emoji": "📉", "key": "derivatives"},
+    {"name": "Fresh Funding", "emoji": "💰", "key": "fundraising"},
 ]
 
 

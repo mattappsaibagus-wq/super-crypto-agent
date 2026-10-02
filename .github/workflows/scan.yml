@@ -33,6 +33,7 @@ jobs:
           COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
           ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
           NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+          SANTIMENT_API_KEY: ${{ secrets.SANTIMENT_API_KEY }}
         run: python3 run_pipeline.py --no-clear
 
       - name: Prune old reports (keep latest 30)
