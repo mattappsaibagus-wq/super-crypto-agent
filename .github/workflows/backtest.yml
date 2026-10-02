@@ -1,0 +1,84 @@
+name: Backtest Runner
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"  # Weekly on Sunday at midnight UTC
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Backtest period (days)'
+        required: false
+        default: '90'
+        type: choice
+        options:
+          - '30'
+          - '60'
+          - '90'
+          - '180'
+          - '365'
+
+jobs:
+  backtest:
+    name: Run Backtest
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run single backtest
+        env:
+          COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
+        run: |
+          python3 run_backtest.py
+          echo "✅ Single backtest completed"
+
+      - name: Run portfolio backtest
+        env:
+          COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
+        run: |
+          python3 run_backtest_portfolio.py
+          echo "✅ Portfolio backtest completed"
+
+      - name: Generate backtest report
+        run: |
+          echo "# Backtest Results - $(date '+%Y-%m-%d')" > backtest_summary.md
+          echo "" >> backtest_summary.md
+          echo "## Single Asset Backtest" >> backtest_summary.md
+          echo "See data/reports/ for detailed results" >> backtest_summary.md
+          echo "" >> backtest_summary.md
+          echo "## Portfolio Backtest" >> backtest_summary.md
+          echo "See data/reports/ for detailed results" >> backtest_summary.md
+
+      - name: Upload backtest results
+        uses: actions/upload-artifact@v4
+        with:
+          name: backtest-results-${{ github.run_number }}
+          path: |
+            data/reports/
+            data/attribution/
+            backtest_summary.md
+          retention-days: 90
+
+      - name: Commit backtest results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add -f data/reports/ data/attribution/
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "backtest: weekly run $(date '+%Y-%m-%d')"
+          git pull --rebase origin main
+          git push origin main

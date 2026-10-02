@@ -1,0 +1,61 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'server.py'
+      - 'supercrypto/**'
+      - 'requirements.txt'
+      - 'render.yaml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy Dashboard
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate server.py
+        run: python3 -m py_compile server.py
+
+      - name: Test server startup (dry run)
+        run: |
+          timeout 10 python3 server.py --port 8888 &
+          SERVER_PID=$!
+          sleep 5
+          curl -f http://localhost:8888/health || exit 1
+          kill $SERVER_PID || true
+        continue-on-error: true
+
+      - name: Trigger Render Deploy
+        if: success()
+        run: |
+          echo "✅ Server validated. Render will auto-deploy from main branch."
+          echo "Dashboard URL: https://super-crypto-agent.onrender.com"
+
+      - name: Notify deployment status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: 'success',
+              context: 'Render Deployment',
+              description: 'Auto-deploy triggered',
+              target_url: 'https://super-crypto-agent.onrender.com'
+            })

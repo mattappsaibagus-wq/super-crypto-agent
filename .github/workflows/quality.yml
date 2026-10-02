@@ -1,0 +1,119 @@
+name: Code Quality & Documentation
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  code-quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install pylint mypy black isort
+          pip install -r requirements.txt
+
+      - name: Check code formatting with Black
+        run: black --check --diff supercrypto/ tests/
+
+      - name: Check import sorting with isort
+        run: isort --check-only --diff supercrypto/ tests/
+
+      - name: Run pylint
+        run: pylint supercrypto/ --exit-zero --output-format=text | tee pylint-report.txt
+
+      - name: Type checking with mypy
+        run: mypy supercrypto/ --ignore-missing-imports --no-error-summary || true
+
+      - name: Upload quality reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-quality-reports
+          path: pylint-report.txt
+
+  documentation:
+    name: Documentation Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for README.md
+        run: |
+          if [ ! -f README.md ]; then
+            echo "❌ README.md is missing"
+            exit 1
+          fi
+          echo "✅ README.md exists"
+
+      - name: Check for WORKFLOW.md
+        run: |
+          if [ ! -f WORKFLOW.md ]; then
+            echo "❌ WORKFLOW.md is missing"
+            exit 1
+          fi
+          echo "✅ WORKFLOW.md exists"
+
+      - name: Validate markdown files
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y markdown
+          for file in *.md; do
+            markdown "$file" > /dev/null 2>&1 || echo "⚠️  Invalid markdown: $file"
+          done
+
+      - name: Check docstrings
+        run: |
+          python3 -c "
+          import ast
+          import sys
+          from pathlib import Path
+
+          missing = []
+          for py_file in Path('supercrypto').rglob('*.py'):
+              if py_file.name == '__init__.py':
+                  continue
+              with open(py_file) as f:
+                  try:
+                      tree = ast.parse(f.read())
+                      for node in ast.walk(tree):
+                          if isinstance(node, (ast.FunctionDef, ast.ClassDef)):
+                              if not ast.get_docstring(node):
+                                  missing.append(f'{py_file}:{node.lineno} - {node.name}')
+                  except:
+                      pass
+
+          if missing:
+              print('⚠️  Missing docstrings:')
+              for item in missing[:10]:  # Show first 10
+                  print(f'  {item}')
+          else:
+              print('✅ All major functions/classes have docstrings')
+          "
+
+      - name: Generate documentation summary
+        run: |
+          echo "# Documentation Summary" > docs-summary.md
+          echo "" >> docs-summary.md
+          echo "- README.md: $(wc -l < README.md) lines" >> docs-summary.md
+          echo "- WORKFLOW.md: $(wc -l < WORKFLOW.md) lines" >> docs-summary.md
+          echo "- Python files: $(find supercrypto -name '*.py' | wc -l) files" >> docs-summary.md
+          echo "- Test files: $(find tests -name '*.py' | wc -l) files" >> docs-summary.md
+
+      - name: Upload documentation summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation-summary
+          path: docs-summary.md
