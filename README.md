@@ -16,6 +16,9 @@
 | **On-Chain Holders** | ⛓️ | Checks token holder concentration via Etherscan |
 | **Macro Regime** | 🌐 | Fear & Greed + BTC dominance → risk_on/neutral/risk_off |
 | **Meta-Learner** | 🧠 | Tracks agent accuracy, adjusts weights, detects regime shifts |
+| **Santiment Activity** | 🛰️ | Dev-activity and active-address spikes (plus social volume with a key) |
+| **Derivatives Flow** | 📉 | Hyperliquid funding + open-interest: squeezes, build-ups, crowded longs, flushes |
+| **Fresh Funding** | 💰 | New VC rounds for tradable tokens from crypto-fundraising.info |
 
 ## Key Features
 
@@ -73,6 +76,9 @@ render deploy --service-name super-crypto-agent
 - **Reddit / Twitter** — sentiment (optional)
 - **NewsAPI** — news headlines (requires `NEWSAPI_KEY`)
 - **Etherscan** — on-chain whale transfers (requires `ETHERSCAN_API_KEY`)
+- **Santiment** — `dev_activity_1d` + `daily_active_addresses` (free, real-time, no key); set `SANTIMENT_API_KEY` to also try `social_volume_total`. Capped at 900 calls/month.
+- **Hyperliquid** — funding, open interest, mark price for every perp in one free call (the same data Buildix charts)
+- **crypto-fundraising.info** — public deal-flow table (newest ~10 rounds); scraped, low weight
 
 ## Architecture
 

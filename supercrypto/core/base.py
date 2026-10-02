@@ -58,6 +58,23 @@ def api_get(url: str, params: Optional[dict] = None, tries: int = API_TRIES):
     return None
 
 
+def api_post(url: str, payload: dict, headers: Optional[dict] = None, tries: int = API_TRIES):
+    """POST JSON with the same backoff rules as api_get. Returns parsed JSON or None."""
+    for attempt in range(tries):
+        try:
+            r = requests.post(url, json=payload, headers=headers or {}, timeout=API_TIMEOUT)
+            if r.status_code == 429:
+                time.sleep(1.5 * (attempt + 1))
+                continue
+            if r.status_code >= 400:
+                time.sleep(0.5 * (attempt + 1))
+                continue
+            return r.json()
+        except (requests.exceptions.RequestException, ValueError):
+            time.sleep(0.5 * (attempt + 1))
+    return None
+
+
 # Shared markets cache: fetched once per process, reused by all agents
 _markets_cache = None
 _markets_cache_time = 0

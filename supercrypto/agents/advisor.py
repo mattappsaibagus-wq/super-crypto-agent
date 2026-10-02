@@ -12,6 +12,7 @@ import json
 import os
 
 from supercrypto.config import (
+    BEARISH_SIGNALS,
     BUY_SCORE_THRESHOLD,
     DD_BUY_THRESHOLD,
     HOLDER_RED_FLAG_CUT,
@@ -56,6 +57,15 @@ class InvestmentAdvisor(BaseAgent):
             "regime_risk_on": 0.3,
             "regime_neutral": 0.3,
             "regime_risk_off": 0.3,
+            "dev_activity_up": 0.35,
+            "active_addresses_spike": 0.45,
+            "active_addresses_fade": 0.30,
+            "social_spike": 0.40,
+            "funding_squeeze": 0.40,
+            "oi_buildup": 0.40,
+            "funding_overheated": 0.35,
+            "oi_flush": 0.30,
+            "fresh_funding": 0.25,
         }
 
     def run(self, **kwargs):
@@ -122,7 +132,7 @@ class InvestmentAdvisor(BaseAgent):
             agent = sig.get("agent", "")
             mult = meta_multipliers.get(agent, 1.0)
             w *= mult
-            if name in ("whale_down", "news_bearish"):
+            if name in BEARISH_SIGNALS:
                 w = -abs(w)
             bucket["bias"] += (sig.get("confidence") or 0) * w
             bucket["count"] += 1

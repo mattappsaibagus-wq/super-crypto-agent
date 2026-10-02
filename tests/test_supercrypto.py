@@ -112,6 +112,113 @@ def test_pearson_positive():
     assert r is not None and r > 0.99
 
 
+# ── New data sources (Santiment, Hyperliquid, crypto-fundraising) ──────────
+
+def test_source_signals_registered():
+    for key in ("dev_activity_up", "active_addresses_spike", "active_addresses_fade",
+                "social_spike", "funding_squeeze", "oi_buildup", "funding_overheated",
+                "oi_flush", "fresh_funding"):
+        assert key in ALL_SIGNALS, f"{key} missing from ALL_SIGNALS"
+
+
+def test_santiment_dev_and_address_spikes():
+    from supercrypto.agents.santiment import analyse
+    dev = [10] * 21 + [40] * 7          # weekly pace 70 → 280 = 4x
+    daa = [1000] * 15 + [2600]          # 2.6x the 14d median
+    names = {n for n, _, _ in analyse({"dev_activity_1d": dev, "daily_active_addresses": daa})}
+    assert names == {"dev_activity_up", "active_addresses_spike"}
+    fade = analyse({"daily_active_addresses": [1000] * 15 + [300]})
+    assert fade and fade[0][0] == "active_addresses_fade"
+    assert analyse({"dev_activity_1d": [5] * 10}) == []   # too little history
+
+
+# Shape copied from a live api.hyperliquid.xyz metaAndAssetCtxs response.
+HL_PAYLOAD = [
+    {"universe": [
+        {"name": "BTC", "szDecimals": 5, "maxLeverage": 40},
+        {"name": "kPEPE", "szDecimals": 0, "maxLeverage": 10},
+        {"name": "DEAD", "szDecimals": 0, "maxLeverage": 3, "isDelisted": True},
+    ]},
+    [
+        {"funding": "0.0000125", "openInterest": "37717.38", "markPx": "87068.0",
+         "prevDayPx": "83906.0", "dayNtlVlm": "2946768889.77"},
+        {"funding": "-0.00008", "openInterest": "900000000", "markPx": "0.012",
+         "prevDayPx": "0.011", "dayNtlVlm": "50000000"},
+        {"funding": "0.001", "openInterest": "1", "markPx": "1", "prevDayPx": "1",
+         "dayNtlVlm": "1"},
+    ],
+]
+
+
+def test_hyperliquid_parse_and_normalise():
+    from supercrypto.agents.derivatives import parse_markets
+    m = parse_markets(HL_PAYLOAD)
+    assert set(m) == {"BTC", "PEPE"}                     # delisted dropped, k-prefix stripped
+    assert abs(m["PEPE"]["price"] - 0.000012) < 1e-12    # kPEPE priced per 1,000
+    assert m["BTC"]["oi_usd"] > 3e9
+
+
+def test_hyperliquid_signals():
+    from supercrypto.agents.derivatives import evaluate, parse_markets
+    m = parse_markets(HL_PAYLOAD)
+    names = {n for n, _, _ in evaluate("PEPE", m["PEPE"])}
+    assert "funding_squeeze" in names                    # shorts paying, price up
+    prev = {"oi_usd": m["BTC"]["oi_usd"] / 1.5, "price": m["BTC"]["price"] / 1.05}
+    names = {n for n, _, _ in evaluate("BTC", m["BTC"], prev)}
+    assert "oi_buildup" in names
+    hot = dict(m["BTC"], funding=0.0003)
+    assert evaluate("BTC", hot)[0][0] == "funding_overheated"
+
+
+# Structure mirrors crypto-fundraising.info /deal-flow/ (div.hpt-data rows).
+DEAL_HTML = """
+<div class="hp-table dealflow-table">
+ <div class="hp-table-row hpt-header"><div>#</div><div>Project</div></div>
+ <div class="hp-table-row hpt-data">
+  <div class="hpt-col1"> 01</div>
+  <div class="hpt-col2"><a class="t-project-link" href="/projects/grass">
+    <div class="coininfo"><h5 class="cointitle">Grass</h5><span class="cointag">GRASS</span></div></a></div>
+  <div class="hpt-col3">Series A</div>
+  <div class="hpt-col3">Sep 2026</div>
+  <div class="hpt-col4">Series A <span>Raised</span> $12.5M</div>
+  <div class="hpt-col4 centred"> -</div>
+  <div class="hpt-col4 centred"> Yes</div>
+  <div class="hpt-col5 flexwrap"><a>AI</a> <a>DePIN</a></div>
+  <div class="hpt-col6 flexwrap nojustify">Investors: <a>Multicoin Capital</a></div>
+ </div>
+ <div class="hp-table-row hpt-data">
+  <div class="hpt-col1"> 02</div>
+  <div class="hpt-col2"><a class="t-project-link" href="/projects/uorm">
+    <div class="coininfo"><h5 class="cointitle">Uorm</h5><span class="cointag">UORM</span></div></a></div>
+  <div class="hpt-col3">Pre-seed</div>
+  <div class="hpt-col3">Oct 2026</div>
+  <div class="hpt-col4">Pre-seed Raised $750k</div>
+  <div class="hpt-col4 centred"> -</div>
+  <div class="hpt-col4 centred"> No</div>
+  <div class="hpt-col5 flexwrap">Gaming</div>
+  <div class="hpt-col6 flexwrap nojustify">Investors: Marqel Capital</div>
+ </div>
+</div>
+"""
+
+
+def test_fundraising_parse():
+    from supercrypto.agents.fundraising import parse_deals, score_deal
+    deals = parse_deals(DEAL_HTML)
+    assert [d["project"] for d in deals] == ["Grass", "Uorm"]
+    g, u = deals
+    assert g["ticker"] == "GRASS" and g["tradable"] and g["raised_usd"] == 12.5e6
+    assert "Multicoin" in g["investors"]
+    assert u["tradable"] is False and u["raised_usd"] == 750e3
+    assert score_deal(g) > score_deal(u)                 # bigger round + top-tier VC
+
+
+def test_advisor_subtracts_bearish_sources():
+    from supercrypto.config import BEARISH_SIGNALS
+    for key in ("funding_overheated", "oi_flush", "active_addresses_fade"):
+        assert key in BEARISH_SIGNALS
+
+
 if __name__ == "__main__":
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     failed = 0

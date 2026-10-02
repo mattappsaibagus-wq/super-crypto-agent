@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Super Crypto Agent orchestrator.
 
-Pipeline: macro → sentiment → pattern → correlation → discovery → DD → on-chain
+Pipeline: macro → sentiment → pattern → correlation → discovery
+→ derivatives/fundraising/santiment → DD → on-chain
 → whale(on-chain) → news → meta-learner → advisor → risk → paper trading.
 
 Run: python3 run_pipeline.py [--loop N] [--coin SYMBOL]
@@ -24,12 +25,15 @@ sys.path.insert(0, os.path.dirname(__file__))
 from supercrypto.agents.advisor import InvestmentAdvisor
 from supercrypto.agents.correlation import CorrelationAgent
 from supercrypto.agents.dd import DueDiligence
+from supercrypto.agents.derivatives import DerivativesFlow
+from supercrypto.agents.fundraising import FundraisingAgent
 from supercrypto.agents.macro import MacroRegime
 from supercrypto.agents.meta_learner import MetaLearner
 from supercrypto.agents.microcap import MicroCapFinder
 from supercrypto.agents.news import NewsScanner
 from supercrypto.agents.onchain import OnChainHolder
 from supercrypto.agents.pattern import PatternAgent
+from supercrypto.agents.santiment import SantimentActivity
 from supercrypto.agents.sentiment import SentimentAgent
 from supercrypto.agents.whale import WhaleDetector
 from supercrypto.config import COINGECKO_BASE, DATA_DIR, SIGNALS_FILE, WATCHLIST_FILE, now_jst
@@ -98,6 +102,15 @@ def run_once(args) -> int:
     NewsScanner().execute(coins=[args.coin.upper()] if args.coin else None)
     print("    done in %.1fs" % (time.time() - t0))
 
+    # Extra early-activity sources. Derivatives + fundraising can surface new
+    # coins, so they run before Santiment, which checks the coins on the bus.
+    print("[1-e] derivatives flow (Hyperliquid)")
+    DerivativesFlow().execute()
+    print("[1-f] fresh funding rounds (crypto-fundraising.info)")
+    FundraisingAgent().execute()
+    print("[1-g] on-chain & dev activity (Santiment)")
+    SantimentActivity().execute()
+
     print("[2] due diligence")
     DueDiligence().execute()
 
@@ -155,6 +168,12 @@ def run_once(args) -> int:
                     "sentiment_shot",
                     "pattern_bullish",
                     "correlation_spike",
+                    "funding_squeeze",
+                    "oi_buildup",
+                    "dev_activity_up",
+                    "active_addresses_spike",
+                    "social_spike",
+                    "fresh_funding",
                 )
             ]
             attrib.record_trade(

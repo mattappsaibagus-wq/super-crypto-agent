@@ -40,6 +40,9 @@ ETHERSCAN_API = "https://api.etherscan.io/api"
 TWITTER_API_BASE = "https://api.twitterapi.xyz"
 REDDIT_API_BASE = "https://www.reddit.com/r"
 NEWSAPI_BASE = "https://newsapi.org/v2/everything"
+SANTIMENT_GRAPHQL = "https://api.santiment.net/graphql"
+HYPERLIQUID_INFO = "https://api.hyperliquid.xyz/info"
+FUNDRAISING_DEALFLOW = "https://crypto-fundraising.info/deal-flow/"
 
 KNOWN_IDS = {
     "BTC": "bitcoin", "ETH": "ethereum", "BNB": "binancecoin",
@@ -79,6 +82,18 @@ ALL_SIGNALS = frozenset({
     "regime_risk_on", "regime_neutral", "regime_risk_off",
     "holder_red_flag", "holder_healthy",
     "meta_agent_trusted", "meta_agent_deprioritized",
+    # Santiment on-chain / dev / social activity
+    "dev_activity_up", "active_addresses_spike", "active_addresses_fade", "social_spike",
+    # Hyperliquid perp positioning (the data Buildix visualises)
+    "funding_squeeze", "oi_buildup", "funding_overheated", "oi_flush",
+    # VC funding rounds (crypto-fundraising.info)
+    "fresh_funding",
+})
+
+# Signals the advisor subtracts from a coin's bias instead of adding.
+BEARISH_SIGNALS = frozenset({
+    "whale_down", "news_bearish",
+    "active_addresses_fade", "funding_overheated", "oi_flush",
 })
 
 DD_WEIGHTS = {
@@ -142,6 +157,27 @@ DEFAULT_MCAP_MAX = 50_000_000
 API_TRIES = 2
 API_TIMEOUT = 10
 
+# Santiment (free metrics work without a key; a key unlocks more + higher limits)
+SANTIMENT_MAX_SLUGS = 25          # coins per scan; all fetched in one call per metric
+SANTIMENT_MONTHLY_CALL_CAP = 900  # free SanAPI plan is 1,000 calls/month
+SANTIMENT_DEV_RATIO = 1.5         # last-7d dev activity vs prior 3-week weekly average
+SANTIMENT_DAA_SPIKE = 2.0         # daily active addresses vs prior 14d median
+SANTIMENT_DAA_FADE = 0.5
+SANTIMENT_SOCIAL_SPIKE = 3.0
+
+# Hyperliquid derivatives
+HL_MIN_OI_USD = 1_000_000
+HL_MIN_DAY_VOLUME_USD = 1_000_000
+HL_FUNDING_HOT = 0.0001           # hourly; ~88% APR paid by longs → crowded
+HL_FUNDING_SQUEEZE = -0.00005     # hourly; shorts paying ~44% APR
+HL_OI_BUILDUP_PCT = 20.0
+HL_OI_FLUSH_PCT = -25.0
+HL_MAX_SIGNALS = 15
+
+# Fundraising
+FUNDRAISING_FRESH_DAYS = 14       # signal a deal for this long after first seen
+
 # Optional API keys (set via environment variables)
 COINGECKO_API_KEY = os.environ.get("COINGECKO_API_KEY", "").strip()
 ETHERSCAN_API_KEY = os.environ.get("ETHERSCAN_API_KEY", "").strip()
+SANTIMENT_API_KEY = os.environ.get("SANTIMENT_API_KEY", "").strip()
