@@ -65,7 +65,6 @@ def save_market_cache():
 
 def prewarm_market_cache():
     """Pre-fetch top markets so coin lookups survive CoinGecko rate limits."""
-    global _market_cache
     params = {"vs_currency": "usd", "order": "market_cap_desc", "per_page": 250, "sparkline": "false"}
     if CG_API_KEY:
         params["x_cg_demo_api_key"] = CG_API_KEY
@@ -189,7 +188,7 @@ scan_last_error = None
 
 
 def run_scan_background():
-    global scan_running, scan_last_run, scan_last_error
+    global scan_running, scan_last_error
     with scan_lock:
         if scan_running:
             return {"status": "already_running"}
