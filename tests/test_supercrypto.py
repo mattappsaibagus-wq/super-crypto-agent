@@ -215,7 +215,8 @@ def test_fundraising_parse():
 
 def test_advisor_subtracts_bearish_sources():
     from supercrypto.config import BEARISH_SIGNALS
-    for key in ("funding_overheated", "oi_flush", "active_addresses_fade"):
+    for key in ("funding_overheated", "oi_flush", "active_addresses_fade",
+                "sentiment_bear", "pattern_bearish", "whale_onchain_down"):
         assert key in BEARISH_SIGNALS
 
 

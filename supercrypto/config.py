@@ -92,7 +92,8 @@ ALL_SIGNALS = frozenset({
 
 # Signals the advisor subtracts from a coin's bias instead of adding.
 BEARISH_SIGNALS = frozenset({
-    "whale_down", "news_bearish",
+    "whale_down", "whale_onchain_down", "news_bearish",
+    "sentiment_bear", "pattern_bearish",
     "active_addresses_fade", "funding_overheated", "oi_flush",
 })
 
