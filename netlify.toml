@@ -1,0 +1,48 @@
+# Netlify deployment for Super Crypto Agent
+# Static snapshot of the dashboard (built from server.py) + a serverless
+# function for live coin / chart / candlestick data.
+# Scan commits to main (GitHub Actions) trigger a rebuild with fresh data.
+
+[build]
+  command   = "pip install -r requirements.txt && python3 build_static.py"
+  publish   = "public"
+  functions = "netlify/functions"
+
+[build.environment]
+  PYTHON_VERSION = "3.11"
+  NODE_VERSION   = "20"
+
+[[redirects]]
+  from   = "/api/status"
+  to     = "/api/status.json"
+  status = 200
+
+[[redirects]]
+  from   = "/api/report"
+  to     = "/api/report.json"
+  status = 200
+
+[[redirects]]
+  from   = "/api/signals"
+  to     = "/api/signals.json"
+  status = 200
+
+[[redirects]]
+  from   = "/api/attribution"
+  to     = "/api/attribution.json"
+  status = 200
+
+[[redirects]]
+  from   = "/api/agents"
+  to     = "/api/agents.json"
+  status = 200
+
+[[redirects]]
+  from   = "/health"
+  to     = "/health.json"
+  status = 200
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "public, max-age=60"
