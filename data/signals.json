@@ -1186,5 +1186,137 @@
     },
     "timestamp": "2026-10-03T15:17:27.898764+00:00",
     "agent": "microcap"
+  },
+  {
+    "coin": "STRK",
+    "signal": "microcap_opportunity",
+    "confidence": 0.55,
+    "source": "coingecko_trending",
+    "details": {
+      "mcap": "$379,309,435",
+      "vol": null,
+      "age_days": null,
+      "reasons": [
+        "trending on CoinGecko right now"
+      ],
+      "price": 0.051094907208189266,
+      "coin_id": "starknet"
+    },
+    "timestamp": "2026-10-03T20:15:41.029113+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "SI",
+    "signal": "microcap_opportunity",
+    "confidence": 0.55,
+    "source": "coingecko_trending",
+    "details": {
+      "mcap": "$22,160,533",
+      "vol": null,
+      "age_days": null,
+      "reasons": [
+        "trending on CoinGecko right now"
+      ],
+      "price": 0.02216228690527979,
+      "coin_id": "super-iguana"
+    },
+    "timestamp": "2026-10-03T20:15:41.029122+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "STRK",
+    "signal": "oi_buildup",
+    "confidence": 0.747,
+    "source": "hyperliquid",
+    "details": {
+      "reasons": [
+        "open interest +49% with price +9.9% since last scan (Hyperliquid)"
+      ],
+      "price": 0.05115,
+      "funding_hourly": 3.29324e-05,
+      "open_interest_usd": 11030766
+    },
+    "timestamp": "2026-10-03T20:15:43.337090+00:00",
+    "agent": "derivatives"
+  },
+  {
+    "coin": "SYRUP",
+    "signal": "funding_overheated",
+    "confidence": 0.643,
+    "source": "hyperliquid",
+    "details": {
+      "reasons": [
+        "longs paying 169% APR funding \u2014 crowded (Hyperliquid)"
+      ],
+      "price": 0.258817,
+      "funding_hourly": 0.0001933976,
+      "open_interest_usd": 10192986
+    },
+    "timestamp": "2026-10-03T20:15:43.337094+00:00",
+    "agent": "derivatives"
+  },
+  {
+    "coin": "JTO",
+    "signal": "oi_buildup",
+    "confidence": 0.602,
+    "source": "hyperliquid",
+    "details": {
+      "reasons": [
+        "open interest +20% with price +5.8% since last scan (Hyperliquid)"
+      ],
+      "price": 0.57348,
+      "funding_hourly": 1.25e-05,
+      "open_interest_usd": 7037751
+    },
+    "timestamp": "2026-10-03T20:15:43.337097+00:00",
+    "agent": "derivatives"
+  },
+  {
+    "coin": "XMR",
+    "signal": "funding_overheated",
+    "confidence": 0.599,
+    "source": "hyperliquid",
+    "details": {
+      "reasons": [
+        "longs paying 131% APR funding \u2014 crowded (Hyperliquid)"
+      ],
+      "price": 560.77,
+      "funding_hourly": 0.0001493632,
+      "open_interest_usd": 74174984
+    },
+    "timestamp": "2026-10-03T20:15:43.337100+00:00",
+    "agent": "derivatives"
+  },
+  {
+    "coin": "GRASS",
+    "signal": "funding_overheated",
+    "confidence": 0.592,
+    "source": "hyperliquid",
+    "details": {
+      "reasons": [
+        "longs paying 124% APR funding \u2014 crowded (Hyperliquid)"
+      ],
+      "price": 0.72351,
+      "funding_hourly": 0.0001416075,
+      "open_interest_usd": 38109769
+    },
+    "timestamp": "2026-10-03T20:15:43.337102+00:00",
+    "agent": "derivatives"
+  },
+  {
+    "coin": "USELESS",
+    "signal": "funding_overheated",
+    "confidence": 0.585,
+    "source": "hyperliquid",
+    "details": {
+      "reasons": [
+        "longs paying 118% APR funding \u2014 crowded (Hyperliquid)"
+      ],
+      "price": 0.23959,
+      "funding_hourly": 0.0001345949,
+      "open_interest_usd": 11467150
+    },
+    "timestamp": "2026-10-03T20:15:43.337104+00:00",
+    "agent": "derivatives"
   }
 ]
