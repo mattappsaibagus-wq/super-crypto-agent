@@ -996,5 +996,71 @@
     },
     "timestamp": "2026-10-02T21:28:54.268425+00:00",
     "agent": "microcap"
+  },
+  {
+    "coin": "TAO",
+    "signal": "microcap_opportunity",
+    "confidence": 0.55,
+    "source": "coingecko_trending",
+    "details": {
+      "mcap": "$3,358,783,999",
+      "vol": null,
+      "age_days": null,
+      "reasons": [
+        "trending on CoinGecko right now"
+      ],
+      "price": 296.1912448868733,
+      "coin_id": "bittensor"
+    },
+    "timestamp": "2026-10-03T02:30:00.184669+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "STONK",
+    "signal": "microcap_opportunity",
+    "confidence": 0.55,
+    "source": "coingecko_trending",
+    "details": {
+      "mcap": "$182,308,149",
+      "vol": null,
+      "age_days": null,
+      "reasons": [
+        "trending on CoinGecko right now"
+      ],
+      "price": 0.22664186621177274,
+      "coin_id": "stonk-3"
+    },
+    "timestamp": "2026-10-03T02:30:00.184676+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "SAND",
+    "signal": "oi_buildup",
+    "confidence": 0.647,
+    "source": "hyperliquid",
+    "details": {
+      "reasons": [
+        "open interest +29% with price +4.8% since last scan (Hyperliquid)"
+      ],
+      "price": 0.066838,
+      "funding_hourly": -0.003132969,
+      "open_interest_usd": 13696719
+    },
+    "timestamp": "2026-10-03T02:30:03.107182+00:00",
+    "agent": "derivatives"
+  },
+  {
+    "coin": "SAND",
+    "signal": "active_addresses_spike",
+    "confidence": 0.78,
+    "source": "santiment",
+    "details": {
+      "reasons": [
+        "active addresses 4.3x 2-week median (Santiment)"
+      ],
+      "slug": "the-sandbox"
+    },
+    "timestamp": "2026-10-03T02:30:12.043236+00:00",
+    "agent": "santiment"
   }
 ]
