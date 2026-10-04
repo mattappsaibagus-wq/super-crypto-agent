@@ -1509,5 +1509,75 @@
     },
     "timestamp": "2026-10-04T16:01:51.678467+00:00",
     "agent": "microcap"
+  },
+  {
+    "coin": "DOGE",
+    "signal": "microcap_opportunity",
+    "confidence": 0.55,
+    "source": "coingecko_trending",
+    "details": {
+      "mcap": "$14,925,565,359",
+      "vol": null,
+      "age_days": null,
+      "reasons": [
+        "trending on CoinGecko right now"
+      ],
+      "price": 0.09556719586221056,
+      "coin_id": "dogecoin"
+    },
+    "timestamp": "2026-10-04T20:31:59.158770+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "ROBO",
+    "signal": "microcap_opportunity",
+    "confidence": 0.55,
+    "source": "coingecko_trending",
+    "details": {
+      "mcap": "$19,578,785",
+      "vol": null,
+      "age_days": null,
+      "reasons": [
+        "trending on CoinGecko right now"
+      ],
+      "price": 0.00878349163407456,
+      "coin_id": "robo-token-2"
+    },
+    "timestamp": "2026-10-04T20:31:59.158775+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "VIRTUAL",
+    "signal": "microcap_opportunity",
+    "confidence": 0.55,
+    "source": "coingecko_trending",
+    "details": {
+      "mcap": "$552,433,244",
+      "vol": null,
+      "age_days": null,
+      "reasons": [
+        "trending on CoinGecko right now"
+      ],
+      "price": 0.8389485738322378,
+      "coin_id": "virtual-protocol"
+    },
+    "timestamp": "2026-10-04T20:31:59.158780+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "IOTA",
+    "signal": "funding_overheated",
+    "confidence": 0.627,
+    "source": "hyperliquid",
+    "details": {
+      "reasons": [
+        "longs paying 155% APR funding \u2014 crowded (Hyperliquid)"
+      ],
+      "price": 0.059474,
+      "funding_hourly": 0.0001765339,
+      "open_interest_usd": 1635986
+    },
+    "timestamp": "2026-10-04T20:32:01.840095+00:00",
+    "agent": "derivatives"
   }
 ]
