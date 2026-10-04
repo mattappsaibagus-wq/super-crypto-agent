@@ -26,6 +26,10 @@ from supercrypto.core.base import api_get, coin_id_for
 
 COINGECKO_BASE = "https://api.coingecko.com/api/v3"
 BINANCE_BASE = "https://data-api.binance.vision/api/v3"
+# Free, no-key candlestick source used as a middle-tier fallback for coins not
+# on Binance. CoinGecko's free tier (no COINGECKO_API_KEY) throttles the newer
+# meme/alt coins under a multi-coin burst; KuCoin serves those same pairs cheaply.
+KUCOIN_BASE = "https://api.kucoin.com/api/v1"
 CG_API_KEY = os.environ.get("COINGECKO_API_KEY", "").strip()
 
 # Shared in-memory caches
@@ -1268,6 +1272,47 @@ def _binance_klines(pair: str, interval_sec: int, limit: int = 500):
     return []
 
 
+# KuCoin is a free, no-key Binance-style OHLCv source. Its /market/candles rows
+# differ from Binance klines in two important ways: the field order is
+#   [time, open, close, high, low, volume, turnover]   (note: close BEFORE high)
+# and `time` is in SECONDS, not milliseconds. The two mappers below normalise
+# both so the response envelopes below stay identical to Binance's.
+_KUCOIN_TYPES = {1800: "30min", 3600: "1hour", 86400: "1day"}
+
+
+def _kucoin_klines(pair: str, ktype: str, tries: int = 2) -> list:
+    data = api_get(f"{KUCOIN_BASE}/market/candles",
+                   params={"symbol": pair, "type": ktype}, tries=tries)
+    if isinstance(data, dict) and data.get("code") == "200000":
+        return data.get("data") or []
+    return []
+
+
+def _kucoin_chart_prices(symbol: str, interval: str) -> list:
+    """Close-price series matching _binance_chart's shape, ms timestamps."""
+    pair = f"{symbol.upper()}-USDT"
+    ktype = _KUCOIN_TYPES.get(_INTERVAL_MAP.get(interval, 1800), "1day")
+    out = []
+    for r in _kucoin_klines(pair, ktype):
+        if isinstance(r, list) and len(r) >= 6:
+            c = float(r[2])
+            if c > 0:
+                out.append({"t": int(float(r[0]) * 1000), "price": round(c, 4)})
+    return out
+
+
+def _kucoin_ohlc(symbol: str, interval: str) -> list:
+    """Full OHLCV candles matching _binance_chart_ohlc's shape, ms timestamps."""
+    pair = f"{symbol.upper()}-USDT"
+    ktype = _KUCOIN_TYPES.get(_INTERVAL_MAP.get(interval, 1800), "1day")
+    return [
+        {"t": int(float(r[0]) * 1000), "o": float(r[1]), "h": float(r[3]),
+         "l": float(r[4]), "c": float(r[2]), "v": float(r[5])}
+        for r in _kucoin_klines(pair, ktype)
+        if isinstance(r, list) and len(r) >= 6
+    ]
+
+
 def _cg_id_for_coin(symbol: str) -> str:
     s = symbol.upper()
     if s in _TICKER_TO_CG:
@@ -1401,7 +1446,18 @@ def api_chart(symbol: str):
         _cached_set(cache_key, result)
         return jsonify(result)
 
-    # Fallback: CoinGecko (with retries via api_get for rate-limit handling)
+    # Next: KuCoin (free, no key) — covers non-Binance coins that CoinGecko's
+    # free tier frequently throttles when the page requests many coins at once.
+    kc_prices = _kucoin_chart_prices(symbol, interval)
+    if kc_prices and len(kc_prices) >= 2:
+        result = {
+            "symbol": symbol.upper(), "interval": interval, "days": days,
+            "prices": kc_prices, "source": "kucoin",
+        }
+        _cached_set(cache_key, result)
+        return jsonify(result)
+
+    # Last resort: CoinGecko (with retries via api_get for rate-limit handling)
     cid = _cg_id_for_coin(symbol)
     params = {"vs_currency": "usd", "days": days}
     if days >= 2:
@@ -1435,8 +1491,14 @@ def api_ohlc(symbol: str):
     if cached is not None:
         return jsonify(cached)
 
+    # Binance → KuCoin → CoinGecko. KuCoin sits between the two because it is
+    # free/no-key and reliably serves the non-Binance meme/alt coins that
+    # CoinGecko's free tier throttles during a multi-coin page burst.
     candles = _binance_chart_ohlc(symbol, interval)
     source = "binance"
+    if not candles or len(candles) < 2:
+        candles = _kucoin_ohlc(symbol, interval)
+        source = "kucoin"
     if not candles or len(candles) < 2:
         candles = _coingecko_ohlc(symbol, interval)
         source = "coingecko"
