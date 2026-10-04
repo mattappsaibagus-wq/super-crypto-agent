@@ -1318,5 +1318,106 @@
     },
     "timestamp": "2026-10-03T20:15:43.337104+00:00",
     "agent": "derivatives"
+  },
+  {
+    "coin": "RENDER",
+    "signal": "microcap_opportunity",
+    "confidence": 0.55,
+    "source": "coingecko_trending",
+    "details": {
+      "mcap": "$1,015,340,555",
+      "vol": null,
+      "age_days": null,
+      "reasons": [
+        "trending on CoinGecko right now"
+      ],
+      "price": 1.95718445453107,
+      "coin_id": "render-token"
+    },
+    "timestamp": "2026-10-04T03:00:19.202307+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "EDGE",
+    "signal": "microcap_opportunity",
+    "confidence": 0.55,
+    "source": "coingecko_trending",
+    "details": {
+      "mcap": "$37,127,618",
+      "vol": null,
+      "age_days": null,
+      "reasons": [
+        "trending on CoinGecko right now"
+      ],
+      "price": 0.13724499270862367,
+      "coin_id": "definitive"
+    },
+    "timestamp": "2026-10-04T03:00:19.202311+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "PERCY",
+    "signal": "microcap_opportunity",
+    "confidence": 0.65,
+    "source": "dexscreener",
+    "details": {
+      "mcap": 737701,
+      "vol": 713990.9,
+      "age_days": 0.0,
+      "reasons": [
+        "listed 0d ago on raydium",
+        "small FDV"
+      ],
+      "price": 0.0007377,
+      "coin_id": null
+    },
+    "timestamp": "2026-10-04T03:00:19.202313+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "2Z",
+    "signal": "funding_squeeze",
+    "confidence": 0.8,
+    "source": "hyperliquid",
+    "details": {
+      "reasons": [
+        "shorts paying 350% APR while price +0.8% \u2014 squeeze setup (Hyperliquid)"
+      ],
+      "price": 0.045271,
+      "funding_hourly": -0.0003992269,
+      "open_interest_usd": 3157363
+    },
+    "timestamp": "2026-10-04T03:00:21.680439+00:00",
+    "agent": "derivatives"
+  },
+  {
+    "coin": "2Z",
+    "signal": "dd_result",
+    "confidence": 0.49,
+    "source": "duediligence",
+    "details": {
+      "reasons": [
+        "liquidity_health: not fully indexed \u2014 liquidity unverified",
+        "holder_concentration: liquidity spread across 16 pairs (top 66%)",
+        "volume_depth: no price \u2014 volume depth unknown",
+        "age_survivorship: found on CoinGecko",
+        "market_traction: 7d +0%"
+      ],
+      "score_breakdown": {
+        "mcap": 0,
+        "vol": 0,
+        "ath_change_pct": 0,
+        "price": 0,
+        "rank": null,
+        "change_7d": null,
+        "change_30d": null,
+        "pair_count": 16,
+        "top_pair_liq_share": 0.664,
+        "rag_status": "indexed_unverified"
+      },
+      "price": 0
+    },
+    "timestamp": "2026-10-04T03:00:56.976818+00:00",
+    "agent": "dd"
   }
 ]
