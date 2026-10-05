@@ -369,6 +369,66 @@
       "timestamp": "2026-10-05T11:44:36.891753+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "SOL",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.82,
+      "raw_confidence": 0.82,
+      "price": 120.59,
+      "timestamp": "2026-10-05T12:06:40.657163+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PONS",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.723,
+      "raw_confidence": 0.723,
+      "price": 0.394,
+      "timestamp": "2026-10-05T12:06:40.657965+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "NIL",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.805,
+      "raw_confidence": 0.805,
+      "price": 0.09604,
+      "timestamp": "2026-10-05T12:06:40.658859+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "TRUMP",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.701,
+      "raw_confidence": 0.701,
+      "price": 2.071,
+      "timestamp": "2026-10-05T12:06:40.659836+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "SAND",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.829,
+      "raw_confidence": 0.829,
+      "price": 0.07185,
+      "timestamp": "2026-10-05T12:06:40.660749+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "FET",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.749,
+      "raw_confidence": 0.749,
+      "price": 0.262,
+      "timestamp": "2026-10-05T12:06:40.661662+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -425,7 +485,7 @@
     "strong_volume_ratio": 0.5,
     "meta_agent_trusted": 0.5
   },
-  "runs": 37,
+  "runs": 43,
   "accuracy_history": [],
   "calibration": {
     "bins": {},
@@ -602,18 +662,18 @@
       "requested": 30,
       "eligible": 26,
       "forecast": 26,
-      "signals": 8,
+      "signals": 6,
       "skipped": {
         "ticker_mismatch": 1,
         "no_candles": 3
       },
-      "seconds": 108.7,
+      "seconds": 185.1,
       "model": "NeoQuasar/Kronos-small",
       "graded_now": 0,
       "mismatched": [
         "CHIP"
       ],
-      "at": "2026-10-05T11:44:36.872066+00:00"
+      "at": "2026-10-05T12:06:40.644452+00:00"
     }
   }
 }
