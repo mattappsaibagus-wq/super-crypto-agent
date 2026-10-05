@@ -53,18 +53,22 @@ def clear_bus():
         json.dump([], f)
 
 
+def _bus_reference() -> dict:
+    """CoinGecko-derived prices per ticker from the signal bus."""
+    try:
+        with open(SIGNALS_FILE) as f:
+            return reference_from_bus(json.load(f))
+    except (OSError, ValueError):
+        return {}
+
+
 def load_prices(verdicts, extra_coins=()):
     """USD prices for the coins paper trading needs: every BUY plus open
     positions (so stops/targets keep working after a coin's signals expire).
     Binance -> KuCoin -> CoinGecko fallbacks; see supercrypto/core/prices.py."""
     coins = [v["coin"] for v in verdicts if v.get("action") == "BUY"] + list(extra_coins)
-    try:
-        with open(SIGNALS_FILE) as f:
-            reference = reference_from_bus(json.load(f))
-    except (OSError, ValueError):
-        reference = {}
     mismatches = set()
-    prices = get_usd_prices(coins, reference=reference, mismatches=mismatches)
+    prices = get_usd_prices(coins, reference=_bus_reference(), mismatches=mismatches)
     return prices, mismatches
 
 
@@ -149,20 +153,24 @@ def run_once(args) -> int:
         with open(WATCHLIST_FILE) as f:
             risk_cfg = json.load(f)
     paper = PaperTrader()
+    reference = _bus_reference()
+    # Void positions opened on a same-ticker different token BEFORE the risk
+    # check, so they don't occupy a buy slot this scan.
+    held = list(paper.state.get("positions", {}))
+    if held:
+        mism = set()
+        get_usd_prices(held, reference=reference, mismatches=mism, log=lambda *a: None)
+        for coin in held:
+            if coin in mism:
+                paper.void(coin, "voided: exchange ticker was a different asset")
+                print("    voided paper position %s (wrong asset priced on exchange)" % coin)
     verdicts = RiskManager(risk_cfg).adjust(verdicts, paper)
 
     write_verdicts(verdicts, regime)
 
     print("[6] paper trading")
     before_positions = dict(paper.state.get("positions", {}))
-    prices, mismatches = load_prices(verdicts, before_positions.keys())
-    # A position opened on an exchange price that turned out to be a different
-    # token with the same ticker is void: close it at entry, no P&L either way.
-    for coin in list(paper.state.get("positions", {})):
-        if coin in mismatches:
-            paper.void(coin, "voided: exchange ticker was a different asset")
-            before_positions.pop(coin, None)
-            print("    voided paper position %s (wrong asset priced on exchange)" % coin)
+    prices, _ = load_prices(verdicts, before_positions.keys())
     unpriced = [v["coin"] for v in verdicts
                 if v.get("action") == "BUY" and v.get("suggested_size_pct") and not prices.get(v["coin"])]
     if unpriced:

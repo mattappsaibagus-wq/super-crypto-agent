@@ -342,6 +342,24 @@ def test_price_guard_rejects_namesake_and_paper_voids_it():
     assert "BEAM" not in pt.state["positions"] and abs(pt.state["cash"] - 100.0) < 1e-9
     assert pt.metrics()["closed_trades"] == 0  # voided trades don't count
 
+
+def test_risk_held_coin_is_hold_and_uses_no_slot():
+    from supercrypto.core.paper import PaperTrader
+    from supercrypto.core.risk import RiskManager
+    pt = PaperTrader(path=None)
+    for i, c in enumerate(["A", "B", "C", "D"]):
+        pt.process([{"coin": c, "action": "BUY", "suggested_size_pct": 4.0}], {c: 1.0 + i})
+    out = RiskManager({}).adjust([
+        {"coin": "A", "action": "BUY", "dd": 0.8},
+        {"coin": "B", "action": "BUY", "dd": 0.8},
+        {"coin": "NEW", "action": "BUY", "dd": 0.8},
+        {"coin": "NEW2", "action": "BUY", "dd": 0.8},
+    ], pt)
+    acts = {v["coin"]: v["action"] for v in out}
+    assert acts["A"] == "HOLD" and acts["B"] == "HOLD", acts
+    assert acts["NEW"] == "BUY", acts          # 4 held of 5 -> one free slot
+    assert acts["NEW2"] == "WATCH", acts       # cap reached after NEW
+
 if __name__ == "__main__":
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     failed = 0

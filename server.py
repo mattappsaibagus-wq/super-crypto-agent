@@ -331,6 +331,8 @@ def parse_report_cards(md):
             action = "WATCH"
             if "BUY" in title:
                 action = "BUY"
+            elif "HOLD" in title:
+                action = "HOLD"
             elif "AVOID" in title:
                 action = "AVOID"
             coin = title.split("—")[0].strip() if "—" in title else title
@@ -549,6 +551,7 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
   }
   .badge-buy { background: rgba(127,196,154,.15); color: var(--green); }
   .badge-watch { background: rgba(214,185,119,.15); color: var(--yellow); }
+  .badge-hold { background: rgba(127,160,214,.15); color: #8fb3e8; }
   .badge-sell { background: rgba(221,139,131,.15); color: var(--red); }
   .badge-avoid { background: rgba(221,139,131,.15); color: var(--red-dark); }
   .card-price-row {
@@ -722,8 +725,11 @@ function renderCards() {
   let html = '';
   shown.forEach(c => {
     const badgeClass = c.action === 'BUY' ? 'badge-buy' :
+                       c.action === 'HOLD' ? 'badge-hold' :
                        c.action === 'WATCH' ? 'badge-watch' :
                        c.action === 'SELL' ? 'badge-sell' : 'badge-avoid';
+    const riskLine = (c.risk_notes || []).length
+      ? '<div class="kr-line">🛡️ ' + (c.risk_notes || []).map(esc).join(' · ') + '</div>' : '';
     const details = (c.details || []).map(d => '<li>' + mdBold(d) + '</li>').join('');
     const sym = c.coin;
     html += '<div class="card" onclick="showCoin(\'' + sym + '\', \'1d\')">' +
@@ -734,6 +740,7 @@ function renderCards() {
         '<div class="card-price-row" id="price-' + sym + '"></div>' +
         '<svg class="card-spark is-loading" id="spark-' + sym + '" viewBox="0 0 100 32" preserveAspectRatio="none"></svg>' +
         kronosLine(c.kronos) +
+        riskLine +
         agentChips(c.evidence) +
         '<ul class="card-details">' + details + '</ul>' +
       '</div>';
@@ -1625,6 +1632,11 @@ def api_report():
             c["agents"] = v.get("agents") or []
             c["evidence"] = v.get("evidence") or []
             c["score"] = v.get("score")
+            # The report is written before the risk manager runs; show the
+            # final call (e.g. HOLD for coins already in the paper portfolio).
+            if v.get("action"):
+                c["action"] = v["action"]
+            c["risk_notes"] = v.get("risk_notes") or []
             c["kronos"] = kronos_latest.get(c["coin"])
         return jsonify({"report": md, "cards": cards, "timestamp": ts})
     return jsonify({"report": None, "cards": [], "timestamp": None})

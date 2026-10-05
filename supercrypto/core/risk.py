@@ -88,6 +88,8 @@ class RiskManager:
         remaining_slots = max(0, self.max_concurrent_buys - open_count)
         remaining_exposure = max(0.0, self.max_total_exposure_pct - used_exposure)
 
+        state = getattr(paper, "state", None) or {}
+        held = set((state.get("positions") or {}).keys())
         out = []
         buys_this_pass = 0
         exposure_this_pass = 0.0
@@ -97,7 +99,12 @@ class RiskManager:
             action = v.get("action")
             dd = v.get("dd")
 
-            if action == "BUY":
+            if action == "BUY" and v.get("coin") in held:
+                # Already in the paper portfolio: keep it, don't spend a slot
+                # (and don't mislabel it WATCH because the cap is full).
+                v["action"] = "HOLD"
+                notes.append("held in paper portfolio")
+            elif action == "BUY":
                 if breaker_tripped:
                     v["action"] = "WATCH"
                     notes.append(
