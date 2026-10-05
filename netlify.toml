@@ -38,6 +38,11 @@
   status = 200
 
 [[redirects]]
+  from   = "/api/healthcheck"
+  to     = "/api/healthcheck.json"
+  status = 200
+
+[[redirects]]
   from   = "/api/portfolio"
   to     = "/api/portfolio.json"
   status = 200

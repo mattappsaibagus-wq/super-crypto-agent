@@ -614,6 +614,19 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
   .ev-head { display: flex; justify-content: space-between; gap: 8px; font-size: .8rem; font-weight: 600; }
   .ev-sig { font: 400 .74rem var(--font-data); color: var(--muted); margin-top: 4px; }
   .ev-sig .why { color: var(--text); font-family: var(--font-body); }
+  .hl-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; font-size: .82rem; color: var(--muted); }
+  .hl-pill { font: 700 .72rem var(--font-data); padding: 3px 10px; border-radius: 99px; letter-spacing: .05em; }
+  .hl-ok { background: rgba(127,196,154,.15); color: var(--green); }
+  .hl-warn { background: rgba(214,185,119,.15); color: var(--yellow); }
+  .hl-fail { background: rgba(221,139,131,.18); color: var(--red); }
+  .hl-list { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+  .hl-row { display: grid; grid-template-columns: 14px minmax(140px, 220px) 1fr; gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--border); font-size: .8rem; align-items: baseline; }
+  .hl-row:last-child { border-bottom: none; }
+  .hl-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .hl-row .d { color: var(--muted); overflow-wrap: anywhere; }
+  .hl-hist { display: flex; gap: 2px; align-items: center; }
+  .hl-hist i { width: 6px; height: 14px; border-radius: 2px; display: inline-block; }
+  @media (max-width: 560px) { .hl-row { grid-template-columns: 14px 1fr; } .hl-row .d { grid-column: 2; } }
   .pf-status { font-size: .76rem; color: var(--muted); margin: 10px 0; }
   .pf-sub { font-size: .8rem; font-weight: 600; margin: 16px 0 8px; }
   .pf-bar { position: relative; height: 6px; border-radius: 99px; background: var(--surface2); border: 1px solid var(--border); min-width: 90px; }
@@ -654,6 +667,9 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
 <button class="btn" id="runBtn" onclick="startScan()">▶ Run Full Scan</button>
 
 <div id="scanStatus" style="text-align:center;color:var(--muted);font-size:0.82rem;margin-bottom:16px">Idle</div>
+
+<h2 class="section-title">🩺 System Health <span class="sec-sub">automatic checks after every scan</span></h2>
+<div id="healthPanel"><div class="empty">Loading health checks…</div></div>
 
 <h2 class="section-title">🤖 Agent Team ({{ agent_count }} agents)</h2>
 <div class="agents-grid" id="agentGrid"></div>
@@ -1161,6 +1177,37 @@ async function loadPortfolio() {
   });
 }
 
+// ── System health ──
+const HL_COL = {ok: 'var(--green)', warn: 'var(--yellow)', fail: 'var(--red)'};
+async function loadHealth() {
+  const el = document.getElementById('healthPanel');
+  let h;
+  try { h = await (await fetch('/api/healthcheck')).json(); } catch (e) { h = null; }
+  if (!h || !h.checks || !h.checks.length) {
+    el.innerHTML = '<div class="empty">No health report yet — it appears after the next scan.</div>';
+    return;
+  }
+  const checks = h.checks.slice();
+  // Checked in the browser too: a scan that never ran can't report itself.
+  const ageH = (Date.now() - new Date(h.generated_at).getTime()) / 3.6e6;
+  if (ageH > 7) checks.unshift({name: 'Scans running', status: 'fail',
+    detail: 'last scan finished ' + Math.round(ageH) + 'h ago (scans run every 6h)'});
+  const rank = {ok: 0, warn: 1, fail: 2};
+  const overall = checks.reduce((a, c) => rank[c.status] > rank[a] ? c.status : a, 'ok');
+  const label = {ok: 'ALL GOOD', warn: 'WARNING', fail: 'PROBLEM'}[overall];
+  const hist = (h.history || []).slice(-30).map(x =>
+    '<i title="' + esc(formatJST(x.t) + ': ' + x.overall) + '" style="background:' + (HL_COL[x.overall] || 'var(--border)') + '"></i>').join('');
+  checks.sort((a, b) => rank[b.status] - rank[a.status]);
+  el.innerHTML = '<div class="hl-head"><span class="hl-pill hl-' + overall + '">' + label + '</span>' +
+    '<span>checked ' + formatJST(h.generated_at) + (h.code_version ? ' · code ' + esc(h.code_version) : '') + '</span>' +
+    (hist ? '<span class="hl-hist" title="last scans, oldest → newest">' + hist + '</span>' : '') +
+    (overall === 'fail' ? '<span>· a GitHub Issue (label <b>health-alert</b>) is opened automatically</span>' : '') +
+    '</div><div class="hl-list">' + checks.map(c =>
+      '<div class="hl-row"><span class="hl-dot" style="background:' + HL_COL[c.status] + '"></span>' +
+      '<b>' + esc(c.name) + '</b><span class="d">' + esc(c.detail) + '</span></div>').join('') + '</div>';
+}
+
+loadHealth();
 loadKronos();
 loadPortfolio();
 loadSignals();
@@ -1640,6 +1687,12 @@ def api_report():
             c["kronos"] = kronos_latest.get(c["coin"])
         return jsonify({"report": md, "cards": cards, "timestamp": ts})
     return jsonify({"report": None, "cards": [], "timestamp": None})
+
+
+@app.route("/api/healthcheck")
+def api_healthcheck():
+    report = _read_json(os.path.join(DATA_DIR, "health.json"), {}) or {}
+    return jsonify(report or {"overall": None, "checks": []})
 
 
 @app.route("/api/portfolio")

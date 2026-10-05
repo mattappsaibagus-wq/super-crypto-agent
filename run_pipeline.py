@@ -42,6 +42,7 @@ from supercrypto.config import (
 )
 from supercrypto.core.attribution import AttributionEngine
 from supercrypto.core.base import ensure_dirs, prune_stale_signals
+from supercrypto.core import health
 from supercrypto.core.prices import get_usd_prices, reference_from_bus
 from supercrypto.core.paper import PaperTrader
 from supercrypto.core.risk import RiskManager
@@ -51,6 +52,10 @@ def clear_bus():
     ensure_dirs()
     with open(SIGNALS_FILE, "w") as f:
         json.dump([], f)
+
+
+# Facts the health checks need from inside the run (see supercrypto/core/health.py).
+HEALTH_CTX = {}
 
 
 def _bus_reference() -> dict:
@@ -69,6 +74,8 @@ def load_prices(verdicts, extra_coins=()):
     coins = [v["coin"] for v in verdicts if v.get("action") == "BUY"] + list(extra_coins)
     mismatches = set()
     prices = get_usd_prices(coins, reference=_bus_reference(), mismatches=mismatches)
+    HEALTH_CTX.update(price_wanted=sorted(set(c.upper() for c in coins)),
+                      prices=prices, mismatches=sorted(mismatches))
     return prices, mismatches
 
 
@@ -83,6 +90,7 @@ def write_verdicts(verdicts, regime) -> None:
 
 
 def run_once(args) -> int:
+    HEALTH_CTX.clear()
     if not getattr(args, "no_clear", True) and not args.quick:
         clear_bus()
     else:
@@ -163,6 +171,7 @@ def run_once(args) -> int:
         for coin in held:
             if coin in mism:
                 paper.void(coin, "voided: exchange ticker was a different asset")
+                HEALTH_CTX.setdefault("voided", []).append(coin)
                 print("    voided paper position %s (wrong asset priced on exchange)" % coin)
     verdicts = RiskManager(risk_cfg).adjust(verdicts, paper)
 
@@ -252,6 +261,10 @@ def run_once(args) -> int:
             "  %s %-10s %-6s score=%+.3f dd=%s%s"
             % (mark, v["coin"], v["action"], v["score"], dd, risk)
         )
+    try:
+        health.run_and_write(HEALTH_CTX)
+    except Exception as e:  # health reporting must never fail the scan
+        print("[health] check run failed: %s: %s" % (type(e).__name__, e))
     print("done in %.1fs - reports in data/reports/" % (time.time() - t0))
     return 0
 

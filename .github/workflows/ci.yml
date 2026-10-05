@@ -49,6 +49,9 @@ jobs:
       - name: Run Kronos agent tests
         run: python3 tests/test_kronos.py
 
+      - name: Run health check tests
+        run: python3 tests/test_health.py
+
       - name: Test pipeline (dry run)
         env:
           COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}

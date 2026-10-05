@@ -1,0 +1,27 @@
+name: Health watchdog
+
+# Scans run every 6h. If no scan has completed for 7h (workflow broken,
+# disabled, or failing before it writes data/health.json) open an issue.
+on:
+  schedule:
+    - cron: "37 * * * *"     # hourly
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests
+      - name: Check last scan age
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/health_alert.py --stale-hours 7

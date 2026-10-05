@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write            # needed to commit data/ back
+  issues: write              # health alerts (scripts/health_alert.py)
 
 concurrency:
   group: scan
@@ -50,12 +51,23 @@ jobs:
           restore-keys: kronos-hf-
 
       - name: Run pipeline
+        id: pipeline
         env:
           COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
           ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
           NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
           SANTIMENT_API_KEY: ${{ secrets.SANTIMENT_API_KEY }}
         run: python3 run_pipeline.py --no-clear
+
+      # Open / update / close the "health-alert" GitHub Issue from
+      # data/health.json. Never fails the scan.
+      - name: Health alert
+        if: always()
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SCAN_OUTCOME: ${{ steps.pipeline.outcome }}
+        run: python3 scripts/health_alert.py
 
       - name: Prune old reports (keep latest 30)
         run: |

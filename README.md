@@ -117,6 +117,26 @@ Dashboard: a **🔮 Kronos Forecasts** panel (track record + every coin's 24h pa
 Kronos line on each verdict card, and in each coin's detail view the forecast fan chart
 plus **every agent working on that coin** with the signals and reasons it contributed.
 
+## System health 🩺
+
+After every scan `supercrypto/core/health.py` checks the symptoms of things
+breaking and writes `data/health.json` (dashboard **System Health** panel):
+
+| Check | Fails when |
+|---|---|
+| Signal freshness | expired signals are still on the bus (pruning broke) |
+| BUY verdicts executed | a sized BUY didn't become a paper position (usually: no price) |
+| Prices found | < 80% of needed prices found; also lists same-ticker tokens rejected / voided |
+| Kronos forecasts | Kronos sat out or forecast 0 coins; warns if its hit rate < 45% after 30 graded |
+| Verdicts produced | 0 verdicts (warns on a > 70% drop) |
+| Agents producing signals | warns if microcap / dd / macro went silent |
+| Paper drawdown | warns at 15% below peak |
+
+`scripts/health_alert.py` (run by the scan workflow) opens a GitHub Issue labelled
+**health-alert** when a check fails, updates it if the failures change, and closes
+it when everything passes. `.github/workflows/health-watch.yml` runs hourly and
+opens one if no scan has completed for 7 hours. GitHub emails you about new issues.
+
 ## Architecture
 
 ```
