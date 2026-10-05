@@ -289,6 +289,86 @@
       "timestamp": "2026-10-05T11:24:03.525555+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "GRASS",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.747,
+      "raw_confidence": 0.747,
+      "price": 0.7247,
+      "timestamp": "2026-10-05T11:44:36.884775+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "QNT",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.782,
+      "raw_confidence": 0.782,
+      "price": 252.74,
+      "timestamp": "2026-10-05T11:44:36.885735+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "NIL",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.796,
+      "raw_confidence": 0.796,
+      "price": 0.09628,
+      "timestamp": "2026-10-05T11:44:36.886844+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ADA",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.775,
+      "raw_confidence": 0.775,
+      "price": 0.272272,
+      "timestamp": "2026-10-05T11:44:36.887851+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PUMP",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.805,
+      "raw_confidence": 0.805,
+      "price": 0.00647284,
+      "timestamp": "2026-10-05T11:44:36.888747+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "SAND",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.85,
+      "raw_confidence": 0.85,
+      "price": 0.07184,
+      "timestamp": "2026-10-05T11:44:36.889725+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "MON",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.825,
+      "raw_confidence": 0.825,
+      "price": 0.032,
+      "timestamp": "2026-10-05T11:44:36.890736+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PENGU",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.718,
+      "raw_confidence": 0.718,
+      "price": 0.009927,
+      "timestamp": "2026-10-05T11:44:36.891753+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -345,7 +425,7 @@
     "strong_volume_ratio": 0.5,
     "meta_agent_trusted": 0.5
   },
-  "runs": 29,
+  "runs": 37,
   "accuracy_history": [],
   "calibration": {
     "bins": {},
@@ -524,12 +604,16 @@
       "forecast": 26,
       "signals": 8,
       "skipped": {
-        "no_candles": 4
+        "ticker_mismatch": 1,
+        "no_candles": 3
       },
-      "seconds": 187.8,
+      "seconds": 108.7,
       "model": "NeoQuasar/Kronos-small",
       "graded_now": 0,
-      "at": "2026-10-05T11:24:03.507447+00:00"
+      "mismatched": [
+        "CHIP"
+      ],
+      "at": "2026-10-05T11:44:36.872066+00:00"
     }
   }
 }
