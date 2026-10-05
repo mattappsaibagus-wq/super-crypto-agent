@@ -1579,5 +1579,39 @@
     },
     "timestamp": "2026-10-04T20:32:01.840095+00:00",
     "agent": "derivatives"
+  },
+  {
+    "coin": "NIL",
+    "signal": "microcap_opportunity",
+    "confidence": 0.55,
+    "source": "coingecko_trending",
+    "details": {
+      "mcap": "$51,035,282",
+      "vol": null,
+      "age_days": null,
+      "reasons": [
+        "trending on CoinGecko right now"
+      ],
+      "price": 0.10056713454665724,
+      "coin_id": "nillion"
+    },
+    "timestamp": "2026-10-05T02:33:47.182409+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "CHIP",
+    "signal": "funding_overheated",
+    "confidence": 0.596,
+    "source": "hyperliquid",
+    "details": {
+      "reasons": [
+        "longs paying 128% APR funding \u2014 crowded (Hyperliquid)"
+      ],
+      "price": 0.050078,
+      "funding_hourly": 0.0001459603,
+      "open_interest_usd": 15697097
+    },
+    "timestamp": "2026-10-05T02:33:49.677685+00:00",
+    "agent": "derivatives"
   }
 ]
