@@ -91,6 +91,12 @@ class PaperTrader:
             }
         )
 
+    def void(self, coin: str, reason: str) -> None:
+        """Cancel a position opened on a bad price: refund at entry, 0% P&L."""
+        if coin in self.state["positions"]:
+            self._close(coin, self.state["positions"][coin]["entry_price"], reason)
+            self.save()
+
     def process(self, verdicts: list, prices: dict) -> dict:
         """Mark-to-market, honor stops/targets, then open new BUYs."""
         # 1. Exits on existing positions.
@@ -145,7 +151,8 @@ class PaperTrader:
         return self.metrics()
 
     def metrics(self) -> dict:
-        closed = self.state.get("closed") or []
+        closed = [t for t in (self.state.get("closed") or [])
+                  if not str(t.get("exit_reason", "")).startswith("voided")]
         wins = [t for t in closed if (t.get("pnl_pct") or 0) > 0]
         peak = self.state.get("peak_equity") or self.state.get("equity") or 0
         equity = self.state.get("equity") or 0

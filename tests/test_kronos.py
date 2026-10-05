@@ -112,7 +112,7 @@ class FakePredictor:
         return out
 
 
-def _synthetic_candles(sym):
+def _synthetic_candles(sym, ref=None):
     rnd = random.Random(sym)
     step = config.KRONOS_INTERVAL_HOURS * 3600
     now = int(time.time() // step * step)
@@ -180,6 +180,17 @@ def test_agent_sits_out_without_model():
     finally:
         del os.environ["KRONOS_ENABLED"]
 
+
+
+def test_candles_reject_namesake_token():
+    agent = K.KronosForecast(predictor=object())
+    bars = [(0, 1, 1, 1, 0.065, 1, 1)] * 3
+    agent._binance = staticmethod(lambda sym, limit: bars)
+    agent._kucoin = staticmethod(lambda sym, limit: None)
+    got, why = agent._candles("BEAM", ref=0.0027)       # Binance BEAM != CoinGecko Beam
+    assert got is None and why == "ticker_mismatch"
+    got, live = agent._candles("BEAM", ref=0.066)        # same asset: accepted
+    assert got is not None
 
 if __name__ == "__main__":
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_")]

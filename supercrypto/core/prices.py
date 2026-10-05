@@ -20,6 +20,37 @@ BINANCE_ALL_PRICES = "https://data-api.binance.vision/api/v3/ticker/price"
 KUCOIN_ALL_TICKERS = "https://api.kucoin.com/api/v1/market/allTickers"
 STABLES = {"USDT", "USDC", "DAI", "FDUSD", "TUSD", "USDE", "BUSD", "PYUSD", "USDS"}
 ALIASES = {"MATIC": "POL"}  # renamed on the exchanges
+# An exchange ticker can belong to a different token than the one the agents
+# flagged (e.g. Binance BEAMUSDT vs CoinGecko's Beam). If the exchange price is
+# outside this ratio of the CoinGecko-derived reference, it's the wrong asset.
+MAX_REF_RATIO = 1.33
+
+
+def price_matches(px, ref, max_ratio=MAX_REF_RATIO) -> bool:
+    if not px or not ref:
+        return True  # nothing to compare against
+    r = px / ref
+    return 1 / max_ratio <= r <= max_ratio
+
+
+def reference_from_bus(signals) -> dict:
+    """{TICKER: median CoinGecko-derived price} from bus signal details.
+
+    Kronos signals are excluded: their price can come from the exchange
+    ticker, which is exactly what is being checked."""
+    import statistics
+    seen = {}
+    for s in signals or []:
+        if s.get("agent") == "kronos":
+            continue
+        px = (s.get("details") or {}).get("price")
+        try:
+            px = float(px)
+        except (TypeError, ValueError):
+            continue
+        if px > 0:
+            seen.setdefault((s.get("coin") or "").upper(), []).append(px)
+    return {c: statistics.median(v) for c, v in seen.items() if c}
 
 
 def parse_binance(data) -> dict:
@@ -55,8 +86,12 @@ def parse_kucoin(data) -> dict:
     return out
 
 
-def get_usd_prices(coins: Iterable[str], log=print) -> dict:
-    """Return {TICKER: usd_price} for as many of `coins` as any source knows."""
+def get_usd_prices(coins: Iterable[str], log=print, reference=None, mismatches=None) -> dict:
+    """Return {TICKER: usd_price} for as many of `coins` as any source knows.
+
+    reference: {TICKER: CoinGecko-derived price}; exchange prices that don't
+    match it are rejected (and the ticker added to `mismatches`, if given)."""
+    reference = reference or {}
     wanted = []
     for c in coins:
         c = (c or "").upper()
@@ -75,8 +110,13 @@ def get_usd_prices(coins: Iterable[str], log=print) -> dict:
             if c in prices:
                 continue
             px = table.get(ALIASES.get(c, c)) or table.get(c)
-            if px:
-                prices[c], source[c] = px, name
+            if not px:
+                continue
+            if not price_matches(px, reference.get(c)):
+                if mismatches is not None:
+                    mismatches.add(c)
+                continue
+            prices[c], source[c] = px, name
 
     fill(parse_binance(api_get(BINANCE_ALL_PRICES)), "binance")
     if len(prices) < len(wanted):
@@ -96,14 +136,20 @@ def get_usd_prices(coins: Iterable[str], log=print) -> dict:
             data = api_get(f"{COINGECKO_BASE}/simple/price", params=params) or {}
             for cid, c in ids.items():
                 px = (data.get(cid) or {}).get("usd") if isinstance(data, dict) else None
-                if px:
+                # ticker->id lookup can pick a namesake too; same check
+                if px and price_matches(float(px), reference.get(c)):
                     prices[c], source[c] = float(px), "coingecko"
+    for c in missing:  # last resort: the reference itself (CoinGecko via the bus)
+        if c not in prices and reference.get(c):
+            prices[c], source[c] = float(reference[c]), "reference"
 
     counts = {}
     for s in source.values():
         counts[s] = counts.get(s, 0) + 1
     missing = [c for c in wanted if c not in prices]
-    log("    prices: %d/%d %s%s" % (
+    log("    prices: %d/%d %s%s%s" % (
         len(prices), len(wanted), counts,
-        (" | no price: " + ", ".join(missing[:15])) if missing else ""))
+        (" | no price: " + ", ".join(missing[:15])) if missing else "",
+        (" | ticker mismatch (wrong asset on exchange): " + ", ".join(sorted(mismatches)))
+        if mismatches else ""))
     return prices

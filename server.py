@@ -565,6 +565,8 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
   .card-spark .spark-fill { stroke: none; }
   .card-spark.is-loading { opacity: .25; }
   .card-details { color: var(--muted); font-size: .82rem; }
+  .card-filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .card-details b { color: var(--text); font-weight: 600; }
   .card-details li { margin-bottom: 4px; list-style: none; }
   .card-details li::before { content: "· "; color: var(--accent); }
   .empty { text-align: center; padding: 40px; color: var(--muted); }
@@ -658,14 +660,16 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
 
 <h2 class="section-title">📊 Verdict Summary</h2>
 <div class="summary-row" id="summaryRow" style="display:none">
-  <div class="summary-chip chip-buy" id="buyCount">0<br><small>BUY</small></div>
-  <div class="summary-chip chip-watch" id="watchCount">0<br><small>WATCH</small></div>
+  <div class="summary-chip chip-buy" id="buyCount" style="cursor:pointer" onclick="setCardFilter('BUY');document.getElementById('cardFilters').scrollIntoView({behavior:'smooth'})">0<br><small>BUY</small></div>
+  <div class="summary-chip chip-watch" id="watchCount" style="cursor:pointer" onclick="setCardFilter('WATCH');document.getElementById('cardFilters').scrollIntoView({behavior:'smooth'})">0<br><small>WATCH</small></div>
   <div class="summary-chip chip-sell" id="sellCount">0<br><small>SELL</small></div>
-  <div class="summary-chip chip-avoid" id="avoidCount">0<br><small>AVOID</small></div>
+  <div class="summary-chip chip-avoid" id="avoidCount" style="cursor:pointer" onclick="setCardFilter('AVOID');document.getElementById('cardFilters').scrollIntoView({behavior:'smooth'})">0<br><small>AVOID</small></div>
 </div>
 
 <h2 class="section-title">🪙 Verdicts</h2>
+<div class="card-filters" id="cardFilters"></div>
 <div id="cards"><div class="empty">No report yet — run a scan to get started</div></div>
+<div id="cardsMore"></div>
 
 <h2 class="section-title">💼 Paper Portfolio <span class="sec-sub">simulated trades from BUY verdicts · not real money</span></h2>
 <div id="portfolioPanel"><div class="empty">Loading paper portfolio…</div></div>
@@ -695,6 +699,70 @@ const AGENTS = [
 const AGENT_META = Object.fromEntries(AGENTS.map(a => [a.key, a]));
 AGENT_META.advisor = {name: "Advisor", emoji: "📋", key: "advisor"};
 const CARD_DATA = {};
+let ALL_CARDS = [], CARD_FILTER = 'ALL', CARD_LIMIT = 12;
+const HYDRATED = new Set();
+
+function mdBold(t) {
+  // report lines carry **bold** markdown; render it instead of showing asterisks
+  return String(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+}
+
+function setCardFilter(f) { CARD_FILTER = f; CARD_LIMIT = 12; renderCards(); }
+function showMoreCards() { CARD_LIMIT += 12; renderCards(); }
+
+function renderCards() {
+  const counts = {ALL: ALL_CARDS.length};
+  ALL_CARDS.forEach(c => { counts[c.action] = (counts[c.action] || 0) + 1; });
+  const tabs = ['ALL', 'BUY', 'WATCH', 'HOLD', 'AVOID'].filter(k => k === 'ALL' || counts[k]);
+  document.getElementById('cardFilters').innerHTML = tabs.map(k =>
+    '<button class="tf-btn' + (CARD_FILTER === k ? ' active' : '') + '" onclick="setCardFilter(\'' + k + '\')">' +
+    (k === 'ALL' ? 'All' : k) + ' <span style="opacity:.7">' + (counts[k] || 0) + '</span></button>').join('');
+  const list = ALL_CARDS.filter(c => CARD_FILTER === 'ALL' || c.action === CARD_FILTER);
+  const shown = list.slice(0, CARD_LIMIT);
+  let html = '';
+  shown.forEach(c => {
+    const badgeClass = c.action === 'BUY' ? 'badge-buy' :
+                       c.action === 'WATCH' ? 'badge-watch' :
+                       c.action === 'SELL' ? 'badge-sell' : 'badge-avoid';
+    const details = (c.details || []).map(d => '<li>' + mdBold(d) + '</li>').join('');
+    const sym = c.coin;
+    html += '<div class="card" onclick="showCoin(\'' + sym + '\', \'1d\')">' +
+        '<div class="card-header">' +
+          '<span class="coin-name">' + sym + '</span>' +
+          '<span class="action-badge ' + badgeClass + '">' + c.action + '</span>' +
+        '</div>' +
+        '<div class="card-price-row" id="price-' + sym + '"></div>' +
+        '<svg class="card-spark is-loading" id="spark-' + sym + '" viewBox="0 0 100 32" preserveAspectRatio="none"></svg>' +
+        kronosLine(c.kronos) +
+        agentChips(c.evidence) +
+        '<ul class="card-details">' + details + '</ul>' +
+      '</div>';
+  });
+  document.getElementById('cards').innerHTML = html || '<div class="empty">No ' + (CARD_FILTER === 'ALL' ? '' : CARD_FILTER + ' ') + 'verdicts</div>';
+  const rest = list.length - shown.length;
+  document.getElementById('cardsMore').innerHTML = rest > 0
+    ? '<button class="btn" style="margin-top:14px" onclick="showMoreCards()">Show ' + Math.min(rest, 12) + ' more (' + rest + ' hidden)</button>'
+    : '';
+  // Price + sparkline hydrate progressively after the list is visible; cache
+  // the fetched markup so re-filtering doesn't refetch.
+  shown.forEach(c => {
+    if (HYDRATED.has(c.coin)) {
+      const h = HYDRATED_HTML[c.coin];
+      if (h) {
+        document.getElementById('price-' + c.coin).innerHTML = h.price;
+        const sp = document.getElementById('spark-' + c.coin);
+        sp.innerHTML = h.spark; sp.classList.remove('is-loading');
+      }
+      return;
+    }
+    HYDRATED.add(c.coin);
+    hydrateCardChart(c.coin).then(() => {
+      const pe = document.getElementById('price-' + c.coin), se = document.getElementById('spark-' + c.coin);
+      HYDRATED_HTML[c.coin] = {price: pe ? pe.innerHTML : '', spark: se ? se.innerHTML : ''};
+    });
+  });
+}
+const HYDRATED_HTML = {};
 let KRONOS = null;
 
 function renderAgents() {
@@ -786,35 +854,10 @@ async function loadReport() {
         }
 
         let html = '';
-        const symbols = [];
-        cards.slice(0, 12).forEach(c => {
-            const badgeClass = c.action === 'BUY' ? 'badge-buy' :
-                               c.action === 'WATCH' ? 'badge-watch' :
-                               c.action === 'SELL' ? 'badge-sell' : 'badge-avoid';
-            const details = (c.details||[]).map(d => '<li>' + d + '</li>').join('');
-            const sym = c.coin;
-            symbols.push(sym);
-            CARD_DATA[sym] = c;
-            html += '<div class="card" onclick="showCoin(\'' + sym + '\', \'1d\')">' +
-                '<div class="card-header">' +
-                  '<span class="coin-name">' + sym + '</span>' +
-                  '<span class="action-badge ' + badgeClass + '">' + c.action + '</span>' +
-                '</div>' +
-                '<div class="card-price-row" id="price-' + sym + '"></div>' +
-                '<svg class="card-spark is-loading" id="spark-' + sym + '" viewBox="0 0 100 32" preserveAspectRatio="none"></svg>' +
-                kronosLine(c.kronos) +
-                agentChips(c.evidence) +
-                '<ul class="card-details">' + details + '</ul>' +
-              '</div>';
-        });
-        document.getElementById('cards').innerHTML = html || '<div class="empty">No results</div>';
-
-        // Price + sparkline hydrate progressively after the list itself is
-        // already visible, so a slow/cold chart fetch never delays the
-        // initial render. These mostly hit the server's warm cache (see
-        // prewarm_chart_cache/prewarm_microcap_cache) so they're normally
-        // near-instant, but staying async keeps things resilient either way.
-        symbols.forEach(sym => hydrateCardChart(sym));
+        ALL_CARDS = cards;
+        cards.forEach(c => { CARD_DATA[c.coin] = c; });
+        CARD_LIMIT = 12;
+        renderCards();
     } catch(e) {
         document.getElementById('cards').innerHTML = '<div class="empty">Failed to load report</div>';
     }

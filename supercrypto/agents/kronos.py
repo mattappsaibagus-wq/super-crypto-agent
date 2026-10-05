@@ -59,6 +59,7 @@ from supercrypto.config import (
     ROOT,
 )
 from supercrypto.core.base import SIGNALS_FILE, BaseAgent, api_get, fetch_markets
+from supercrypto.core.prices import price_matches, reference_from_bus
 
 VENDOR_DIR = os.path.join(ROOT, "vendor", "kronos")
 BINANCE_DATA = "https://data-api.binance.vision/api/v3/klines"  # not geo-blocked on CI
@@ -233,12 +234,26 @@ class KronosForecast(BaseAgent):
                 float(r[5]), float(r[6])) for r in rows]
         return sorted(out)
 
-    def _candles(self, sym: str):
-        """Returns (complete_bars, live_price) or (None, None)."""
+    def _candles(self, sym: str, ref=None):
+        """Returns (complete_bars, live_price), or (None, reason).
+
+        ref: CoinGecko-derived price for the coin the agents flagged. An
+        exchange pair whose price is far from it is a different token that
+        shares the ticker (e.g. Binance BEAM), so it is never forecast."""
         limit = KRONOS_LOOKBACK + 2
-        bars = self._binance(sym, limit) or self._kucoin(sym, limit)
+        bars = None
+        for source in (self._binance, self._kucoin):
+            got = source(sym, limit)
+            if not got:
+                continue
+            if price_matches(got[-1][4], ref):
+                bars = got
+                break
+            bars = "mismatch"
+        if bars == "mismatch":
+            return None, "ticker_mismatch"
         if not bars:
-            return None, None
+            return None, "no_candles"
         step = KRONOS_INTERVAL_HOURS * 3600
         live = bars[-1][4]
         now = time.time()
@@ -424,10 +439,17 @@ class KronosForecast(BaseAgent):
         cands = self._candidates(kwargs.get("coins"))
         stats["requested"] = len(cands)
         prepared = {}
+        reference = reference_from_bus(self.read_signals())
+        for c in fetch_markets():
+            sym_ = (c.get("symbol") or "").upper()
+            if sym_ and c.get("current_price") and sym_ not in reference:
+                reference[sym_] = c["current_price"]
         for sym in cands:
-            bars, live = self._candles(sym)
+            bars, live = self._candles(sym, reference.get(sym))
             if not bars:
-                stats["skipped"]["no_candles"] = stats["skipped"].get("no_candles", 0) + 1
+                stats["skipped"][live] = stats["skipped"].get(live, 0) + 1
+                if live == "ticker_mismatch":
+                    stats.setdefault("mismatched", []).append(sym)
                 continue
             if len(bars) < KRONOS_MIN_HISTORY:
                 stats["skipped"]["short_history"] = stats["skipped"].get("short_history", 0) + 1

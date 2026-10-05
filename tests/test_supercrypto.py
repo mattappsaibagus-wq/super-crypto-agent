@@ -317,6 +317,31 @@ def test_paper_trader_opens_buy_when_priced():
     assert "SAND" in pt.state["positions"]
     assert abs(pt.state["cash"] - 96.0) < 1e-6
 
+
+def test_price_guard_rejects_namesake_and_paper_voids_it():
+    import supercrypto.core.prices as P
+    from supercrypto.core.paper import PaperTrader
+    orig = (P.api_get, P.coin_id_for)
+    P.api_get = lambda url, params=None, tries=2: (
+        [{"symbol": "BEAMUSDT", "price": "0.0652"}, {"symbol": "SANDUSDT", "price": "0.0727"}]
+        if url == P.BINANCE_ALL_PRICES else None)
+    P.coin_id_for = lambda s: None
+    mism = set()
+    try:
+        px = P.get_usd_prices(["BEAM", "SAND"], log=lambda *a: None,
+                              reference={"BEAM": 0.0027, "SAND": 0.0728}, mismatches=mism)
+    finally:
+        P.api_get, P.coin_id_for = orig
+    assert mism == {"BEAM"}
+    assert px["SAND"] == 0.0727 and px["BEAM"] == 0.0027  # falls back to the reference
+    assert P.reference_from_bus([{"coin": "x", "agent": "microcap", "details": {"price": 2}},
+                                 {"coin": "X", "agent": "kronos", "details": {"price": 99}}]) == {"X": 2.0}
+    pt = PaperTrader(path=None)
+    pt.process([{"coin": "BEAM", "action": "BUY", "suggested_size_pct": 4.0}], {"BEAM": 0.0652})
+    pt.void("BEAM", "voided: test")
+    assert "BEAM" not in pt.state["positions"] and abs(pt.state["cash"] - 100.0) < 1e-9
+    assert pt.metrics()["closed_trades"] == 0  # voided trades don't count
+
 if __name__ == "__main__":
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     failed = 0

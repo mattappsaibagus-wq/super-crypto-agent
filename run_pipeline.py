@@ -42,7 +42,7 @@ from supercrypto.config import (
 )
 from supercrypto.core.attribution import AttributionEngine
 from supercrypto.core.base import ensure_dirs, prune_stale_signals
-from supercrypto.core.prices import get_usd_prices
+from supercrypto.core.prices import get_usd_prices, reference_from_bus
 from supercrypto.core.paper import PaperTrader
 from supercrypto.core.risk import RiskManager
 
@@ -58,7 +58,14 @@ def load_prices(verdicts, extra_coins=()):
     positions (so stops/targets keep working after a coin's signals expire).
     Binance -> KuCoin -> CoinGecko fallbacks; see supercrypto/core/prices.py."""
     coins = [v["coin"] for v in verdicts if v.get("action") == "BUY"] + list(extra_coins)
-    return get_usd_prices(coins)
+    try:
+        with open(SIGNALS_FILE) as f:
+            reference = reference_from_bus(json.load(f))
+    except (OSError, ValueError):
+        reference = {}
+    mismatches = set()
+    prices = get_usd_prices(coins, reference=reference, mismatches=mismatches)
+    return prices, mismatches
 
 
 def write_verdicts(verdicts, regime) -> None:
@@ -148,7 +155,14 @@ def run_once(args) -> int:
 
     print("[6] paper trading")
     before_positions = dict(paper.state.get("positions", {}))
-    prices = load_prices(verdicts, before_positions.keys())
+    prices, mismatches = load_prices(verdicts, before_positions.keys())
+    # A position opened on an exchange price that turned out to be a different
+    # token with the same ticker is void: close it at entry, no P&L either way.
+    for coin in list(paper.state.get("positions", {})):
+        if coin in mismatches:
+            paper.void(coin, "voided: exchange ticker was a different asset")
+            before_positions.pop(coin, None)
+            print("    voided paper position %s (wrong asset priced on exchange)" % coin)
     unpriced = [v["coin"] for v in verdicts
                 if v.get("action") == "BUY" and v.get("suggested_size_pct") and not prices.get(v["coin"])]
     if unpriced:
