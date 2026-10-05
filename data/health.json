@@ -1,0 +1,68 @@
+{
+ "generated_at": "2026-10-05T12:34:33.380177+00:00",
+ "overall": "ok",
+ "code_version": "d16eb5e",
+ "verdict_count": 44,
+ "checks": [
+  {
+   "id": "bus_freshness",
+   "name": "Signal freshness",
+   "status": "ok",
+   "detail": "63 signals, oldest 68h",
+   "oldest_h": 67.7
+  },
+  {
+   "id": "agents_active",
+   "name": "Agents producing signals",
+   "status": "ok",
+   "detail": "active: dd 15, derivatives 2, fundraising 2, kronos 3, macro 1, microcap 28, santiment 3",
+   "counts": {
+    "dd": 15,
+    "microcap": 28,
+    "macro": 1,
+    "fundraising": 2,
+    "santiment": 3,
+    "derivatives": 2,
+    "kronos": 3
+   }
+  },
+  {
+   "id": "verdicts",
+   "name": "Verdicts produced",
+   "status": "ok",
+   "detail": "44 verdicts"
+  },
+  {
+   "id": "paper_execution",
+   "name": "BUY verdicts executed",
+   "status": "ok",
+   "detail": "0 BUY executed, 5 positions open"
+  },
+  {
+   "id": "price_coverage",
+   "name": "Prices found",
+   "status": "ok",
+   "detail": "5/5 priced",
+   "coverage": 1.0
+  },
+  {
+   "id": "kronos",
+   "name": "Kronos forecasts",
+   "status": "ok",
+   "detail": "26/30 coins forecast, 3 signals"
+  },
+  {
+   "id": "drawdown",
+   "name": "Paper drawdown",
+   "status": "ok",
+   "detail": "equity 99.60, 0.4% below peak",
+   "drawdown_pct": 0.4
+  }
+ ],
+ "history": [
+  {
+   "t": "2026-10-05T12:34:33.380177+00:00",
+   "overall": "ok"
+  }
+ ]
+}

@@ -429,6 +429,36 @@
       "timestamp": "2026-10-05T12:06:40.661662+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "SOL",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.818,
+      "raw_confidence": 0.818,
+      "price": 120.58,
+      "timestamp": "2026-10-05T12:34:10.526085+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "NIL",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.798,
+      "raw_confidence": 0.798,
+      "price": 0.09525,
+      "timestamp": "2026-10-05T12:34:10.527353+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "SAND",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.642,
+      "raw_confidence": 0.642,
+      "price": 0.07181,
+      "timestamp": "2026-10-05T12:34:10.528744+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -485,7 +515,7 @@
     "strong_volume_ratio": 0.5,
     "meta_agent_trusted": 0.5
   },
-  "runs": 43,
+  "runs": 46,
   "accuracy_history": [],
   "calibration": {
     "bins": {},
@@ -662,18 +692,18 @@
       "requested": 30,
       "eligible": 26,
       "forecast": 26,
-      "signals": 6,
+      "signals": 3,
       "skipped": {
-        "ticker_mismatch": 1,
-        "no_candles": 3
+        "no_candles": 3,
+        "ticker_mismatch": 1
       },
-      "seconds": 185.1,
+      "seconds": 192.5,
       "model": "NeoQuasar/Kronos-small",
       "graded_now": 0,
       "mismatched": [
         "CHIP"
       ],
-      "at": "2026-10-05T12:06:40.644452+00:00"
+      "at": "2026-10-05T12:34:10.507945+00:00"
     }
   }
 }
