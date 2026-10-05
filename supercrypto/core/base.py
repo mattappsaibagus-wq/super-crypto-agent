@@ -26,6 +26,8 @@ from supercrypto.config import (
     KNOWN_IDS,
     MEMORY_DIR,
     REPORTS_DIR,
+    SIGNAL_MAX_AGE_HOURS,
+    SIGNAL_TTL_OVERRIDES,
     SIGNALS_FILE,
 )
 from supercrypto.core.learning import WeightLearner
@@ -140,6 +142,37 @@ def coin_id_for(symbol: str) -> Optional[str]:
     return None
 
 
+def signal_age_hours(sig: dict, now: Optional[datetime] = None) -> Optional[float]:
+    try:
+        ts = datetime.fromisoformat(str(sig.get("timestamp")).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if ts.tzinfo is None:
+        ts = ts.replace(tzinfo=timezone.utc)
+    return ((now or datetime.now(timezone.utc)) - ts).total_seconds() / 3600.0
+
+
+def prune_stale_signals(now: Optional[datetime] = None) -> tuple:
+    """Drop bus signals older than their TTL. Returns (kept, dropped) counts."""
+    if not os.path.exists(SIGNALS_FILE):
+        return 0, 0
+    try:
+        with open(SIGNALS_FILE) as f:
+            bus = json.load(f)
+    except (OSError, ValueError):
+        return 0, 0
+    kept = []
+    for sig in bus:
+        age = signal_age_hours(sig, now)
+        ttl = SIGNAL_TTL_OVERRIDES.get(sig.get("signal"), SIGNAL_MAX_AGE_HOURS)
+        if age is not None and age <= ttl:
+            kept.append(sig)
+    if len(kept) != len(bus):
+        with open(SIGNALS_FILE, "w") as f:
+            json.dump(kept, f, indent=2)
+    return len(kept), len(bus) - len(kept)
+
+
 class BaseAgent:
     NAME = "base"
     EMOJI = "?"
@@ -172,15 +205,21 @@ class BaseAgent:
             return json.load(f)
 
     def write_signals(self, signals: list) -> None:
+        # Same (coin, source, signal) seen again replaces the old entry, so a
+        # re-detected signal carries a fresh timestamp/confidence instead of
+        # the first one ever written (which made the bus look days old).
         existing = self.read_signals()
-        seen = {(s.get("coin"), s.get("source", ""), s.get("signal")) for s in existing}
+        index = {(s.get("coin"), s.get("source", ""), s.get("signal")): i
+                 for i, s in enumerate(existing)}
         for sig in signals:
             sig.setdefault("timestamp", now_iso())
             sig.setdefault("agent", self.name)
             key = (sig.get("coin"), sig.get("source", ""), sig.get("signal"))
-            if key not in seen:
+            if key in index:
+                existing[index[key]] = sig
+            else:
+                index[key] = len(existing)
                 existing.append(sig)
-                seen.add(key)
         with open(SIGNALS_FILE, "w") as f:
             json.dump(existing, f, indent=2)
 

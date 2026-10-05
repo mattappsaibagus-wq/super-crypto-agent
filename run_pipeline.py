@@ -41,7 +41,7 @@ from supercrypto.config import (
     COINGECKO_BASE, DATA_DIR, SIGNALS_FILE, VERDICTS_FILE, WATCHLIST_FILE, now_jst,
 )
 from supercrypto.core.attribution import AttributionEngine
-from supercrypto.core.base import api_get, coin_id_for, ensure_dirs
+from supercrypto.core.base import api_get, coin_id_for, ensure_dirs, prune_stale_signals
 from supercrypto.core.paper import PaperTrader
 from supercrypto.core.risk import RiskManager
 
@@ -52,12 +52,14 @@ def clear_bus():
         json.dump([], f)
 
 
-def load_prices(verdicts):
+def load_prices(verdicts, extra_coins=()):
+    """USD prices for every verdict coin plus any extra coins (open positions,
+    so stops/targets keep working after a coin's signals expire)."""
     ids, prices = {}, {}
-    for v in verdicts:
-        cid = coin_id_for(v["coin"])
+    for coin in [v["coin"] for v in verdicts] + list(extra_coins):
+        cid = coin_id_for(coin)
         if cid:
-            ids[cid] = v["coin"]
+            ids[cid] = coin
     if ids:
         data = (
             api_get(
@@ -87,6 +89,9 @@ def run_once(args) -> int:
         clear_bus()
     else:
         ensure_dirs()
+    kept, dropped = prune_stale_signals()
+    if dropped:
+        print("bus: dropped %d stale signal(s), kept %d" % (dropped, kept))
 
     print("super-crypto-agent — multi-agent signal & research engine (paper-trading only)")
     t0 = time.time()
@@ -156,7 +161,7 @@ def run_once(args) -> int:
 
     print("[6] paper trading")
     before_positions = dict(paper.state.get("positions", {}))
-    paper.process(verdicts, load_prices(verdicts))
+    paper.process(verdicts, load_prices(verdicts, before_positions.keys()))
     after_positions = paper.state.get("positions", {})
 
     # Attribution: record closed trades

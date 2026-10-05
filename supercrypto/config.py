@@ -182,6 +182,17 @@ HL_MAX_SIGNALS = 15
 # Fundraising
 FUNDRAISING_FRESH_DAYS = 14       # signal a deal for this long after first seen
 
+# Signal bus freshness. The bus persists between scans (--no-clear), so each
+# scan first drops signals no agent has re-confirmed within their TTL.
+SIGNAL_MAX_AGE_HOURS = 24
+SIGNAL_TTL_OVERRIDES = {
+    # Due diligence only re-checks ~8 coins a scan and liquidity/holder facts
+    # change slowly, so these may live longer.
+    "dd_result": 72,
+    "holder_red_flag": 72,
+    "holder_healthy": 72,
+}
+
 # Kronos forecast agent (vendor/kronos, optional deps in requirements-kronos.txt)
 KRONOS_MODEL_ID = "NeoQuasar/Kronos-small"
 KRONOS_TOKENIZER_ID = "NeoQuasar/Kronos-Tokenizer-base"

@@ -220,6 +220,58 @@ def test_advisor_subtracts_bearish_sources():
         assert key in BEARISH_SIGNALS
 
 
+
+# ── Signal bus freshness ───────────────────────────────────────────────────
+
+def _with_tmp_bus(fn):
+    import json as _json
+    import supercrypto.core.base as base
+    orig = base.SIGNALS_FILE
+    path = os.path.join(tempfile.mkdtemp(), "signals.json")
+    base.SIGNALS_FILE = path
+    try:
+        return fn(base, path, _json)
+    finally:
+        base.SIGNALS_FILE = orig
+
+
+def test_prune_drops_stale_signals_keeps_fresh_and_dd():
+    from datetime import datetime, timedelta, timezone
+
+    def run(base, path, json):
+        now = datetime.now(timezone.utc)
+        ago = lambda h: (now - timedelta(hours=h)).isoformat()  # noqa: E731
+        bus = [
+            {"coin": "A", "signal": "microcap_opportunity", "timestamp": ago(2)},
+            {"coin": "B", "signal": "microcap_opportunity", "timestamp": ago(30)},
+            {"coin": "C", "signal": "dd_result", "timestamp": ago(48)},
+            {"coin": "D", "signal": "dd_result", "timestamp": ago(80)},
+            {"coin": "E", "signal": "whale_up"},
+        ]
+        json.dump(bus, open(path, "w"))
+        kept, dropped = base.prune_stale_signals(now)
+        left = {s["coin"] for s in json.load(open(path))}
+        assert (kept, dropped) == (2, 3), (kept, dropped)
+        assert left == {"A", "C"}, left
+    _with_tmp_bus(run)
+
+
+def test_write_signals_refreshes_redetected_signal():
+    def run(base, path, json):
+        json.dump([{"coin": "X", "source": "s", "signal": "whale_up", "agent": "whale",
+                    "confidence": 0.5, "timestamp": "2026-01-01T00:00:00+00:00"}], open(path, "w"))
+        agent = base.BaseAgent.__new__(base.BaseAgent)
+        agent.name = "whale"
+        base.BaseAgent.write_signals(agent, [
+            {"coin": "X", "source": "s", "signal": "whale_up", "confidence": 0.8},
+            {"coin": "Y", "source": "s", "signal": "whale_up", "confidence": 0.6},
+        ])
+        bus = json.load(open(path))
+        assert len(bus) == 2
+        x = [b for b in bus if b["coin"] == "X"][0]
+        assert x["confidence"] == 0.8 and not x["timestamp"].startswith("2026-01-01")
+    _with_tmp_bus(run)
+
 if __name__ == "__main__":
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     failed = 0
