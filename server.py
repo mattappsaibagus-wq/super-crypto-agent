@@ -44,6 +44,29 @@ SIGNALS_FILE = os.path.join(DATA_DIR, "signals.json")
 ATTRIB_DIR = os.path.join(DATA_DIR, "attribution")
 MEMORY_DIR = os.path.join(DATA_DIR, "memory")
 _cache_file = os.path.join(DATA_DIR, "market_cache.json")
+VERDICTS_FILE = os.path.join(DATA_DIR, "verdicts.json")
+KRONOS_FILE = os.path.join(DATA_DIR, "kronos_forecasts.json")
+
+
+def _read_json(path, default):
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return default
+
+
+def get_kronos_summary():
+    """Latest Kronos forecasts + graded track record for the dashboard."""
+    store = _read_json(KRONOS_FILE, {}) or {}
+    stats = store.get("stats") or {}
+    return {
+        "available": bool(store.get("latest")) and not stats.get("unavailable"),
+        "stats": stats,
+        "track_record": store.get("track_record") or {},
+        "latest": store.get("latest") or {},
+        "recent": [r for r in (store.get("history") or []) if r.get("graded")][-40:][::-1],
+    }
 
 
 def load_market_cache():
@@ -306,7 +329,8 @@ def get_agent_memory_snapshot():
     snapshots = {}
     if not os.path.exists(MEMORY_DIR):
         return snapshots
-    for name in ["whale", "sentiment", "pattern", "correlation", "news", "dd", "macro", "meta", "advisor"]:
+    for name in ["whale", "sentiment", "pattern", "correlation", "news", "dd", "macro", "meta", "advisor",
+                 "microcap", "santiment", "derivatives", "fundraising", "kronos"]:
         path = os.path.join(MEMORY_DIR, f"{name}_memory.json")
         if not os.path.exists(path):
             continue
@@ -500,6 +524,42 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
   .attribution-table th { color: var(--muted); font-weight: 500; }
   .attribution-table tr:hover { background: rgba(213,184,120,.03); }
 
+  /* Kronos + per-coin agent evidence */
+  .sec-sub { font: 400 .72rem var(--font-data); color: var(--muted); margin-left: 8px; }
+  .kr-tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 12px; }
+  .kr-tile { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
+  .kr-tile .k { font-size: .66rem; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+  .kr-tile .v { font: 600 1.25rem var(--font-data); margin-top: 2px; }
+  .kr-tile .s { font-size: .68rem; color: var(--muted); }
+  .kr-status { font-size: .76rem; color: var(--muted); margin-bottom: 10px; }
+  .kr-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+  .kr-table { width: 100%; border-collapse: collapse; font-size: .8rem; min-width: 560px; }
+  .kr-table th, .kr-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .kr-table th { color: var(--muted); font-weight: 500; font-size: .7rem; text-transform: uppercase; letter-spacing: .04em; }
+  .kr-table tr.kr-row { cursor: pointer; }
+  .kr-table tr.kr-row:hover { background: var(--surface2); }
+  .kr-table td.num { font-family: var(--font-data); }
+  .kr-pill { font: 600 .66rem var(--font-data); padding: 2px 7px; border-radius: 99px; border: 1px solid var(--border); color: var(--muted); }
+  .kr-pill.up { color: var(--green); border-color: var(--green-dark); }
+  .kr-pill.down { color: var(--red); border-color: var(--red-dark); }
+  .kr-line { font: 500 .76rem var(--font-data); color: var(--muted); margin: 6px 0 2px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .agent-chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0 6px; }
+  .agent-chip { font-size: .68rem; padding: 2px 7px; border-radius: 99px; background: var(--surface2); border: 1px solid var(--border); color: var(--text); white-space: nowrap; }
+  .agent-chip.bear { border-color: var(--red-dark); }
+  .agent-chip.kr { border-color: var(--accent-dark); }
+  .intel-sec { margin-top: 18px; border-top: 1px solid var(--border); padding-top: 14px; }
+  .intel-title { font-size: .85rem; font-weight: 600; margin-bottom: 8px; }
+  .ev-agent { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+  .ev-head { display: flex; justify-content: space-between; gap: 8px; font-size: .8rem; font-weight: 600; }
+  .ev-sig { font: 400 .74rem var(--font-data); color: var(--muted); margin-top: 4px; }
+  .ev-sig .why { color: var(--text); font-family: var(--font-body); }
+  .kr-chart { width: 100%; height: auto; display: block; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; }
+  .kr-grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
+  @media (max-width: 700px) {
+    .kr-tiles { grid-template-columns: repeat(2, 1fr); }
+    .kr-grid4 { grid-template-columns: repeat(2, 1fr); }
+  }
+
   @media (max-width: 700px) {
     body { padding: 8px; }
     header { padding: 40px 0 24px; }
@@ -532,6 +592,9 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
 <h2 class="section-title">🤖 Agent Team ({{ agent_count }} agents)</h2>
 <div class="agents-grid" id="agentGrid"></div>
 
+<h2 class="section-title">🔮 Kronos Forecasts <span class="sec-sub">next 24h · foundation model on 4h candles</span></h2>
+<div id="kronosPanel"><div class="empty">Loading Kronos forecasts…</div></div>
+
 <h2 class="section-title">📊 Verdict Summary</h2>
 <div class="summary-row" id="summaryRow" style="display:none">
   <div class="summary-chip chip-buy" id="buyCount">0<br><small>BUY</small></div>
@@ -563,7 +626,12 @@ const AGENTS = [
   {name: "Santiment Activity", emoji: "🛰️", key: "santiment"},
   {name: "Derivatives Flow", emoji: "📉", key: "derivatives"},
   {name: "Fresh Funding", emoji: "💰", key: "fundraising"},
+  {name: "Kronos Forecast", emoji: "🔮", key: "kronos"},
 ];
+const AGENT_META = Object.fromEntries(AGENTS.map(a => [a.key, a]));
+AGENT_META.advisor = {name: "Advisor", emoji: "📋", key: "advisor"};
+const CARD_DATA = {};
+let KRONOS = null;
 
 function renderAgents() {
   const grid = document.getElementById("agentGrid");
@@ -662,6 +730,7 @@ async function loadReport() {
             const details = (c.details||[]).map(d => '<li>' + d + '</li>').join('');
             const sym = c.coin;
             symbols.push(sym);
+            CARD_DATA[sym] = c;
             html += '<div class="card" onclick="showCoin(\'' + sym + '\', \'1d\')">' +
                 '<div class="card-header">' +
                   '<span class="coin-name">' + sym + '</span>' +
@@ -669,6 +738,8 @@ async function loadReport() {
                 '</div>' +
                 '<div class="card-price-row" id="price-' + sym + '"></div>' +
                 '<svg class="card-spark is-loading" id="spark-' + sym + '" viewBox="0 0 100 32" preserveAspectRatio="none"></svg>' +
+                kronosLine(c.kronos) +
+                agentChips(c.evidence) +
                 '<ul class="card-details">' + details + '</ul>' +
               '</div>';
         });
@@ -714,7 +785,181 @@ async function loadAttribution() {
   } catch(e) {}
 }
 
+function esc(v) {
+  return String(v == null ? '' : v).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function pctCls(v) { return v > 0 ? 'gain' : v < 0 ? 'loss' : 'flat'; }
+function fmtSigned(v, d) {
+  if (v == null || !Number.isFinite(v)) return '—';
+  return (v > 0 ? '+' : '') + v.toFixed(d == null ? 1 : d) + '%';
+}
+function timeAgo(iso) {
+  if (!iso) return '';
+  const ms = Date.now() - new Date(iso).getTime();
+  if (!Number.isFinite(ms)) return '';
+  const h = ms / 3.6e6;
+  if (h < 1) return Math.max(1, Math.round(ms / 6e4)) + 'm ago';
+  if (h < 48) return Math.round(h) + 'h ago';
+  return Math.round(h / 24) + 'd ago';
+}
+function groupEvidence(ev) {
+  const by = {};
+  (ev || []).forEach(e => { (by[e.agent] = by[e.agent] || []).push(e); });
+  return by;
+}
+function kronosPill(fc) {
+  if (!fc || !fc.signal) return '<span class="kr-pill">no call</span>';
+  const up = fc.signal === 'kronos_forecast_up';
+  return '<span class="kr-pill ' + (up ? 'up' : 'down') + '">' + (up ? '▲ UP' : '▼ DOWN') + ' signal</span>';
+}
+function kronosLine(fc) {
+  if (!fc) return '';
+  const agree = Math.round((fc.path_agreement || 0) * (fc.paths || 0));
+  return '<div class="kr-line">🔮 Kronos 24h <b class="' + pctCls(fc.expected_move_pct) + '">' +
+    fmtSigned(fc.expected_move_pct) + '</b> · ' + agree + '/' + (fc.paths || 0) + ' paths ' + kronosPill(fc) + '</div>';
+}
+function agentChips(ev) {
+  const by = groupEvidence(ev);
+  const keys = Object.keys(by);
+  if (!keys.length) return '';
+  return '<div class="agent-chips" title="Agents with signals on this coin">' + keys.map(k => {
+    const m = AGENT_META[k] || {name: k, emoji: '•'};
+    const bear = by[k].every(e => e.bearish);
+    return '<span class="agent-chip' + (k === 'kronos' ? ' kr' : '') + (bear ? ' bear' : '') + '" title="' +
+      esc(m.name + ': ' + by[k].map(e => e.signal).join(', ')) + '">' + m.emoji + ' ' + esc(m.name) +
+      (by[k].length > 1 ? ' ×' + by[k].length : '') + '</span>';
+  }).join('') + '</div>';
+}
+
+// Kronos fan chart: last 7 days of 4h closes, then the forecast median with
+// its 10-90% path band, split by a "now" line.
+function kronosFanSVG(fc, w, h, mini) {
+  const hist = (fc.history || []).map(p => p.c);
+  const f = fc.forecast || [];
+  if (hist.length < 2 || !f.length) return '';
+  const all = hist.concat(f.map(p => p.p10), f.map(p => p.p90), [fc.reference_price]).filter(Number.isFinite);
+  const min = Math.min(...all), max = Math.max(...all), span = (max - min) || 1;
+  const n = hist.length + f.length;
+  const padL = mini ? 1 : 6, padR = mini ? 1 : 64, padY = mini ? 2 : 14;
+  const X = i => padL + i * (w - padL - padR) / (n - 1);
+  const Y = v => padY + (1 - (v - min) / span) * (h - padY * 2);
+  const last = hist.length - 1;
+  const histPath = hist.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ');
+  const med = [[last, fc.reference_price || hist[last]]].concat(f.map((p, i) => [last + 1 + i, p.median]));
+  const medPath = med.map((pt, i) => (i ? 'L' : 'M') + X(pt[0]).toFixed(1) + ',' + Y(pt[1]).toFixed(1)).join(' ');
+  const top = [[last, fc.reference_price || hist[last]]].concat(f.map((p, i) => [last + 1 + i, p.p90]));
+  const bot = f.map((p, i) => [last + 1 + i, p.p10]).reverse();
+  const band = top.concat(bot).map((pt, i) => (i ? 'L' : 'M') + X(pt[0]).toFixed(1) + ',' + Y(pt[1]).toFixed(1)).join(' ') + ' Z';
+  const col = (fc.expected_move_pct || 0) >= 0 ? 'var(--green)' : 'var(--red)';
+  let svg = '<svg class="' + (mini ? '' : 'kr-chart') + '" viewBox="0 0 ' + w + ' ' + h + '" ' +
+    (mini ? 'width="' + w + '" height="' + h + '"' : 'preserveAspectRatio="none"') + '>' +
+    '<path d="' + band + '" fill="' + col + '" fill-opacity="0.16" stroke="none"/>' +
+    '<path d="' + histPath + '" fill="none" stroke="var(--muted)" stroke-width="' + (mini ? 1.2 : 1.6) + '"/>' +
+    '<path d="' + medPath + '" fill="none" stroke="' + col + '" stroke-width="' + (mini ? 1.5 : 2) + '" stroke-dasharray="' + (mini ? '0' : '5 3') + '"/>';
+  if (!mini) {
+    const nx = X(last).toFixed(1);
+    const endV = f[f.length - 1].median;
+    svg += '<line x1="' + nx + '" x2="' + nx + '" y1="4" y2="' + (h - 4) + '" stroke="var(--border)" stroke-dasharray="2 3"/>' +
+      '<text x="' + (X(last) - 4).toFixed(1) + '" y="12" fill="var(--muted)" font-size="10" text-anchor="end" font-family="DM Mono, monospace">now</text>' +
+      '<text x="' + (w - padR + 6) + '" y="' + (Y(endV) + 4).toFixed(1) + '" fill="' + col + '" font-size="11" font-family="DM Mono, monospace">' + fmtPrice(endV) + '</text>' +
+      '<text x="' + (w - padR + 6) + '" y="' + (Y(max) + 8).toFixed(1) + '" fill="var(--muted)" font-size="10" font-family="DM Mono, monospace">' + fmtPrice(max) + '</text>' +
+      '<text x="' + (w - padR + 6) + '" y="' + (Y(min)).toFixed(1) + '" fill="var(--muted)" font-size="10" font-family="DM Mono, monospace">' + fmtPrice(min) + '</text>';
+  }
+  return svg + '</svg>';
+}
+
+function trTile(k, v, s) {
+  return '<div class="kr-tile"><div class="k">' + k + '</div><div class="v">' + v + '</div><div class="s">' + (s || '') + '</div></div>';
+}
+
+async function loadKronos() {
+  const el = document.getElementById('kronosPanel');
+  try {
+    const r = await fetch('/api/kronos');
+    KRONOS = await r.json();
+  } catch (e) {
+    el.innerHTML = '<div class="empty">Kronos data unavailable</div>';
+    return;
+  }
+  const st = KRONOS.stats || {}, tr = KRONOS.track_record || {};
+  const sig = tr.signals || {}, all = tr.all || {};
+  const pct = v => v == null ? '—' : v + '%';
+  let html = '<div class="kr-tiles">' +
+    trTile('Signal hit rate', pct(sig.hit_rate), (sig.n || 0) + ' graded signals') +
+    trTile('All-forecast hit rate', pct(all.hit_rate), (all.n || 0) + ' graded forecasts') +
+    trTile('Inside 10–90% band', pct(all.in_range), 'calibration check') +
+    trTile('Avg abs. error', all.mae == null ? '—' : all.mae + '%', 'forecast vs actual 24h') +
+    trTile('Following calls', all.avg_return == null ? '—' : fmtSigned(all.avg_return, 2), 'avg 24h return, ' + (tr.pending || 0) + ' pending') +
+    '</div>';
+  if (st.unavailable) {
+    html += '<div class="kr-status">⚠️ Kronos sat out the last scan: ' + esc(st.unavailable) + '</div>';
+  } else if (st.at) {
+    html += '<div class="kr-status">Last run ' + formatJST(st.at) + ' · ' + (st.forecast || 0) + ' coins forecast · ' +
+      (st.signals || 0) + ' strong enough to signal · ' + esc(st.model || '') + ' · ' + (st.seconds || 0) + 's of inference</div>';
+  }
+  const rows = Object.entries(KRONOS.latest || {}).sort((a, b) =>
+    (b[1].signal ? 1 : 0) - (a[1].signal ? 1 : 0) || Math.abs(b[1].expected_move_pct) - Math.abs(a[1].expected_move_pct));
+  if (!rows.length) {
+    el.innerHTML = html + '<div class="empty">No forecasts yet — they appear after the next scheduled scan.</div>';
+    return;
+  }
+  const byCoin = tr.by_coin || {};
+  html += '<div class="kr-table-wrap"><table class="kr-table"><thead><tr><th>Coin</th><th>Path</th><th>Expected 24h</th>' +
+    '<th>10–90% range</th><th>Agreement</th><th>Call</th><th>Track record</th></tr></thead><tbody>';
+  rows.forEach(([coin, fc]) => {
+    const rec = byCoin[coin];
+    html += '<tr class="kr-row" onclick="showCoin(\'' + esc(coin) + '\', \'1d\')">' +
+      '<td><b>' + esc(coin) + '</b></td>' +
+      '<td>' + kronosFanSVG(fc, 90, 26, true) + '</td>' +
+      '<td class="num ' + pctCls(fc.expected_move_pct) + '">' + fmtSigned(fc.expected_move_pct, 2) + '</td>' +
+      '<td class="num">' + fmtSigned(fc.range_pct[0]) + ' … ' + fmtSigned(fc.range_pct[1]) + '</td>' +
+      '<td class="num">' + Math.round((fc.path_agreement || 0) * 100) + '%</td>' +
+      '<td>' + kronosPill(fc) + '</td>' +
+      '<td class="num">' + (rec && rec.n ? rec.hit_rate + '% of ' + rec.n : '—') + '</td></tr>';
+  });
+  el.innerHTML = html + '</tbody></table></div>';
+}
+
+function renderCoinIntel(symbol) {
+  const kEl = document.getElementById('modalKronos');
+  const aEl = document.getElementById('modalAgents');
+  const fc = (KRONOS && KRONOS.latest && KRONOS.latest[symbol]) || (CARD_DATA[symbol] && CARD_DATA[symbol].kronos);
+  if (fc) {
+    const rec = ((KRONOS && KRONOS.track_record && KRONOS.track_record.by_coin) || {})[symbol];
+    const agree = Math.round((fc.path_agreement || 0) * (fc.paths || 0));
+    kEl.innerHTML = '<div class="intel-sec"><div class="intel-title">🔮 Kronos forecast · next ' + (fc.horizon_h || 24) + 'h ' + kronosPill(fc) + '</div>' +
+      kronosFanSVG(fc, 640, 190, false) +
+      '<div class="kr-grid4">' +
+        '<div class="stat-item"><div class="stat-label">Expected move</div><div class="stat-value ' + pctCls(fc.expected_move_pct) + '">' + fmtSigned(fc.expected_move_pct, 2) + '</div></div>' +
+        '<div class="stat-item"><div class="stat-label">10–90% range</div><div class="stat-value">' + fmtSigned(fc.range_pct[0]) + ' … ' + fmtSigned(fc.range_pct[1]) + '</div></div>' +
+        '<div class="stat-item"><div class="stat-label">Paths agreeing</div><div class="stat-value">' + agree + ' / ' + (fc.paths || 0) + '</div></div>' +
+        '<div class="stat-item"><div class="stat-label">Move vs daily vol</div><div class="stat-value">' + (fc.move_vs_vol == null ? '—' : fc.move_vs_vol + '×') + '</div></div>' +
+      '</div>' +
+      '<div style="font-size:.72rem;color:var(--muted);margin-top:8px">Target ' + formatJST(fc.target_time) + ' · ref price ' + fmtPrice(fc.reference_price) +
+      ' · t-stat ' + (fc.t_stat == null ? '—' : fc.t_stat) + ' · ' + (fc.context_bars || 0) + ' bars of context · ' +
+      (rec && rec.n ? 'Kronos on ' + esc(symbol) + ': ' + rec.hit_rate + '% direction hits over ' + rec.n + ' graded forecasts' : 'no graded forecasts for this coin yet') +
+      '</div></div>';
+  } else {
+    kEl.innerHTML = '';
+  }
+  const c = CARD_DATA[symbol];
+  const by = groupEvidence(c && c.evidence);
+  const keys = Object.keys(by);
+  if (!keys.length) { aEl.innerHTML = ''; return; }
+  aEl.innerHTML = '<div class="intel-sec"><div class="intel-title">🤖 Agents working on ' + esc(symbol) + ' (' + keys.length + ')</div>' +
+    keys.map(k => {
+      const m = AGENT_META[k] || {name: k, emoji: '•'};
+      return '<div class="ev-agent"><div class="ev-head"><span>' + m.emoji + ' ' + esc(m.name) + '</span><span style="color:var(--muted);font-weight:400;font-size:.72rem">' +
+        by[k].length + ' signal' + (by[k].length > 1 ? 's' : '') + '</span></div>' +
+        by[k].map(e => '<div class="ev-sig"><span class="' + (e.bearish ? 'loss' : 'gain') + '">' + esc(e.signal) + '</span> · conf ' +
+          (e.confidence == null ? '—' : Number(e.confidence).toFixed(2)) + ' · ' + timeAgo(e.timestamp) +
+          (e.reason ? '<br><span class="why">' + esc(e.reason) + '</span>' : '') + '</div>').join('') +
+        '</div>';
+    }).join('') + '</div>';
+}
+
 loadReport();
+loadKronos();
 loadSignals();
 loadAttribution();
 </script>
@@ -736,6 +981,8 @@ loadAttribution();
       <div class="ohlc-readout" id="ohlcReadout"></div>
       <div class="ohlc-stats-grid" id="ohlcStatsGrid"></div>
       <div id="chartNote" style="font-size:.7rem;color:var(--muted);margin-top:8px;text-align:center"></div>
+      <div id="modalKronos"></div>
+      <div id="modalAgents"></div>
     </div>
   </div>
 </div>
@@ -1063,6 +1310,7 @@ async function showCoin(symbol, interval) {
     }
   };
 
+  renderCoinIntel(symbol);
   const data = await loadCoinData(symbol);
   renderStats(data);
 
@@ -1142,6 +1390,7 @@ AGENTS_DATA = [
     {"name": "Santiment Activity", "emoji": "🛰️", "key": "santiment"},
     {"name": "Derivatives Flow", "emoji": "📉", "key": "derivatives"},
     {"name": "Fresh Funding", "emoji": "💰", "key": "fundraising"},
+    {"name": "Kronos Forecast", "emoji": "🔮", "key": "kronos"},
 ]
 
 
@@ -1170,8 +1419,24 @@ def api_report():
             ts = datetime.strptime(fname, "%Y%m%d_%H%M%S").replace(tzinfo=JST).isoformat()
         except Exception:
             ts = datetime.fromtimestamp(os.path.getmtime(path), JST).isoformat(timespec="seconds")
-        return jsonify({"report": md, "cards": parse_report_cards(md), "timestamp": ts})
+        cards = parse_report_cards(md)
+        # Enrich each card with which agents worked on the coin (and what they
+        # saw) plus its Kronos forecast, so the dashboard can show them.
+        verdicts = {v.get("coin"): v for v in (_read_json(VERDICTS_FILE, {}) or {}).get("verdicts", [])}
+        kronos_latest = (_read_json(KRONOS_FILE, {}) or {}).get("latest") or {}
+        for c in cards:
+            v = verdicts.get(c["coin"]) or {}
+            c["agents"] = v.get("agents") or []
+            c["evidence"] = v.get("evidence") or []
+            c["score"] = v.get("score")
+            c["kronos"] = kronos_latest.get(c["coin"])
+        return jsonify({"report": md, "cards": cards, "timestamp": ts})
     return jsonify({"report": None, "cards": [], "timestamp": None})
+
+
+@app.route("/api/kronos")
+def api_kronos():
+    return jsonify(get_kronos_summary())
 
 
 @app.route("/api/signals")

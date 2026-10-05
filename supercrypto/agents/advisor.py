@@ -66,6 +66,8 @@ class InvestmentAdvisor(BaseAgent):
             "funding_overheated": 0.35,
             "oi_flush": 0.30,
             "fresh_funding": 0.25,
+            "kronos_forecast_up": 0.35,
+            "kronos_forecast_down": 0.35,
         }
 
     def run(self, **kwargs):
@@ -108,9 +110,19 @@ class InvestmentAdvisor(BaseAgent):
             if name in ("meta_agent_trusted", "meta_agent_deprioritized"):
                 continue
             bucket = agg.setdefault(
-                coin, {"bias": 0.0, "count": 0, "notes": [], "price": 0}
+                coin, {"bias": 0.0, "count": 0, "notes": [], "price": 0, "evidence": []}
             )
             details = sig.get("details") or {}
+            # Per-agent evidence so the dashboard can show who is working on
+            # this coin and what each agent actually saw.
+            bucket["evidence"].append({
+                "agent": sig.get("agent") or sig.get("source") or "?",
+                "signal": name,
+                "confidence": sig.get("confidence"),
+                "bearish": name in BEARISH_SIGNALS,
+                "reason": ((details.get("reasons") or [""])[0] or "")[:220],
+                "timestamp": sig.get("timestamp"),
+            })
             if name == "dd_result":
                 bucket["dd"] = sig.get("confidence")
                 bucket["notes"] += (details.get("reasons") or [])[:3]
@@ -178,6 +190,8 @@ class InvestmentAdvisor(BaseAgent):
                     "holder_red_flag": coin in red_flags,
                     "regime": regime,
                     "suggested_size_pct": 0.0,  # risk manager fills this
+                    "agents": sorted({e["agent"] for e in b["evidence"]}),
+                    "evidence": b["evidence"],
                 }
             )
 

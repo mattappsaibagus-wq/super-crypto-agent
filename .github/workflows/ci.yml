@@ -46,6 +46,9 @@ jobs:
       - name: Run alphaforge tests
         run: python3 tests/test_alphaforge.py
 
+      - name: Run Kronos agent tests
+        run: python3 tests/test_kronos.py
+
       - name: Test pipeline (dry run)
         env:
           COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}

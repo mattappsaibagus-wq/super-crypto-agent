@@ -2,7 +2,7 @@
 """Super Crypto Agent orchestrator.
 
 Pipeline: macro → sentiment → pattern → correlation → discovery
-→ derivatives/fundraising/santiment → DD → on-chain
+→ derivatives/fundraising/santiment → Kronos forecasts → DD → on-chain
 → whale(on-chain) → news → meta-learner → advisor → risk → paper trading.
 
 Run: python3 run_pipeline.py [--loop N] [--coin SYMBOL]
@@ -27,6 +27,7 @@ from supercrypto.agents.correlation import CorrelationAgent
 from supercrypto.agents.dd import DueDiligence
 from supercrypto.agents.derivatives import DerivativesFlow
 from supercrypto.agents.fundraising import FundraisingAgent
+from supercrypto.agents.kronos import KronosForecast
 from supercrypto.agents.macro import MacroRegime
 from supercrypto.agents.meta_learner import MetaLearner
 from supercrypto.agents.microcap import MicroCapFinder
@@ -36,7 +37,9 @@ from supercrypto.agents.pattern import PatternAgent
 from supercrypto.agents.santiment import SantimentActivity
 from supercrypto.agents.sentiment import SentimentAgent
 from supercrypto.agents.whale import WhaleDetector
-from supercrypto.config import COINGECKO_BASE, DATA_DIR, SIGNALS_FILE, WATCHLIST_FILE, now_jst
+from supercrypto.config import (
+    COINGECKO_BASE, DATA_DIR, SIGNALS_FILE, VERDICTS_FILE, WATCHLIST_FILE, now_jst,
+)
 from supercrypto.core.attribution import AttributionEngine
 from supercrypto.core.base import api_get, coin_id_for, ensure_dirs
 from supercrypto.core.paper import PaperTrader
@@ -67,6 +70,16 @@ def load_prices(verdicts):
             if cid in data and isinstance(data[cid], dict):
                 prices[sym] = data[cid].get("usd")
     return prices
+
+
+def write_verdicts(verdicts, regime) -> None:
+    """Structured verdicts (with per-agent evidence) for the dashboard."""
+    with open(VERDICTS_FILE, "w") as f:
+        json.dump({
+            "generated_at": now_jst().isoformat(timespec="seconds"),
+            "regime": regime,
+            "verdicts": verdicts,
+        }, f, indent=1, default=str)
 
 
 def run_once(args) -> int:
@@ -110,6 +123,10 @@ def run_once(args) -> int:
     FundraisingAgent().execute()
     print("[1-g] on-chain & dev activity (Santiment)")
     SantimentActivity().execute()
+    # Kronos forecasts the majors plus every coin the agents above surfaced.
+    # Without torch / the weights it sits out and the scan carries on.
+    print("[1-h] Kronos foundation-model forecasts")
+    KronosForecast().execute()
 
     print("[2] due diligence")
     DueDiligence().execute()
@@ -134,6 +151,8 @@ def run_once(args) -> int:
             risk_cfg = json.load(f)
     paper = PaperTrader()
     verdicts = RiskManager(risk_cfg).adjust(verdicts, paper)
+
+    write_verdicts(verdicts, regime)
 
     print("[6] paper trading")
     before_positions = dict(paper.state.get("positions", {}))
@@ -174,6 +193,7 @@ def run_once(args) -> int:
                     "active_addresses_spike",
                     "social_spike",
                     "fresh_funding",
+                    "kronos_forecast_up",
                 )
             ]
             attrib.record_trade(

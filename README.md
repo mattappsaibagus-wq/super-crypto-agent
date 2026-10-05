@@ -19,6 +19,7 @@
 | **Santiment Activity** | 🛰️ | Dev-activity and active-address spikes (plus social volume with a key) |
 | **Derivatives Flow** | 📉 | Hyperliquid funding + open-interest: squeezes, build-ups, crowded longs, flushes |
 | **Fresh Funding** | 💰 | New VC rounds for tradable tokens from crypto-fundraising.info |
+| **Kronos Forecast** | 🔮 | Foundation-model 24h forecasts from 4h candles ([Kronos](https://github.com/shiyu-coder/Kronos)) |
 
 ## Key Features
 
@@ -80,6 +81,42 @@ render deploy --service-name super-crypto-agent
 - **Hyperliquid** — funding, open interest, mark price for every perp in one free call (the same data Buildix charts)
 - **crypto-fundraising.info** — public deal-flow table (newest ~10 rounds); scraped, low weight
 
+## Kronos Forecast agent 🔮
+
+[Kronos](https://github.com/shiyu-coder/Kronos) (MIT) is a decoder-only Transformer
+pre-trained on K-line (OHLCV) data from 45+ exchanges, crypto included. Its inference
+code is vendored under `vendor/kronos/`; the `Kronos-small` weights (~100 MB) download
+from Hugging Face on first run and are cached by the scan workflow.
+
+Each scan it forecasts the majors (BTC, ETH, SOL, BNB, XRP) plus every coin the other
+agents surfaced (up to 30), using the last 60 days of **4h candles** (Binance public
+data API, KuCoin fallback):
+
+- 8 independent sample paths per coin, 24h ahead (6 bars) — the same horizon the
+  learning loop grades.
+- Emits `kronos_forecast_up` / `kronos_forecast_down` only when ≥75% of paths agree,
+  the mean move clears 1% and a t-stat of 2.5 across paths, and the move isn't
+  implausible (>4× the coin's daily volatility). Everything else is still shown on the
+  dashboard as "no call".
+- Every forecast is stored in `data/kronos_forecasts.json` and **graded 24h later**
+  against the real close: direction hit rate, share inside the 10–90% band, average
+  error, and the return from following the calls — overall, for signals only, and per
+  coin. The WeightLearner also tracks both signals, so if Kronos has no edge its weight
+  decays on its own.
+- Without torch or the weights it sits out and the scan carries on. Disable it with
+  `KRONOS_ENABLED=0`.
+
+Local install (CPU-only torch):
+
+```bash
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install -r requirements-kronos.txt
+```
+
+Dashboard: a **🔮 Kronos Forecasts** panel (track record + every coin's 24h path), a
+Kronos line on each verdict card, and in each coin's detail view the forecast fan chart
+plus **every agent working on that coin** with the signals and reasons it contributed.
+
 ## Architecture
 
 ```
@@ -102,6 +139,7 @@ supercrypto/
 ```bash
 python3 tests/test_alphaforge.py    # 25 original tests
 python3 tests/test_supercrypto.py   #  9 enhanced feature tests
+python3 tests/test_kronos.py        # Kronos agent (offline, fake predictor)
 ```
 
 ## Self-Improvement Loop

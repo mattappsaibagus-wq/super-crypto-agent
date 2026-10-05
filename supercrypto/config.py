@@ -14,6 +14,7 @@ MEMORY_DIR = os.path.join(DATA_DIR, "memory")
 REPORTS_DIR = os.path.join(DATA_DIR, "reports")
 WATCHLIST_FILE = os.path.join(DATA_DIR, "watchlist.json")
 PAPER_FILE = os.path.join(DATA_DIR, "paper_portfolio.json")
+VERDICTS_FILE = os.path.join(DATA_DIR, "verdicts.json")
 
 # All user-facing scan times are shown in Japan Standard Time. Japan has no
 # DST, so a fixed +09:00 offset is exact and needs no tzdata package. The
@@ -88,6 +89,8 @@ ALL_SIGNALS = frozenset({
     "funding_squeeze", "oi_buildup", "funding_overheated", "oi_flush",
     # VC funding rounds (crypto-fundraising.info)
     "fresh_funding",
+    # Kronos foundation-model candlestick forecasts
+    "kronos_forecast_up", "kronos_forecast_down",
 })
 
 # Signals the advisor subtracts from a coin's bias instead of adding.
@@ -95,6 +98,7 @@ BEARISH_SIGNALS = frozenset({
     "whale_down", "whale_onchain_down", "news_bearish",
     "sentiment_bear", "pattern_bearish",
     "active_addresses_fade", "funding_overheated", "oi_flush",
+    "kronos_forecast_down",
 })
 
 DD_WEIGHTS = {
@@ -177,6 +181,22 @@ HL_MAX_SIGNALS = 15
 
 # Fundraising
 FUNDRAISING_FRESH_DAYS = 14       # signal a deal for this long after first seen
+
+# Kronos forecast agent (vendor/kronos, optional deps in requirements-kronos.txt)
+KRONOS_MODEL_ID = "NeoQuasar/Kronos-small"
+KRONOS_TOKENIZER_ID = "NeoQuasar/Kronos-Tokenizer-base"
+KRONOS_INTERVAL_HOURS = 4         # 4h candles
+KRONOS_LOOKBACK = 360             # bars of context (60 days; model max is 512)
+KRONOS_MIN_HISTORY = 180          # skip coins with less than 30 days of 4h bars
+KRONOS_PRED_LEN = 6               # 6 x 4h = 24h, the horizon outcomes settle at
+KRONOS_N_PATHS = 8                # independent sampled paths per coin
+KRONOS_MAX_COINS = 30             # coins forecast per scan
+KRONOS_MIN_MOVE_PCT = 1.0         # |expected 24h move| noise floor
+KRONOS_MIN_AGREEMENT = 0.75       # share of paths that must agree on direction
+KRONOS_MIN_T_STAT = 2.5           # mean move / std error across paths
+KRONOS_MAX_MOVE_VS_VOL = 4.0      # forecasts > 4x daily volatility are shown, never signalled
+KRONOS_FORECASTS_FILE = os.path.join(DATA_DIR, "kronos_forecasts.json")
+KRONOS_HISTORY_KEEP = 600         # graded forecasts kept for the track record
 
 # Optional API keys (set via environment variables)
 COINGECKO_API_KEY = os.environ.get("COINGECKO_API_KEY", "").strip()

@@ -1,0 +1,13 @@
+# Optional: Kronos forecast agent (supercrypto/agents/kronos.py).
+# Without these the scanner still runs; the Kronos agent just sits out.
+#
+# Install torch CPU-only first (the default PyPI wheel pulls ~2 GB of CUDA):
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+# then:
+#   pip install -r requirements-kronos.txt
+numpy>=1.26
+pandas>=2.1
+einops==0.8.1
+huggingface_hub==0.33.1
+safetensors==0.6.2
+tqdm>=4.66

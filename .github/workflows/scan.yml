@@ -16,7 +16,7 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
 
@@ -24,9 +24,30 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-kronos.txt
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      # Kronos forecast agent: CPU-only torch (the default PyPI wheel drags in
+      # ~2 GB of CUDA libraries a GitHub runner can't use). Failure here must
+      # not block the scan - the agent detects missing torch and sits out.
+      - name: Install Kronos dependencies
+        continue-on-error: true
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements-kronos.txt
+
+      # Kronos-small + tokenizer weights (~100 MB) from Hugging Face, cached
+      # so scans don't re-download them every 6 hours.
+      - name: Cache Kronos weights
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: kronos-hf-${{ hashFiles('vendor/kronos/VENDORED.md') }}
+          restore-keys: kronos-hf-
 
       - name: Run pipeline
         env:
