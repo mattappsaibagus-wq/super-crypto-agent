@@ -21,7 +21,7 @@ API_OUT = os.path.join(OUT, "api")
 # Import without triggering any cache pre-warming / network calls.
 import server  # noqa: E402
 
-JSON_ENDPOINTS = ["status", "report", "signals", "attribution", "agents", "kronos"]
+JSON_ENDPOINTS = ["status", "report", "signals", "attribution", "agents", "kronos", "portfolio"]
 
 
 def main() -> None:

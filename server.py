@@ -56,6 +56,62 @@ def _read_json(path, default):
         return default
 
 
+PAPER_FILE = os.path.join(DATA_DIR, "paper_portfolio.json")
+
+
+def get_portfolio_summary():
+    """Paper portfolio: open positions (marked at last scan), closed trades,
+    headline metrics and a de-duplicated equity curve."""
+    from supercrypto.core.paper import PaperTrader
+
+    state = _read_json(PAPER_FILE, {}) or {}
+    if not state:
+        return {"available": False}
+    pt = PaperTrader(path=None)
+    pt.state = dict(pt._empty(), **state)
+    metrics = pt.metrics()
+    start = state.get("starting_equity") or 100.0
+    positions = []
+    for coin, pos in (state.get("positions") or {}).items():
+        entry = pos.get("entry_price") or 0
+        last = pos.get("last_price") or entry
+        qty = pos.get("qty") or 0
+        positions.append({
+            "coin": coin,
+            "entry_price": entry,
+            "last_price": last,
+            "qty": qty,
+            "size_pct": round(pos.get("size_pct") or 0, 2),
+            "cost": round(qty * entry, 4),
+            "value": round(qty * last, 4),
+            "pnl_pct": round((last - entry) / entry * 100, 2) if entry else None,
+            "stop_price": entry * (1 - abs(pos.get("stop_loss_pct") or 0) / 100) if pos.get("stop_loss_pct") else None,
+            "target_price": entry * (1 + abs(pos.get("take_profit_pct") or 0) / 100) if pos.get("take_profit_pct") else None,
+            "stop_loss_pct": pos.get("stop_loss_pct"),
+            "take_profit_pct": pos.get("take_profit_pct"),
+            "opened_at": pos.get("opened_at"),
+        })
+    positions.sort(key=lambda p: p["opened_at"] or "")
+    curve, last_eq = [], None
+    for pt_ in state.get("equity_curve") or []:
+        eq = pt_.get("equity")
+        if eq != last_eq or (curve and pt_.get("t", "")[:13] != curve[-1]["t"][:13]):
+            curve.append({"t": pt_.get("t"), "equity": eq})
+            last_eq = eq
+    closed = list(state.get("closed") or [])[-20:][::-1]
+    return {
+        "available": True,
+        "starting_equity": start,
+        "equity": state.get("equity"),
+        "cash": round(state.get("cash") or 0, 4),
+        "return_pct": round(((state.get("equity") or start) - start) / start * 100, 2),
+        "metrics": metrics,
+        "positions": positions,
+        "closed": closed,
+        "equity_curve": curve[-300:],
+    }
+
+
 def get_kronos_summary():
     """Latest Kronos forecasts + graded track record for the dashboard."""
     store = _read_json(KRONOS_FILE, {}) or {}
@@ -553,6 +609,11 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
   .ev-head { display: flex; justify-content: space-between; gap: 8px; font-size: .8rem; font-weight: 600; }
   .ev-sig { font: 400 .74rem var(--font-data); color: var(--muted); margin-top: 4px; }
   .ev-sig .why { color: var(--text); font-family: var(--font-body); }
+  .pf-status { font-size: .76rem; color: var(--muted); margin: 10px 0; }
+  .pf-sub { font-size: .8rem; font-weight: 600; margin: 16px 0 8px; }
+  .pf-bar { position: relative; height: 6px; border-radius: 99px; background: var(--surface2); border: 1px solid var(--border); min-width: 90px; }
+  .pf-bar i { position: absolute; top: -3px; width: 2px; height: 10px; background: var(--text); border-radius: 2px; }
+  .pf-curve { width: 100%; height: 70px; display: block; margin-top: 4px; }
   .kr-chart { width: 100%; height: auto; display: block; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; }
   .kr-grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
   @media (max-width: 700px) {
@@ -605,6 +666,9 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
 
 <h2 class="section-title">🪙 Verdicts</h2>
 <div id="cards"><div class="empty">No report yet — run a scan to get started</div></div>
+
+<h2 class="section-title">💼 Paper Portfolio <span class="sec-sub">simulated trades from BUY verdicts · not real money</span></h2>
+<div id="portfolioPanel"><div class="empty">Loading paper portfolio…</div></div>
 
 <h2 class="section-title">📈 Agent Attribution (P&L by agent)</h2>
 <div id="attributionTable"></div>
@@ -959,7 +1023,96 @@ function renderCoinIntel(symbol) {
 }
 
 loadReport();
+// ── Paper portfolio ──
+function pfPrice(v) {
+  if (v == null || !Number.isFinite(v)) return '—';
+  if (v >= 1000) return '$' + v.toLocaleString(undefined, {maximumFractionDigits: 0});
+  if (v >= 1) return '$' + v.toFixed(3);
+  return '$' + v.toPrecision(4);
+}
+function equityCurveSVG(curve, start) {
+  const pts = (curve || []).map(p => p.equity).filter(Number.isFinite);
+  if (pts.length < 2) return '';
+  const all = pts.concat([start]);
+  let min = Math.min(...all), max = Math.max(...all);
+  if (max - min < start * 0.002) { min = start * 0.995; max = start * 1.005; }  // flat: centre it
+  const span = max - min;
+  const w = 600, h = 70, pad = 4;
+  const X = i => pad + i * (w - pad * 2) / (pts.length - 1);
+  const Y = v => pad + (1 - (v - min) / span) * (h - pad * 2);
+  const path = pts.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ');
+  const col = pts[pts.length - 1] >= start ? 'var(--green)' : 'var(--red)';
+  return '<svg class="pf-curve" viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">' +
+    '<line x1="0" x2="' + w + '" y1="' + Y(start).toFixed(1) + '" y2="' + Y(start).toFixed(1) + '" stroke="var(--border)" stroke-dasharray="3 3"/>' +
+    '<path d="' + path + '" fill="none" stroke="' + col + '" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>';
+}
+// Where the price sits between stop (left) and target (right).
+function stopTargetBar(p) {
+  if (!p.stop_price || !p.target_price) return '—';
+  const pos = Math.max(0, Math.min(1, (p.last_price - p.stop_price) / (p.target_price - p.stop_price)));
+  const entryPos = (p.entry_price - p.stop_price) / (p.target_price - p.stop_price);
+  return '<div class="pf-bar" title="stop ' + pfPrice(p.stop_price) + ' · target ' + pfPrice(p.target_price) + '">' +
+    '<i style="left:' + (entryPos * 100).toFixed(1) + '%;background:var(--muted)"></i>' +
+    '<i style="left:' + (pos * 100).toFixed(1) + '%;background:' + (p.last_price >= p.entry_price ? 'var(--green)' : 'var(--red)') + '"></i></div>';
+}
+async function loadPortfolio() {
+  const el = document.getElementById('portfolioPanel');
+  let pf;
+  try { pf = await (await fetch('/api/portfolio')).json(); } catch (e) { pf = null; }
+  if (!pf || !pf.available) { el.innerHTML = '<div class="empty">No paper portfolio yet</div>'; return; }
+  const m = pf.metrics || {};
+  const invested = pf.positions.reduce((a, p) => a + p.value, 0);
+  const openPnl = pf.positions.reduce((a, p) => a + (p.value - p.cost), 0);
+  let html = '<div class="kr-tiles">' +
+    trTile('Equity', (pf.equity || 0).toFixed(2), 'started at ' + pf.starting_equity) +
+    trTile('Total return', '<span class="' + pctCls(pf.return_pct) + '">' + fmtSigned(pf.return_pct, 2) + '</span>', 'max drawdown ' + (m.max_drawdown_pct || 0) + '%') +
+    trTile('Open P&L', '<span class="' + pctCls(openPnl) + '">' + (openPnl >= 0 ? '+' : '') + openPnl.toFixed(2) + '</span>', pf.positions.length + ' open · ' + invested.toFixed(1) + ' invested') +
+    trTile('Cash', pf.cash.toFixed(2), 'available for new buys') +
+    trTile('Closed trades', String(m.closed_trades || 0), m.win_rate == null ? 'no win rate yet' : m.win_rate + '% winners') +
+    '</div>' + equityCurveSVG(pf.equity_curve, pf.starting_equity) +
+    '<div class="pf-status">Prices marked at the last scan; live prices fill in below when available. Stops at −15%, targets at +45%, checked every scan.</div>';
+  if (pf.positions.length) {
+    html += '<div class="pf-sub">Open positions</div><div class="kr-table-wrap"><table class="kr-table"><thead><tr>' +
+      '<th>Coin</th><th>Opened</th><th>Entry</th><th>Now</th><th>P&L</th><th>Size</th><th>Stop ← → Target</th></tr></thead><tbody>';
+    pf.positions.forEach(p => {
+      html += '<tr class="kr-row" onclick="showCoin(\'' + esc(p.coin) + '\', \'1d\')">' +
+        '<td><b>' + esc(p.coin) + '</b></td>' +
+        '<td class="num">' + timeAgo(p.opened_at) + '</td>' +
+        '<td class="num">' + pfPrice(p.entry_price) + '</td>' +
+        '<td class="num" id="pf-now-' + esc(p.coin) + '">' + pfPrice(p.last_price) + '</td>' +
+        '<td class="num ' + pctCls(p.pnl_pct) + '" id="pf-pnl-' + esc(p.coin) + '">' + fmtSigned(p.pnl_pct, 2) + '</td>' +
+        '<td class="num">' + p.size_pct + '%</td>' +
+        '<td>' + stopTargetBar(p) + '</td></tr>';
+    });
+    html += '</tbody></table></div>';
+  } else {
+    html += '<div class="empty">No open positions — waiting for BUY verdicts.</div>';
+  }
+  if (pf.closed.length) {
+    html += '<div class="pf-sub">Closed trades</div><div class="kr-table-wrap"><table class="kr-table"><thead><tr>' +
+      '<th>Coin</th><th>Closed</th><th>Entry</th><th>Exit</th><th>P&L</th><th>Reason</th></tr></thead><tbody>';
+    pf.closed.forEach(t => {
+      html += '<tr><td><b>' + esc(t.coin) + '</b></td><td class="num">' + timeAgo(t.closed_at) + '</td>' +
+        '<td class="num">' + pfPrice(t.entry_price) + '</td><td class="num">' + pfPrice(t.exit_price) + '</td>' +
+        '<td class="num ' + pctCls(t.pnl_pct) + '">' + fmtSigned(t.pnl_pct, 2) + '</td>' +
+        '<td>' + esc(String(t.exit_reason || '').replace('_', ' ')) + '</td></tr>';
+    });
+    html += '</tbody></table></div>';
+  }
+  el.innerHTML = html;
+  // Live mark: reuse the coin-price endpoint the verdict cards already use.
+  pf.positions.forEach(async p => {
+    const d = await loadCoinData(p.coin);
+    if (!d || !Number.isFinite(d.price) || !p.entry_price) return;
+    const pnl = (d.price - p.entry_price) / p.entry_price * 100;
+    const now = document.getElementById('pf-now-' + p.coin), pe = document.getElementById('pf-pnl-' + p.coin);
+    if (now) now.innerHTML = pfPrice(d.price) + ' <span class="kr-pill">live</span>';
+    if (pe) { pe.textContent = fmtSigned(pnl, 2); pe.className = 'num ' + pctCls(pnl); }
+  });
+}
+
 loadKronos();
+loadPortfolio();
 loadSignals();
 loadAttribution();
 </script>
@@ -1432,6 +1585,11 @@ def api_report():
             c["kronos"] = kronos_latest.get(c["coin"])
         return jsonify({"report": md, "cards": cards, "timestamp": ts})
     return jsonify({"report": None, "cards": [], "timestamp": None})
+
+
+@app.route("/api/portfolio")
+def api_portfolio():
+    return jsonify(get_portfolio_summary())
 
 
 @app.route("/api/kronos")
