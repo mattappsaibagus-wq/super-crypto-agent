@@ -1,42 +1,42 @@
 {
- "generated_at": "2026-10-05T12:51:53.146109+00:00",
+ "generated_at": "2026-10-05T23:28:38.528977+00:00",
  "overall": "ok",
- "code_version": "62c617c",
- "verdict_count": 44,
+ "code_version": "6852199",
+ "verdict_count": 45,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "65 signals, oldest 68h",
-   "oldest_h": 68.0
+   "detail": "73 signals, oldest 44h",
+   "oldest_h": 44.5
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 15, derivatives 2, fundraising 2, kronos 5, macro 1, microcap 28, santiment 3",
+   "detail": "active: dd 8, derivatives 3, fundraising 1, kronos 11, macro 1, microcap 15, santiment 3",
    "counts": {
-    "dd": 15,
-    "microcap": 28,
+    "dd": 8,
+    "microcap": 15,
     "macro": 1,
-    "fundraising": 2,
+    "fundraising": 1,
     "santiment": 3,
-    "derivatives": 2,
-    "kronos": 5
+    "derivatives": 3,
+    "kronos": 11
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "44 verdicts"
+   "detail": "45 verdicts"
   },
   {
    "id": "paper_execution",
    "name": "BUY verdicts executed",
    "status": "ok",
-   "detail": "0 BUY executed, 5 positions open"
+   "detail": "0 BUY executed, 4 positions open"
   },
   {
    "id": "price_coverage",
@@ -49,14 +49,14 @@
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "26/30 coins forecast, 5 signals"
+   "detail": "25/30 coins forecast, 11 signals"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 99.55, 0.5% below peak",
-   "drawdown_pct": 0.45
+   "detail": "equity 97.57, 2.4% below peak",
+   "drawdown_pct": 2.43
   }
  ],
  "history": [
@@ -66,6 +66,10 @@
   },
   {
    "t": "2026-10-05T12:51:53.146109+00:00",
+   "overall": "ok"
+  },
+  {
+   "t": "2026-10-05T23:28:38.528977+00:00",
    "overall": "ok"
   }
  ]

@@ -509,6 +509,116 @@
       "timestamp": "2026-10-05T12:51:31.266330+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "XRP",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.82,
+      "raw_confidence": 0.82,
+      "price": 1.51,
+      "timestamp": "2026-10-05T23:28:15.149933+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "NEAR",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.804,
+      "raw_confidence": 0.804,
+      "price": 5.17,
+      "timestamp": "2026-10-05T23:28:15.150877+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "QNT",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.724,
+      "raw_confidence": 0.724,
+      "price": 258.48,
+      "timestamp": "2026-10-05T23:28:15.152062+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PONS",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.735,
+      "raw_confidence": 0.735,
+      "price": 0.3867,
+      "timestamp": "2026-10-05T23:28:15.153104+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "NIL",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.85,
+      "raw_confidence": 0.85,
+      "price": 0.11022,
+      "timestamp": "2026-10-05T23:28:15.154239+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ADA",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.782,
+      "raw_confidence": 0.782,
+      "price": 0.270821,
+      "timestamp": "2026-10-05T23:28:15.155413+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ZEC",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.801,
+      "raw_confidence": 0.801,
+      "price": 1335.68,
+      "timestamp": "2026-10-05T23:28:15.156548+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "VVV",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.711,
+      "raw_confidence": 0.711,
+      "price": 28.837,
+      "timestamp": "2026-10-05T23:28:15.157754+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "SKY",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.748,
+      "raw_confidence": 0.748,
+      "price": 0.08842,
+      "timestamp": "2026-10-05T23:28:15.158846+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "MON",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.733,
+      "raw_confidence": 0.733,
+      "price": 0.03139,
+      "timestamp": "2026-10-05T23:28:15.159962+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ONDO",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.798,
+      "raw_confidence": 0.798,
+      "price": 0.499416,
+      "timestamp": "2026-10-05T23:28:15.161111+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -565,7 +675,7 @@
     "strong_volume_ratio": 0.5,
     "meta_agent_trusted": 0.5
   },
-  "runs": 51,
+  "runs": 62,
   "accuracy_history": [],
   "calibration": {
     "bins": {},
@@ -740,20 +850,20 @@
   "notes": {
     "last_run": {
       "requested": 30,
-      "eligible": 26,
-      "forecast": 26,
-      "signals": 5,
+      "eligible": 25,
+      "forecast": 25,
+      "signals": 11,
       "skipped": {
-        "no_candles": 3,
+        "no_candles": 4,
         "ticker_mismatch": 1
       },
-      "seconds": 170.5,
+      "seconds": 179.4,
       "model": "NeoQuasar/Kronos-small",
       "graded_now": 0,
       "mismatched": [
         "CHIP"
       ],
-      "at": "2026-10-05T12:51:31.250820+00:00"
+      "at": "2026-10-05T23:28:15.136073+00:00"
     }
   }
 }
