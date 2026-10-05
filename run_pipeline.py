@@ -38,10 +38,11 @@ from supercrypto.agents.santiment import SantimentActivity
 from supercrypto.agents.sentiment import SentimentAgent
 from supercrypto.agents.whale import WhaleDetector
 from supercrypto.config import (
-    COINGECKO_BASE, DATA_DIR, SIGNALS_FILE, VERDICTS_FILE, WATCHLIST_FILE, now_jst,
+    DATA_DIR, SIGNALS_FILE, VERDICTS_FILE, WATCHLIST_FILE, now_jst,
 )
 from supercrypto.core.attribution import AttributionEngine
-from supercrypto.core.base import api_get, coin_id_for, ensure_dirs, prune_stale_signals
+from supercrypto.core.base import ensure_dirs, prune_stale_signals
+from supercrypto.core.prices import get_usd_prices
 from supercrypto.core.paper import PaperTrader
 from supercrypto.core.risk import RiskManager
 
@@ -53,25 +54,11 @@ def clear_bus():
 
 
 def load_prices(verdicts, extra_coins=()):
-    """USD prices for every verdict coin plus any extra coins (open positions,
-    so stops/targets keep working after a coin's signals expire)."""
-    ids, prices = {}, {}
-    for coin in [v["coin"] for v in verdicts] + list(extra_coins):
-        cid = coin_id_for(coin)
-        if cid:
-            ids[cid] = coin
-    if ids:
-        data = (
-            api_get(
-                f"{COINGECKO_BASE}/simple/price",
-                params={"ids": ",".join(ids), "vs_currencies": "usd"},
-            )
-            or {}
-        )
-        for cid, sym in ids.items():
-            if cid in data and isinstance(data[cid], dict):
-                prices[sym] = data[cid].get("usd")
-    return prices
+    """USD prices for the coins paper trading needs: every BUY plus open
+    positions (so stops/targets keep working after a coin's signals expire).
+    Binance -> KuCoin -> CoinGecko fallbacks; see supercrypto/core/prices.py."""
+    coins = [v["coin"] for v in verdicts if v.get("action") == "BUY"] + list(extra_coins)
+    return get_usd_prices(coins)
 
 
 def write_verdicts(verdicts, regime) -> None:
@@ -161,7 +148,12 @@ def run_once(args) -> int:
 
     print("[6] paper trading")
     before_positions = dict(paper.state.get("positions", {}))
-    paper.process(verdicts, load_prices(verdicts, before_positions.keys()))
+    prices = load_prices(verdicts, before_positions.keys())
+    unpriced = [v["coin"] for v in verdicts
+                if v.get("action") == "BUY" and v.get("suggested_size_pct") and not prices.get(v["coin"])]
+    if unpriced:
+        print("    WARNING: BUY skipped, no price for: " + ", ".join(unpriced))
+    paper.process(verdicts, prices)
     after_positions = paper.state.get("positions", {})
 
     # Attribution: record closed trades

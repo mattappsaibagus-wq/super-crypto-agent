@@ -272,6 +272,51 @@ def test_write_signals_refreshes_redetected_signal():
         assert x["confidence"] == 0.8 and not x["timestamp"].startswith("2026-01-01")
     _with_tmp_bus(run)
 
+
+# ── Prices for paper trading ───────────────────────────────────────────────
+
+def test_price_parsers():
+    from supercrypto.core.prices import parse_binance, parse_kucoin
+    assert parse_binance([{"symbol": "BTCUSDT", "price": "62000.5"},
+                          {"symbol": "ETHBTC", "price": "0.05"},
+                          {"symbol": "BADUSDT", "price": "x"}]) == {"BTC": 62000.5}
+    assert parse_kucoin({"data": {"ticker": [{"symbol": "PONS-USDT", "last": "0.12"},
+                                             {"symbol": "PONS-BTC", "last": "1"}]}}) == {"PONS": 0.12}
+
+
+def test_get_usd_prices_falls_back_binance_kucoin_coingecko():
+    import supercrypto.core.prices as P
+    calls = []
+
+    def fake_get(url, params=None, tries=2):
+        calls.append(url)
+        if url == P.BINANCE_ALL_PRICES:
+            return [{"symbol": "SANDUSDT", "price": "0.3"}, {"symbol": "POLUSDT", "price": "0.4"}]
+        if url == P.KUCOIN_ALL_TICKERS:
+            return {"data": {"ticker": [{"symbol": "PONS-USDT", "last": "0.12"}]}}
+        if url.endswith("/simple/price"):
+            assert params["ids"] == "edel"
+            return {"edel": {"usd": 0.05}}
+        return None
+
+    orig = (P.api_get, P.coin_id_for)
+    P.api_get = fake_get
+    P.coin_id_for = lambda s: {"EDEL": "edel"}.get(s)
+    try:
+        px = P.get_usd_prices(["SAND", "matic", "PONS", "EDEL", "USDT", "NOPE"], log=lambda *a: None)
+    finally:
+        P.api_get, P.coin_id_for = orig
+    assert px == {"SAND": 0.3, "MATIC": 0.4, "PONS": 0.12, "EDEL": 0.05, "USDT": 1.0}, px
+
+
+def test_paper_trader_opens_buy_when_priced():
+    from supercrypto.core.paper import PaperTrader
+    pt = PaperTrader(path=None)
+    pt.process([{"coin": "SAND", "action": "BUY", "suggested_size_pct": 4.0,
+                 "stop_loss_pct": 15, "take_profit_pct": 45}], {"SAND": 0.5})
+    assert "SAND" in pt.state["positions"]
+    assert abs(pt.state["cash"] - 96.0) < 1e-6
+
 if __name__ == "__main__":
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     failed = 0
