@@ -1,21 +1,21 @@
 {
- "generated_at": "2026-10-05T12:34:33.380177+00:00",
+ "generated_at": "2026-10-05T12:51:53.146109+00:00",
  "overall": "ok",
- "code_version": "d16eb5e",
+ "code_version": "62c617c",
  "verdict_count": 44,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "63 signals, oldest 68h",
-   "oldest_h": 67.7
+   "detail": "65 signals, oldest 68h",
+   "oldest_h": 68.0
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 15, derivatives 2, fundraising 2, kronos 3, macro 1, microcap 28, santiment 3",
+   "detail": "active: dd 15, derivatives 2, fundraising 2, kronos 5, macro 1, microcap 28, santiment 3",
    "counts": {
     "dd": 15,
     "microcap": 28,
@@ -23,7 +23,7 @@
     "fundraising": 2,
     "santiment": 3,
     "derivatives": 2,
-    "kronos": 3
+    "kronos": 5
    }
   },
   {
@@ -49,19 +49,23 @@
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "26/30 coins forecast, 3 signals"
+   "detail": "26/30 coins forecast, 5 signals"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 99.60, 0.4% below peak",
-   "drawdown_pct": 0.4
+   "detail": "equity 99.55, 0.5% below peak",
+   "drawdown_pct": 0.45
   }
  ],
  "history": [
   {
    "t": "2026-10-05T12:34:33.380177+00:00",
+   "overall": "ok"
+  },
+  {
+   "t": "2026-10-05T12:51:53.146109+00:00",
    "overall": "ok"
   }
  ]

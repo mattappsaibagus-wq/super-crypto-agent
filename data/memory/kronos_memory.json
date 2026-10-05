@@ -459,6 +459,56 @@
       "timestamp": "2026-10-05T12:34:10.528744+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "SOL",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.822,
+      "raw_confidence": 0.822,
+      "price": 120.38,
+      "timestamp": "2026-10-05T12:51:31.262683+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "QNT",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.703,
+      "raw_confidence": 0.703,
+      "price": 260.77,
+      "timestamp": "2026-10-05T12:51:31.263497+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PONS",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.719,
+      "raw_confidence": 0.719,
+      "price": 0.3957,
+      "timestamp": "2026-10-05T12:51:31.264460+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "NIL",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.802,
+      "raw_confidence": 0.802,
+      "price": 0.09569,
+      "timestamp": "2026-10-05T12:51:31.265393+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "SAND",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.644,
+      "raw_confidence": 0.644,
+      "price": 0.0717,
+      "timestamp": "2026-10-05T12:51:31.266330+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -515,7 +565,7 @@
     "strong_volume_ratio": 0.5,
     "meta_agent_trusted": 0.5
   },
-  "runs": 46,
+  "runs": 51,
   "accuracy_history": [],
   "calibration": {
     "bins": {},
@@ -692,18 +742,18 @@
       "requested": 30,
       "eligible": 26,
       "forecast": 26,
-      "signals": 3,
+      "signals": 5,
       "skipped": {
         "no_candles": 3,
         "ticker_mismatch": 1
       },
-      "seconds": 192.5,
+      "seconds": 170.5,
       "model": "NeoQuasar/Kronos-small",
       "graded_now": 0,
       "mismatched": [
         "CHIP"
       ],
-      "at": "2026-10-05T12:34:10.507945+00:00"
+      "at": "2026-10-05T12:51:31.250820+00:00"
     }
   }
 }
