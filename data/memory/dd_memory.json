@@ -519,6 +519,76 @@
       "timestamp": "2026-10-05T10:03:41.570547+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "GRASS",
+      "signal": "dd_result",
+      "confidence": 0.72,
+      "raw_confidence": 0.72,
+      "price": 0.72213,
+      "timestamp": "2026-10-05T10:16:52.271096+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "QNT",
+      "signal": "dd_result",
+      "confidence": 0.84,
+      "raw_confidence": 0.84,
+      "price": 253.55,
+      "timestamp": "2026-10-05T10:16:52.271949+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "NEAR",
+      "signal": "dd_result",
+      "confidence": 0.84,
+      "raw_confidence": 0.84,
+      "price": 5.0,
+      "timestamp": "2026-10-05T10:16:52.272871+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "AAVE",
+      "signal": "dd_result",
+      "confidence": 0.84,
+      "raw_confidence": 0.84,
+      "price": 178.27,
+      "timestamp": "2026-10-05T10:16:52.273790+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "SAND",
+      "signal": "dd_result",
+      "confidence": 0.86,
+      "raw_confidence": 0.86,
+      "price": 0.073297,
+      "timestamp": "2026-10-05T10:16:52.274753+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PONS",
+      "signal": "dd_result",
+      "confidence": 0.75,
+      "raw_confidence": 0.75,
+      "price": 0.398543,
+      "timestamp": "2026-10-05T10:16:52.275650+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PUMP",
+      "signal": "dd_result",
+      "confidence": 0.76,
+      "raw_confidence": 0.76,
+      "price": 0.00635958,
+      "timestamp": "2026-10-05T10:16:52.276575+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -571,9 +641,11 @@
     "oi_flush": 0.5,
     "dev_activity_up": 0.5,
     "funding_squeeze": 0.5,
-    "funding_overheated": 0.5
+    "funding_overheated": 0.5,
+    "kronos_forecast_up": 0.5,
+    "kronos_forecast_down": 0.5
   },
-  "runs": 52,
+  "runs": 59,
   "accuracy_history": [],
   "calibration": {
     "bins": {},
@@ -631,7 +703,9 @@
       "oi_flush": 0.5,
       "dev_activity_up": 0.5,
       "funding_squeeze": 0.5,
-      "funding_overheated": 0.5
+      "funding_overheated": 0.5,
+      "kronos_forecast_up": 0.5,
+      "kronos_forecast_down": 0.5
     },
     "neutral": {
       "liquidity_depth": 0.5,
@@ -683,7 +757,9 @@
       "oi_flush": 0.5,
       "dev_activity_up": 0.5,
       "funding_squeeze": 0.5,
-      "funding_overheated": 0.5
+      "funding_overheated": 0.5,
+      "kronos_forecast_up": 0.5,
+      "kronos_forecast_down": 0.5
     },
     "risk_off": {
       "liquidity_depth": 0.5,
@@ -735,7 +811,9 @@
       "oi_flush": 0.5,
       "dev_activity_up": 0.5,
       "funding_squeeze": 0.5,
-      "funding_overheated": 0.5
+      "funding_overheated": 0.5,
+      "kronos_forecast_up": 0.5,
+      "kronos_forecast_down": 0.5
     }
   },
   "agent_stats": {}
