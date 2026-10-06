@@ -47,7 +47,7 @@
       "raw_confidence": 0.65,
       "price": 0.000315,
       "timestamp": "2026-10-05T02:33:47.185374+00:00",
-      "outcome_24h": null,
+      "outcome_24h": 17.66,
       "outcome_7d": null
     }
   ],
@@ -82,7 +82,7 @@
     "pattern_bearish": 0.5,
     "correlation_dump": 0.5,
     "volume_spike": 0.5,
-    "microcap_opportunity": 0.0886,
+    "microcap_opportunity": 0.1486,
     "dex_listing": 0.15,
     "whale_down": 0.5,
     "news_event": 0.5,
@@ -1114,6 +1114,63 @@
         "kronos_forecast_down": 0.5
       },
       "sample_size": 4
+    },
+    {
+      "weights": {
+        "liquidity_depth": 0.5,
+        "meta_agent_trusted": 0.5,
+        "market_traction": 0.5,
+        "meta_agent_deprioritized": 0.5,
+        "trending_boost": 0.2,
+        "momentum": 0.5,
+        "news_bullish": 0.5,
+        "sustainability": 0.5,
+        "whale_onchain": 0.5,
+        "age_survivorship": 0.5,
+        "volume_depth": 0.5,
+        "holder_red_flag": 0.5,
+        "regime_neutral": 0.5,
+        "advisor_buy": 0.5,
+        "whale_onchain_down": 0.5,
+        "price_move": 0.5,
+        "holder_healthy": 0.5,
+        "news_bearish": 0.5,
+        "dd_result": 0.5,
+        "regime_risk_off": 0.5,
+        "correlation_spike": 0.5,
+        "strong_volume_ratio": 0.3,
+        "whale_up": 0.5,
+        "pattern_bullish": 0.5,
+        "age_signal": 0.15,
+        "liquidity_health": 0.5,
+        "low_liquidity_risk": 0.2,
+        "pattern_bearish": 0.5,
+        "correlation_dump": 0.5,
+        "volume_spike": 0.5,
+        "microcap_opportunity": 0.1486,
+        "dex_listing": 0.15,
+        "whale_down": 0.5,
+        "news_event": 0.5,
+        "holder_concentration": 0.5,
+        "advisor_hold": 0.5,
+        "sentiment_bear": 0.5,
+        "advisor_watch": 0.5,
+        "regime_risk_on": 0.5,
+        "advisor_avoid": 0.5,
+        "sentiment_shot": 0.5,
+        "active_addresses_fade": 0.5,
+        "fresh_funding": 0.5,
+        "social_spike": 0.5,
+        "active_addresses_spike": 0.5,
+        "oi_buildup": 0.5,
+        "oi_flush": 0.5,
+        "dev_activity_up": 0.5,
+        "funding_squeeze": 0.5,
+        "funding_overheated": 0.5,
+        "kronos_forecast_up": 0.5,
+        "kronos_forecast_down": 0.5
+      },
+      "sample_size": 5
     }
   ],
   "calibration": {
@@ -1124,13 +1181,13 @@
         "mean_acc": 0.0
       },
       "2": {
-        "n": 2,
+        "n": 3,
         "mean_conf": 0.488,
-        "mean_acc": 0.5
+        "mean_acc": 0.6667
       }
     },
-    "ece": 0.331,
-    "n": 4
+    "ece": 0.3672,
+    "n": 5
   },
   "regime_weights": {
     "risk_on": {
@@ -1218,7 +1275,7 @@
       "pattern_bearish": 0.5,
       "correlation_dump": 0.5,
       "volume_spike": 0.5,
-      "microcap_opportunity": 0.0915,
+      "microcap_opportunity": 0.1509,
       "dex_listing": 0.5,
       "whale_down": 0.5,
       "news_event": 0.5,
@@ -1298,10 +1355,10 @@
   },
   "agent_stats": {
     "unknown": {
-      "samples": 47,
-      "wins": 1,
-      "avg_return": -84.79,
-      "win_rate": 0.021
+      "samples": 52,
+      "wins": 3,
+      "avg_return": -80.71,
+      "win_rate": 0.058
     }
   }
 }

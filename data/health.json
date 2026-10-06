@@ -1,29 +1,29 @@
 {
- "generated_at": "2026-10-05T23:28:38.528977+00:00",
+ "generated_at": "2026-10-06T03:31:37.189324+00:00",
  "overall": "ok",
- "code_version": "6852199",
+ "code_version": "3c94cea",
  "verdict_count": 45,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "73 signals, oldest 44h",
-   "oldest_h": 44.5
+   "detail": "73 signals, oldest 17h",
+   "oldest_h": 17.2
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 8, derivatives 3, fundraising 1, kronos 11, macro 1, microcap 15, santiment 3",
+   "detail": "active: dd 11, derivatives 3, fundraising 1, kronos 9, macro 1, microcap 20, santiment 6",
    "counts": {
-    "dd": 8,
-    "microcap": 15,
+    "dd": 11,
+    "microcap": 20,
     "macro": 1,
     "fundraising": 1,
-    "santiment": 3,
+    "santiment": 6,
     "derivatives": 3,
-    "kronos": 11
+    "kronos": 9
    }
   },
   {
@@ -36,7 +36,7 @@
    "id": "paper_execution",
    "name": "BUY verdicts executed",
    "status": "ok",
-   "detail": "0 BUY executed, 4 positions open"
+   "detail": "1 BUY executed, 5 positions open"
   },
   {
    "id": "price_coverage",
@@ -49,14 +49,14 @@
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "25/30 coins forecast, 11 signals"
+   "detail": "26/30 coins forecast, 9 signals"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 97.57, 2.4% below peak",
-   "drawdown_pct": 2.43
+   "detail": "equity 97.35, 2.6% below peak",
+   "drawdown_pct": 2.65
   }
  ],
  "history": [
@@ -70,6 +70,10 @@
   },
   {
    "t": "2026-10-05T23:28:38.528977+00:00",
+   "overall": "ok"
+  },
+  {
+   "t": "2026-10-06T03:31:37.189324+00:00",
    "overall": "ok"
   }
  ]

@@ -619,6 +619,96 @@
       "timestamp": "2026-10-05T23:28:15.161111+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "QNT",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.787,
+      "raw_confidence": 0.787,
+      "price": 266.09,
+      "timestamp": "2026-10-06T03:31:19.608504+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PUMP",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.645,
+      "raw_confidence": 0.645,
+      "price": 0.00634763,
+      "timestamp": "2026-10-06T03:31:19.609206+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ZRO",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.805,
+      "raw_confidence": 0.805,
+      "price": 2.134,
+      "timestamp": "2026-10-06T03:31:19.610103+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "VVV",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.783,
+      "raw_confidence": 0.783,
+      "price": 28.977,
+      "timestamp": "2026-10-06T03:31:19.610903+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "NIL",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.803,
+      "raw_confidence": 0.803,
+      "price": 0.10255,
+      "timestamp": "2026-10-06T03:31:19.611762+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "TRUMP",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.717,
+      "raw_confidence": 0.717,
+      "price": 2.025,
+      "timestamp": "2026-10-06T03:31:19.612647+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "SAND",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.729,
+      "raw_confidence": 0.729,
+      "price": 0.06742,
+      "timestamp": "2026-10-06T03:31:19.613441+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "2Z",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.845,
+      "raw_confidence": 0.845,
+      "price": 0.04236,
+      "timestamp": "2026-10-06T03:31:19.614312+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "MON",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.85,
+      "raw_confidence": 0.85,
+      "price": 0.03014,
+      "timestamp": "2026-10-06T03:31:19.615129+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -675,7 +765,7 @@
     "strong_volume_ratio": 0.5,
     "meta_agent_trusted": 0.5
   },
-  "runs": 62,
+  "runs": 71,
   "accuracy_history": [],
   "calibration": {
     "bins": {},
@@ -850,20 +940,16 @@
   "notes": {
     "last_run": {
       "requested": 30,
-      "eligible": 25,
-      "forecast": 25,
-      "signals": 11,
+      "eligible": 26,
+      "forecast": 26,
+      "signals": 9,
       "skipped": {
-        "no_candles": 4,
-        "ticker_mismatch": 1
+        "no_candles": 4
       },
-      "seconds": 179.4,
+      "seconds": 141.6,
       "model": "NeoQuasar/Kronos-small",
       "graded_now": 0,
-      "mismatched": [
-        "CHIP"
-      ],
-      "at": "2026-10-05T23:28:15.136073+00:00"
+      "at": "2026-10-06T03:31:19.598474+00:00"
     }
   }
 }
