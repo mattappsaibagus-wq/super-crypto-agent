@@ -27,7 +27,7 @@
       "raw_confidence": 0.721,
       "price": 1335.66,
       "timestamp": "2026-10-05T23:24:30.964442+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -0.66,
       "outcome_7d": null
     },
     {
@@ -37,7 +37,7 @@
       "raw_confidence": 0.655,
       "price": 1340.63,
       "timestamp": "2026-10-06T03:28:14.089614+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -1.03,
       "outcome_7d": null
     },
     {
@@ -57,6 +57,16 @@
       "raw_confidence": 0.658,
       "price": 1339.23,
       "timestamp": "2026-10-06T21:56:34.182471+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "XRP",
+      "signal": "dev_activity_up",
+      "confidence": 0.477,
+      "raw_confidence": 0.636,
+      "price": 1.46,
+      "timestamp": "2026-10-07T02:52:41.776770+00:00",
       "outcome_24h": null,
       "outcome_7d": null
     }
@@ -115,7 +125,7 @@
     "kronos_forecast_up": 0.5,
     "kronos_forecast_down": 0.5
   },
-  "runs": 6,
+  "runs": 7,
   "accuracy_history": [
     {
       "weights": {
@@ -1240,6 +1250,63 @@
         "kronos_forecast_down": 0.5
       },
       "sample_size": 2
+    },
+    {
+      "weights": {
+        "age_survivorship": 0.5,
+        "news_bearish": 0.5,
+        "price_move": 0.5,
+        "momentum": 0.5,
+        "advisor_watch": 0.5,
+        "pattern_bearish": 0.5,
+        "dex_listing": 0.5,
+        "microcap_opportunity": 0.5,
+        "sentiment_bear": 0.5,
+        "trending_boost": 0.5,
+        "meta_agent_deprioritized": 0.5,
+        "whale_onchain_down": 0.5,
+        "active_addresses_fade": 0.3,
+        "fresh_funding": 0.5,
+        "whale_onchain": 0.5,
+        "news_event": 0.5,
+        "regime_risk_off": 0.5,
+        "correlation_dump": 0.5,
+        "news_bullish": 0.5,
+        "holder_concentration": 0.5,
+        "dd_result": 0.5,
+        "holder_red_flag": 0.5,
+        "social_spike": 0.4,
+        "volume_spike": 0.5,
+        "sentiment_shot": 0.5,
+        "correlation_spike": 0.5,
+        "pattern_bullish": 0.5,
+        "meta_agent_trusted": 0.5,
+        "whale_up": 0.5,
+        "advisor_hold": 0.5,
+        "liquidity_depth": 0.5,
+        "regime_neutral": 0.5,
+        "liquidity_health": 0.5,
+        "advisor_avoid": 0.5,
+        "low_liquidity_risk": 0.5,
+        "active_addresses_spike": 0.45,
+        "oi_buildup": 0.5,
+        "oi_flush": 0.5,
+        "sustainability": 0.5,
+        "strong_volume_ratio": 0.5,
+        "dev_activity_up": 0.35,
+        "regime_risk_on": 0.5,
+        "whale_down": 0.5,
+        "volume_depth": 0.5,
+        "holder_healthy": 0.5,
+        "market_traction": 0.5,
+        "advisor_buy": 0.5,
+        "funding_squeeze": 0.5,
+        "age_signal": 0.5,
+        "funding_overheated": 0.5,
+        "kronos_forecast_up": 0.5,
+        "kronos_forecast_down": 0.5
+      },
+      "sample_size": 4
     }
   ],
   "calibration": {
@@ -1248,10 +1315,15 @@
         "n": 2,
         "mean_conf": 0.8,
         "mean_acc": 0.5
+      },
+      "2": {
+        "n": 2,
+        "mean_conf": 0.516,
+        "mean_acc": 0.0
       }
     },
-    "ece": 0.3,
-    "n": 2
+    "ece": 0.408,
+    "n": 4
   },
   "regime_weights": {
     "risk_on": {
@@ -1419,15 +1491,15 @@
   },
   "agent_stats": {
     "unknown": {
-      "samples": 39,
-      "wins": 19,
-      "avg_return": 6.041,
-      "win_rate": 0.487
+      "samples": 43,
+      "wins": 20,
+      "avg_return": 5.728,
+      "win_rate": 0.465
     }
   },
   "api_usage": {
     "month": "2026-10",
-    "calls": 49
+    "calls": 51
   },
   "slug_cache": {
     "t": 1790960001.3738236,
