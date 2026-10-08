@@ -1709,6 +1709,76 @@
       "timestamp": "2026-10-08T03:14:16.553933+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "MET",
+      "signal": "dd_result",
+      "confidence": 0.667,
+      "raw_confidence": 0.89,
+      "price": 0.475858,
+      "timestamp": "2026-10-08T12:23:56.247627+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "SAND",
+      "signal": "dd_result",
+      "confidence": 0.645,
+      "raw_confidence": 0.86,
+      "price": 0.07279,
+      "timestamp": "2026-10-08T12:23:56.250216+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ZRO",
+      "signal": "dd_result",
+      "confidence": 0.645,
+      "raw_confidence": 0.86,
+      "price": 2.03,
+      "timestamp": "2026-10-08T12:23:56.253159+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PUMP",
+      "signal": "dd_result",
+      "confidence": 0.63,
+      "raw_confidence": 0.84,
+      "price": 0.00577217,
+      "timestamp": "2026-10-08T12:23:56.255893+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "QNT",
+      "signal": "dd_result",
+      "confidence": 0.63,
+      "raw_confidence": 0.84,
+      "price": 236.56,
+      "timestamp": "2026-10-08T12:23:56.258672+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "NEAR",
+      "signal": "dd_result",
+      "confidence": 0.63,
+      "raw_confidence": 0.84,
+      "price": 5.08,
+      "timestamp": "2026-10-08T12:23:56.261482+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "AAVE",
+      "signal": "dd_result",
+      "confidence": 0.63,
+      "raw_confidence": 0.84,
+      "price": 170.78,
+      "timestamp": "2026-10-08T12:23:56.264272+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -1730,7 +1800,7 @@
     "price_move": 0.5,
     "holder_healthy": 0.5,
     "news_bearish": 0.5,
-    "dd_result": 0.4963,
+    "dd_result": 0.493,
     "regime_risk_off": 0.5,
     "correlation_spike": 0.5,
     "strong_volume_ratio": 0.5,
@@ -1765,7 +1835,7 @@
     "kronos_forecast_up": 0.5,
     "kronos_forecast_down": 0.5
   },
-  "runs": 171,
+  "runs": 178,
   "accuracy_history": [
     {
       "weights": {
@@ -2108,6 +2178,63 @@
         "kronos_forecast_down": 0.5
       },
       "sample_size": 140
+    },
+    {
+      "weights": {
+        "liquidity_depth": 0.5,
+        "meta_agent_trusted": 0.5,
+        "market_traction": 0.15,
+        "meta_agent_deprioritized": 0.5,
+        "trending_boost": 0.5,
+        "momentum": 0.5,
+        "news_bullish": 0.5,
+        "sustainability": 0.5,
+        "whale_onchain": 0.5,
+        "age_survivorship": 0.15,
+        "volume_depth": 0.2,
+        "holder_red_flag": 0.5,
+        "regime_neutral": 0.5,
+        "advisor_buy": 0.5,
+        "whale_onchain_down": 0.5,
+        "price_move": 0.5,
+        "holder_healthy": 0.5,
+        "news_bearish": 0.5,
+        "dd_result": 0.493,
+        "regime_risk_off": 0.5,
+        "correlation_spike": 0.5,
+        "strong_volume_ratio": 0.5,
+        "whale_up": 0.5,
+        "pattern_bullish": 0.5,
+        "age_signal": 0.5,
+        "liquidity_health": 0.25,
+        "low_liquidity_risk": 0.5,
+        "pattern_bearish": 0.5,
+        "correlation_dump": 0.5,
+        "volume_spike": 0.5,
+        "microcap_opportunity": 0.5,
+        "dex_listing": 0.5,
+        "whale_down": 0.5,
+        "news_event": 0.5,
+        "holder_concentration": 0.25,
+        "advisor_hold": 0.5,
+        "sentiment_bear": 0.5,
+        "advisor_watch": 0.5,
+        "regime_risk_on": 0.5,
+        "advisor_avoid": 0.5,
+        "sentiment_shot": 0.5,
+        "active_addresses_fade": 0.5,
+        "fresh_funding": 0.5,
+        "social_spike": 0.5,
+        "active_addresses_spike": 0.5,
+        "oi_buildup": 0.5,
+        "oi_flush": 0.5,
+        "dev_activity_up": 0.5,
+        "funding_squeeze": 0.5,
+        "funding_overheated": 0.5,
+        "kronos_forecast_up": 0.5,
+        "kronos_forecast_down": 0.5
+      },
+      "sample_size": 140
     }
   ],
   "calibration": {
@@ -2205,7 +2332,7 @@
       "price_move": 0.5,
       "holder_healthy": 0.5,
       "news_bearish": 0.5,
-      "dd_result": 0.4963,
+      "dd_result": 0.493,
       "regime_risk_off": 0.5,
       "correlation_spike": 0.5,
       "strong_volume_ratio": 0.5,
@@ -2297,10 +2424,10 @@
   },
   "agent_stats": {
     "unknown": {
-      "samples": 716,
-      "wins": 400,
-      "avg_return": -2.501,
-      "win_rate": 0.559
+      "samples": 856,
+      "wins": 472,
+      "avg_return": -2.626,
+      "win_rate": 0.551
     }
   }
 }

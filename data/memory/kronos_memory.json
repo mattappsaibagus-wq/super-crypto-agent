@@ -997,7 +997,7 @@
       "raw_confidence": 0.717,
       "price": 1.45,
       "timestamp": "2026-10-07T12:13:10.121298+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -4.14,
       "outcome_7d": null
     },
     {
@@ -1007,7 +1007,7 @@
       "raw_confidence": 0.709,
       "price": 0.09168,
       "timestamp": "2026-10-07T12:13:10.122982+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -5.59,
       "outcome_7d": null
     },
     {
@@ -1017,7 +1017,7 @@
       "raw_confidence": 0.801,
       "price": 0.03881,
       "timestamp": "2026-10-07T12:13:10.124800+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -1.84,
       "outcome_7d": null
     },
     {
@@ -1027,7 +1027,7 @@
       "raw_confidence": 0.733,
       "price": 0.229485,
       "timestamp": "2026-10-07T12:13:10.126881+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -5.69,
       "outcome_7d": null
     },
     {
@@ -1037,7 +1037,7 @@
       "raw_confidence": 0.8,
       "price": 0.00638199,
       "timestamp": "2026-10-07T12:13:10.128740+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -9.55,
       "outcome_7d": null
     },
     {
@@ -1047,7 +1047,7 @@
       "raw_confidence": 0.785,
       "price": 0.46439,
       "timestamp": "2026-10-07T12:13:10.130520+00:00",
-      "outcome_24h": null,
+      "outcome_24h": 3.84,
       "outcome_7d": null
     },
     {
@@ -1199,6 +1199,86 @@
       "timestamp": "2026-10-08T03:14:15.274101+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "MET",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.483,
+      "raw_confidence": 0.644,
+      "price": 0.474,
+      "timestamp": "2026-10-08T12:23:50.311028+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ALGO",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.613,
+      "raw_confidence": 0.818,
+      "price": 0.1314,
+      "timestamp": "2026-10-08T12:23:50.313041+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "MON",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.616,
+      "raw_confidence": 0.821,
+      "price": 0.0251,
+      "timestamp": "2026-10-08T12:23:50.315266+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ORCA",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.637,
+      "raw_confidence": 0.85,
+      "price": 2.597,
+      "timestamp": "2026-10-08T12:23:50.317381+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "GRIFFAIN",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.603,
+      "raw_confidence": 0.804,
+      "price": 0.01709,
+      "timestamp": "2026-10-08T12:23:50.321640+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "STRK",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.532,
+      "raw_confidence": 0.709,
+      "price": 0.05851,
+      "timestamp": "2026-10-08T12:23:50.323869+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PUMP",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.637,
+      "raw_confidence": 0.85,
+      "price": 0.00577217,
+      "timestamp": "2026-10-08T12:23:50.326092+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PONS",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.561,
+      "raw_confidence": 0.748,
+      "price": 0.3766,
+      "timestamp": "2026-10-08T12:23:50.332720+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -1220,7 +1300,7 @@
     "whale_onchain": 0.5,
     "dex_listing": 0.5,
     "social_spike": 0.5,
-    "kronos_forecast_up": 0.2911,
+    "kronos_forecast_up": 0.2924,
     "whale_onchain_down": 0.5,
     "sentiment_shot": 0.5,
     "liquidity_depth": 0.5,
@@ -1244,7 +1324,7 @@
     "holder_healthy": 0.5,
     "news_bearish": 0.5,
     "oi_flush": 0.5,
-    "kronos_forecast_down": 0.4131,
+    "kronos_forecast_down": 0.4155,
     "advisor_watch": 0.5,
     "dev_activity_up": 0.5,
     "microcap_opportunity": 0.5,
@@ -1255,7 +1335,7 @@
     "strong_volume_ratio": 0.5,
     "meta_agent_trusted": 0.5
   },
-  "runs": 120,
+  "runs": 128,
   "accuracy_history": [
     {
       "weights": {
@@ -1598,6 +1678,63 @@
         "meta_agent_trusted": 0.5
       },
       "sample_size": 99
+    },
+    {
+      "weights": {
+        "momentum": 0.5,
+        "news_event": 0.5,
+        "liquidity_health": 0.5,
+        "low_liquidity_risk": 0.5,
+        "sustainability": 0.5,
+        "active_addresses_fade": 0.5,
+        "trending_boost": 0.5,
+        "correlation_spike": 0.5,
+        "holder_concentration": 0.5,
+        "advisor_buy": 0.5,
+        "active_addresses_spike": 0.5,
+        "regime_neutral": 0.5,
+        "market_traction": 0.5,
+        "regime_risk_on": 0.5,
+        "funding_overheated": 0.5,
+        "whale_onchain": 0.5,
+        "dex_listing": 0.5,
+        "social_spike": 0.5,
+        "kronos_forecast_up": 0.2924,
+        "whale_onchain_down": 0.5,
+        "sentiment_shot": 0.5,
+        "liquidity_depth": 0.5,
+        "fresh_funding": 0.5,
+        "volume_depth": 0.5,
+        "dd_result": 0.5,
+        "whale_down": 0.5,
+        "news_bullish": 0.5,
+        "oi_buildup": 0.5,
+        "sentiment_bear": 0.5,
+        "pattern_bearish": 0.5,
+        "holder_red_flag": 0.5,
+        "price_move": 0.5,
+        "age_signal": 0.5,
+        "pattern_bullish": 0.5,
+        "advisor_hold": 0.5,
+        "age_survivorship": 0.5,
+        "funding_squeeze": 0.5,
+        "regime_risk_off": 0.5,
+        "advisor_avoid": 0.5,
+        "holder_healthy": 0.5,
+        "news_bearish": 0.5,
+        "oi_flush": 0.5,
+        "kronos_forecast_down": 0.4155,
+        "advisor_watch": 0.5,
+        "dev_activity_up": 0.5,
+        "microcap_opportunity": 0.5,
+        "correlation_dump": 0.5,
+        "meta_agent_deprioritized": 0.5,
+        "whale_up": 0.5,
+        "volume_spike": 0.5,
+        "strong_volume_ratio": 0.5,
+        "meta_agent_trusted": 0.5
+      },
+      "sample_size": 105
     }
   ],
   "calibration": {
@@ -1608,18 +1745,18 @@
         "mean_acc": 0.25
       },
       "3": {
-        "n": 55,
-        "mean_conf": 0.7137,
-        "mean_acc": 0.3636
+        "n": 57,
+        "mean_conf": 0.7097,
+        "mean_acc": 0.3509
       },
       "2": {
-        "n": 12,
-        "mean_conf": 0.5344,
-        "mean_acc": 0.1667
+        "n": 16,
+        "mean_conf": 0.5389,
+        "mean_acc": 0.1875
       }
     },
-    "ece": 0.4253,
-    "n": 99
+    "ece": 0.4239,
+    "n": 105
   },
   "regime_weights": {
     "risk_on": {
@@ -1695,7 +1832,7 @@
       "whale_onchain": 0.5,
       "dex_listing": 0.5,
       "social_spike": 0.5,
-      "kronos_forecast_up": 0.3304,
+      "kronos_forecast_up": 0.3239,
       "whale_onchain_down": 0.5,
       "sentiment_shot": 0.5,
       "liquidity_depth": 0.5,
@@ -1719,7 +1856,7 @@
       "holder_healthy": 0.5,
       "news_bearish": 0.5,
       "oi_flush": 0.5,
-      "kronos_forecast_down": 0.4524,
+      "kronos_forecast_down": 0.447,
       "advisor_watch": 0.5,
       "dev_activity_up": 0.5,
       "microcap_opportunity": 0.5,
@@ -1787,31 +1924,30 @@
   },
   "agent_stats": {
     "unknown": {
-      "samples": 446,
-      "wins": 151,
-      "avg_return": -13.59,
-      "win_rate": 0.339
+      "samples": 551,
+      "wins": 182,
+      "avg_return": -13.193,
+      "win_rate": 0.33
     }
   },
   "notes": {
     "last_run": {
       "requested": 30,
-      "eligible": 25,
-      "forecast": 25,
-      "signals": 9,
+      "eligible": 24,
+      "forecast": 24,
+      "signals": 8,
       "skipped": {
-        "ticker_mismatch": 3,
-        "no_candles": 2
+        "ticker_mismatch": 2,
+        "no_candles": 4
       },
-      "seconds": 179.9,
+      "seconds": 171.9,
       "model": "NeoQuasar/Kronos-small",
-      "graded_now": 0,
+      "graded_now": 24,
       "mismatched": [
         "TRUMP",
-        "BEAM",
-        "CHIP"
+        "PRL"
       ],
-      "at": "2026-10-08T03:14:15.238224+00:00"
+      "at": "2026-10-08T12:23:50.291087+00:00"
     }
   }
 }

@@ -1,42 +1,42 @@
 {
- "generated_at": "2026-10-08T03:14:30.030946+00:00",
+ "generated_at": "2026-10-08T12:24:08.687925+00:00",
  "overall": "ok",
- "code_version": "1f975e3",
- "verdict_count": 45,
+ "code_version": "39ef5a1",
+ "verdict_count": 41,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "74 signals, oldest 65h",
-   "oldest_h": 65.0
+   "detail": "71 signals, oldest 72h",
+   "oldest_h": 71.5
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 8, derivatives 4, fundraising 2, kronos 9, macro 1, microcap 21, santiment 7",
+   "detail": "active: dd 8, derivatives 4, fundraising 2, kronos 8, macro 1, microcap 15, santiment 6",
    "counts": {
     "dd": 8,
     "macro": 1,
-    "microcap": 21,
-    "santiment": 7,
+    "microcap": 15,
+    "santiment": 6,
     "fundraising": 2,
     "derivatives": 4,
-    "kronos": 9
+    "kronos": 8
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "45 verdicts"
+   "detail": "41 verdicts"
   },
   {
    "id": "paper_execution",
    "name": "BUY verdicts executed",
    "status": "ok",
-   "detail": "0 BUY executed, 5 positions open"
+   "detail": "0 BUY executed, 4 positions open"
   },
   {
    "id": "price_coverage",
@@ -49,14 +49,14 @@
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "25/30 coins forecast, 9 signals \u00b7 direction hit rate 46.6% over 335 graded"
+   "detail": "24/30 coins forecast, 8 signals \u00b7 direction hit rate 46.2% over 359 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 97.61, 2.4% below peak",
-   "drawdown_pct": 2.39
+   "detail": "equity 96.83, 3.2% below peak",
+   "drawdown_pct": 3.17
   }
  ],
  "history": [
@@ -98,6 +98,10 @@
   },
   {
    "t": "2026-10-08T03:14:30.030946+00:00",
+   "overall": "ok"
+  },
+  {
+   "t": "2026-10-08T12:24:08.687925+00:00",
    "overall": "ok"
   }
  ]
