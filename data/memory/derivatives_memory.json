@@ -539,6 +539,16 @@
       "timestamp": "2026-10-10T20:46:38.639356+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "MINA",
+      "signal": "funding_squeeze",
+      "confidence": 0.562,
+      "raw_confidence": 0.749,
+      "price": 0.085992,
+      "timestamp": "2026-10-10T22:03:14.901567+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -578,7 +588,7 @@
     "advisor_avoid": 0.5,
     "low_liquidity_risk": 0.5,
     "active_addresses_spike": 0.5,
-    "oi_buildup": 0.3999,
+    "oi_buildup": 0.3983,
     "oi_flush": 0.3,
     "sustainability": 0.5,
     "strong_volume_ratio": 0.5,
@@ -589,13 +599,13 @@
     "holder_healthy": 0.5,
     "market_traction": 0.5,
     "advisor_buy": 0.5,
-    "funding_squeeze": 0.5145,
+    "funding_squeeze": 0.5048,
     "age_signal": 0.5,
-    "funding_overheated": 0.3346,
+    "funding_overheated": 0.3223,
     "kronos_forecast_up": 0.5,
     "kronos_forecast_down": 0.5
   },
-  "runs": 54,
+  "runs": 55,
   "accuracy_history": [
     {
       "weights": {
@@ -2461,6 +2471,63 @@
         "kronos_forecast_down": 0.5
       },
       "sample_size": 37
+    },
+    {
+      "weights": {
+        "age_survivorship": 0.5,
+        "news_bearish": 0.5,
+        "price_move": 0.5,
+        "momentum": 0.5,
+        "advisor_watch": 0.5,
+        "pattern_bearish": 0.5,
+        "dex_listing": 0.5,
+        "microcap_opportunity": 0.5,
+        "sentiment_bear": 0.5,
+        "trending_boost": 0.5,
+        "meta_agent_deprioritized": 0.5,
+        "whale_onchain_down": 0.5,
+        "active_addresses_fade": 0.5,
+        "fresh_funding": 0.5,
+        "whale_onchain": 0.5,
+        "news_event": 0.5,
+        "regime_risk_off": 0.5,
+        "correlation_dump": 0.5,
+        "news_bullish": 0.5,
+        "holder_concentration": 0.5,
+        "dd_result": 0.5,
+        "holder_red_flag": 0.5,
+        "social_spike": 0.5,
+        "volume_spike": 0.5,
+        "sentiment_shot": 0.5,
+        "correlation_spike": 0.5,
+        "pattern_bullish": 0.5,
+        "meta_agent_trusted": 0.5,
+        "whale_up": 0.5,
+        "advisor_hold": 0.5,
+        "liquidity_depth": 0.5,
+        "regime_neutral": 0.5,
+        "liquidity_health": 0.5,
+        "advisor_avoid": 0.5,
+        "low_liquidity_risk": 0.5,
+        "active_addresses_spike": 0.5,
+        "oi_buildup": 0.3983,
+        "oi_flush": 0.3,
+        "sustainability": 0.5,
+        "strong_volume_ratio": 0.5,
+        "dev_activity_up": 0.5,
+        "regime_risk_on": 0.5,
+        "whale_down": 0.5,
+        "volume_depth": 0.5,
+        "holder_healthy": 0.5,
+        "market_traction": 0.5,
+        "advisor_buy": 0.5,
+        "funding_squeeze": 0.5048,
+        "age_signal": 0.5,
+        "funding_overheated": 0.3223,
+        "kronos_forecast_up": 0.5,
+        "kronos_forecast_down": 0.5
+      },
+      "sample_size": 37
     }
   ],
   "calibration": {
@@ -2576,7 +2643,7 @@
       "advisor_avoid": 0.5,
       "low_liquidity_risk": 0.5,
       "active_addresses_spike": 0.5,
-      "oi_buildup": 0.4001,
+      "oi_buildup": 0.3984,
       "oi_flush": 0.5,
       "sustainability": 0.5,
       "strong_volume_ratio": 0.5,
@@ -2587,9 +2654,9 @@
       "holder_healthy": 0.5,
       "market_traction": 0.5,
       "advisor_buy": 0.5,
-      "funding_squeeze": 0.5147,
+      "funding_squeeze": 0.5049,
       "age_signal": 0.5,
-      "funding_overheated": 0.4546,
+      "funding_overheated": 0.4183,
       "kronos_forecast_up": 0.5,
       "kronos_forecast_down": 0.5
     },
@@ -2650,10 +2717,10 @@
   },
   "agent_stats": {
     "unknown": {
-      "samples": 584,
-      "wins": 331,
-      "avg_return": 1.065,
-      "win_rate": 0.567
+      "samples": 621,
+      "wins": 344,
+      "avg_return": 0.744,
+      "win_rate": 0.554
     }
   },
   "snapshot": {
