@@ -1839,6 +1839,106 @@
       "timestamp": "2026-10-10T11:30:51.293424+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "ETH",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.556,
+      "raw_confidence": 0.742,
+      "price": 2505.34,
+      "timestamp": "2026-10-10T16:29:47.439162+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "BNB",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.617,
+      "raw_confidence": 0.823,
+      "price": 749.67,
+      "timestamp": "2026-10-10T16:29:47.441007+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "XRP",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.528,
+      "raw_confidence": 0.704,
+      "price": 1.4,
+      "timestamp": "2026-10-10T16:29:47.442924+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "STRK",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.636,
+      "raw_confidence": 0.848,
+      "price": 0.09249,
+      "timestamp": "2026-10-10T16:29:47.444857+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ORCA",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.637,
+      "raw_confidence": 0.85,
+      "price": 2.497,
+      "timestamp": "2026-10-10T16:29:47.446753+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PYTH",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.602,
+      "raw_confidence": 0.802,
+      "price": 0.0786,
+      "timestamp": "2026-10-10T16:29:47.448637+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PUMP",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.637,
+      "raw_confidence": 0.85,
+      "price": 0.00566192,
+      "timestamp": "2026-10-10T16:29:47.450530+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "SUI",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.532,
+      "raw_confidence": 0.71,
+      "price": 1.12,
+      "timestamp": "2026-10-10T16:29:47.452421+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ADA",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.544,
+      "raw_confidence": 0.725,
+      "price": 0.254826,
+      "timestamp": "2026-10-10T16:29:47.454327+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ALGO",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.572,
+      "raw_confidence": 0.762,
+      "price": 0.1196,
+      "timestamp": "2026-10-10T16:29:47.456207+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -1860,7 +1960,7 @@
     "whale_onchain": 0.5,
     "dex_listing": 0.5,
     "social_spike": 0.5,
-    "kronos_forecast_up": 0.3022,
+    "kronos_forecast_up": 0.3056,
     "whale_onchain_down": 0.5,
     "sentiment_shot": 0.5,
     "liquidity_depth": 0.5,
@@ -1884,7 +1984,7 @@
     "holder_healthy": 0.5,
     "news_bearish": 0.5,
     "oi_flush": 0.5,
-    "kronos_forecast_down": 0.4001,
+    "kronos_forecast_down": 0.3993,
     "advisor_watch": 0.5,
     "dev_activity_up": 0.5,
     "microcap_opportunity": 0.5,
@@ -1895,7 +1995,7 @@
     "strong_volume_ratio": 0.5,
     "meta_agent_trusted": 0.5
   },
-  "runs": 184,
+  "runs": 194,
   "accuracy_history": [
     {
       "weights": {
@@ -2637,6 +2737,63 @@
         "meta_agent_trusted": 0.5
       },
       "sample_size": 154
+    },
+    {
+      "weights": {
+        "momentum": 0.5,
+        "news_event": 0.5,
+        "liquidity_health": 0.5,
+        "low_liquidity_risk": 0.5,
+        "sustainability": 0.5,
+        "active_addresses_fade": 0.5,
+        "trending_boost": 0.5,
+        "correlation_spike": 0.5,
+        "holder_concentration": 0.5,
+        "advisor_buy": 0.5,
+        "active_addresses_spike": 0.5,
+        "regime_neutral": 0.5,
+        "market_traction": 0.5,
+        "regime_risk_on": 0.5,
+        "funding_overheated": 0.5,
+        "whale_onchain": 0.5,
+        "dex_listing": 0.5,
+        "social_spike": 0.5,
+        "kronos_forecast_up": 0.3056,
+        "whale_onchain_down": 0.5,
+        "sentiment_shot": 0.5,
+        "liquidity_depth": 0.5,
+        "fresh_funding": 0.5,
+        "volume_depth": 0.5,
+        "dd_result": 0.5,
+        "whale_down": 0.5,
+        "news_bullish": 0.5,
+        "oi_buildup": 0.5,
+        "sentiment_bear": 0.5,
+        "pattern_bearish": 0.5,
+        "holder_red_flag": 0.5,
+        "price_move": 0.5,
+        "age_signal": 0.5,
+        "pattern_bullish": 0.5,
+        "advisor_hold": 0.5,
+        "age_survivorship": 0.5,
+        "funding_squeeze": 0.5,
+        "regime_risk_off": 0.5,
+        "advisor_avoid": 0.5,
+        "holder_healthy": 0.5,
+        "news_bearish": 0.5,
+        "oi_flush": 0.5,
+        "kronos_forecast_down": 0.3993,
+        "advisor_watch": 0.5,
+        "dev_activity_up": 0.5,
+        "microcap_opportunity": 0.5,
+        "correlation_dump": 0.5,
+        "meta_agent_deprioritized": 0.5,
+        "whale_up": 0.5,
+        "volume_spike": 0.5,
+        "strong_volume_ratio": 0.5,
+        "meta_agent_trusted": 0.5
+      },
+      "sample_size": 154
     }
   ],
   "calibration": {
@@ -2734,7 +2891,7 @@
       "whale_onchain": 0.5,
       "dex_listing": 0.5,
       "social_spike": 0.5,
-      "kronos_forecast_up": 0.3104,
+      "kronos_forecast_up": 0.3122,
       "whale_onchain_down": 0.5,
       "sentiment_shot": 0.5,
       "liquidity_depth": 0.5,
@@ -2758,7 +2915,7 @@
       "holder_healthy": 0.5,
       "news_bearish": 0.5,
       "oi_flush": 0.5,
-      "kronos_forecast_down": 0.4083,
+      "kronos_forecast_down": 0.4059,
       "advisor_watch": 0.5,
       "dev_activity_up": 0.5,
       "microcap_opportunity": 0.5,
@@ -2826,10 +2983,10 @@
   },
   "agent_stats": {
     "unknown": {
-      "samples": 1348,
-      "wins": 394,
-      "avg_return": -11.366,
-      "win_rate": 0.292
+      "samples": 1502,
+      "wins": 437,
+      "avg_return": -11.121,
+      "win_rate": 0.291
     }
   },
   "notes": {
@@ -2837,18 +2994,18 @@
       "requested": 30,
       "eligible": 25,
       "forecast": 25,
-      "signals": 9,
+      "signals": 10,
       "skipped": {
-        "no_candles": 4,
-        "ticker_mismatch": 1
+        "ticker_mismatch": 1,
+        "no_candles": 4
       },
-      "seconds": 137.0,
+      "seconds": 132.7,
       "model": "NeoQuasar/Kronos-small",
       "graded_now": 24,
       "mismatched": [
         "PRL"
       ],
-      "at": "2026-10-10T11:30:51.263322+00:00"
+      "at": "2026-10-10T16:29:47.423869+00:00"
     }
   }
 }
