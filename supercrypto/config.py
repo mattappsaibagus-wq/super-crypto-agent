@@ -63,6 +63,7 @@ KNOWN_IDS = {
     "TAO": "bittensor", "ZEC": "zcash", "SUSHI": "sushi",
     "FTM": "fantom", "HBAR": "hedera", "SEI": "sei-2", "PYTH": "pyth-network",
     "STRK": "starknet-2", "KAS": "kaspa", "RNDR": "render-token",
+    "HI": "hi-dollar",  # ticker "HI" is shared by several CoinGecko coins
 }
 
 ALL_SIGNALS = frozenset({

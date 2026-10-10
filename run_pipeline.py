@@ -43,7 +43,7 @@ from supercrypto.config import (
 from supercrypto.core.attribution import AttributionEngine
 from supercrypto.core.base import ensure_dirs, prune_stale_signals
 from supercrypto.core import health
-from supercrypto.core.prices import get_usd_prices, reference_from_bus
+from supercrypto.core.prices import get_usd_prices, ids_from_bus, reference_from_bus
 from supercrypto.core.paper import PaperTrader
 from supercrypto.core.risk import RiskManager
 
@@ -67,13 +67,33 @@ def _bus_reference() -> dict:
         return {}
 
 
-def load_prices(verdicts, extra_coins=()):
+def _bus_ids() -> dict:
+    """CoinGecko ids per ticker from the signal bus."""
+    try:
+        with open(SIGNALS_FILE) as f:
+            return ids_from_bus(json.load(f))
+    except (OSError, ValueError):
+        return {}
+
+
+def _id_hints(paper=None) -> dict:
+    """Bus ids, overridden by the id stored on each open position: once a
+    coin's signals expire the bus no longer says which token it was."""
+    hints = _bus_ids()
+    for coin, pos in ((paper.state.get("positions") or {}) if paper else {}).items():
+        if pos.get("coingecko_id"):
+            hints[coin.upper()] = pos["coingecko_id"]
+    return hints
+
+
+def load_prices(verdicts, extra_coins=(), id_hints=None):
     """USD prices for the coins paper trading needs: every BUY plus open
     positions (so stops/targets keep working after a coin's signals expire).
     Binance -> KuCoin -> CoinGecko fallbacks; see supercrypto/core/prices.py."""
     coins = [v["coin"] for v in verdicts if v.get("action") == "BUY"] + list(extra_coins)
     mismatches = set()
-    prices = get_usd_prices(coins, reference=_bus_reference(), mismatches=mismatches)
+    prices = get_usd_prices(coins, reference=_bus_reference(), mismatches=mismatches,
+                            id_hints=id_hints)
     HEALTH_CTX.update(price_wanted=sorted(set(c.upper() for c in coins)),
                       prices=prices, mismatches=sorted(mismatches))
     return prices, mismatches
@@ -167,7 +187,8 @@ def run_once(args) -> int:
     held = list(paper.state.get("positions", {}))
     if held:
         mism = set()
-        get_usd_prices(held, reference=reference, mismatches=mism, log=lambda *a: None)
+        get_usd_prices(held, reference=reference, mismatches=mism, log=lambda *a: None,
+                       id_hints=_id_hints(paper))
         for coin in held:
             if coin in mism:
                 paper.void(coin, "voided: exchange ticker was a different asset")
@@ -179,13 +200,24 @@ def run_once(args) -> int:
 
     print("[6] paper trading")
     before_positions = dict(paper.state.get("positions", {}))
-    prices, _ = load_prices(verdicts, before_positions.keys())
+    hints = _id_hints(paper)
+    prices, _ = load_prices(verdicts, before_positions.keys(), id_hints=hints)
     unpriced = [v["coin"] for v in verdicts
                 if v.get("action") == "BUY" and v.get("suggested_size_pct") and not prices.get(v["coin"])]
     if unpriced:
         print("    WARNING: BUY skipped, no price for: " + ", ".join(unpriced))
     paper.process(verdicts, prices)
     after_positions = paper.state.get("positions", {})
+    # Remember which token each position is, for pricing after its signals expire.
+    from supercrypto.config import KNOWN_IDS
+    stamped = False
+    for coin, pos in after_positions.items():
+        cid = hints.get(coin.upper()) or KNOWN_IDS.get(coin.upper())
+        if cid and not pos.get("coingecko_id"):
+            pos["coingecko_id"] = cid
+            stamped = True
+    if stamped:
+        paper.save()
 
     # Attribution: record closed trades
     attrib = AttributionEngine()

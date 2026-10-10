@@ -53,6 +53,17 @@ def reference_from_bus(signals) -> dict:
     return {c: statistics.median(v) for c, v in seen.items() if c}
 
 
+def ids_from_bus(signals) -> dict:
+    """{TICKER: CoinGecko id} from bus signal details (microcap/dd carry it)."""
+    out = {}
+    for s in signals or []:
+        cid = (s.get("details") or {}).get("coin_id")
+        coin = (s.get("coin") or "").upper()
+        if coin and cid and coin not in out:
+            out[coin] = cid
+    return out
+
+
 def parse_binance(data) -> dict:
     """[{symbol: 'BTCUSDT', price: '123'}...] -> {'BTC': 123.0} (USDT pairs only)."""
     out = {}
@@ -86,12 +97,16 @@ def parse_kucoin(data) -> dict:
     return out
 
 
-def get_usd_prices(coins: Iterable[str], log=print, reference=None, mismatches=None) -> dict:
+def get_usd_prices(coins: Iterable[str], log=print, reference=None, mismatches=None,
+                   id_hints=None) -> dict:
     """Return {TICKER: usd_price} for as many of `coins` as any source knows.
 
     reference: {TICKER: CoinGecko-derived price}; exchange prices that don't
-    match it are rejected (and the ticker added to `mismatches`, if given)."""
+    match it are rejected (and the ticker added to `mismatches`, if given).
+    id_hints: {TICKER: CoinGecko id} known for the exact token (e.g. stored on
+    a paper position), used instead of the ambiguous ticker->id lookup."""
     reference = reference or {}
+    id_hints = {k.upper(): v for k, v in (id_hints or {}).items() if v}
     wanted = []
     for c in coins:
         c = (c or "").upper()
@@ -126,7 +141,7 @@ def get_usd_prices(coins: Iterable[str], log=print, reference=None, mismatches=N
     if missing:
         ids = {}
         for c in missing:
-            cid = coin_id_for(c)
+            cid = id_hints.get(c) or coin_id_for(c)
             if cid:
                 ids[cid] = c
         if ids:
