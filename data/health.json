@@ -1,35 +1,35 @@
 {
- "generated_at": "2026-10-10T23:43:01.680549+00:00",
+ "generated_at": "2026-10-11T02:24:04.071927+00:00",
  "overall": "warn",
- "code_version": "98b57fd",
- "verdict_count": 49,
+ "code_version": "ef35af7",
+ "verdict_count": 51,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "75 signals, oldest 44h",
-   "oldest_h": 44.4
+   "detail": "83 signals, oldest 47h",
+   "oldest_h": 47.1
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 8, derivatives 5, kronos 9, macro 1, microcap 25, santiment 6",
+   "detail": "active: dd 10, derivatives 6, kronos 12, macro 1, microcap 28, santiment 6",
    "counts": {
-    "dd": 8,
+    "dd": 10,
     "macro": 1,
-    "microcap": 25,
+    "microcap": 28,
     "santiment": 6,
-    "derivatives": 5,
-    "kronos": 9
+    "derivatives": 6,
+    "kronos": 12
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "49 verdicts"
+   "detail": "51 verdicts"
   },
   {
    "id": "paper_execution",
@@ -41,21 +41,21 @@
    "id": "price_coverage",
    "name": "Prices found",
    "status": "warn",
-   "detail": "4/5 priced \u00b7 missing: HI",
+   "detail": "4/5 priced \u00b7 missing: HI \u00b7 CoinGecko request failed (rate limit or error)",
    "coverage": 0.8
   },
   {
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "27/30 coins forecast, 9 signals \u00b7 direction hit rate 47.4% over 496 graded"
+   "detail": "27/30 coins forecast, 12 signals \u00b7 direction hit rate 46.9% over 469 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 96.60, 3.4% below peak",
-   "drawdown_pct": 3.4
+   "detail": "equity 96.46, 3.5% below peak",
+   "drawdown_pct": 3.54
   }
  ],
  "history": [
@@ -141,6 +141,10 @@
   },
   {
    "t": "2026-10-10T23:43:01.680549+00:00",
+   "overall": "warn"
+  },
+  {
+   "t": "2026-10-11T02:24:04.071927+00:00",
    "overall": "warn"
   }
  ]
