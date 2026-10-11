@@ -1,8 +1,8 @@
 {
-  "equity": 96.4598,
+  "equity": 95.1848,
   "peak_equity": 100.0,
   "starting_equity": 100.0,
-  "cash": 78.4796370214322,
+  "cash": 80.12500167561248,
   "positions": {
     "SAND": {
       "entry_price": 0.07268,
@@ -42,16 +42,6 @@
       "opened_at": "2026-10-05T11:24:20.634484+00:00",
       "last_price": 5.327,
       "coingecko_id": "near"
-    },
-    "HI": {
-      "entry_price": 3.841e-05,
-      "qty": 76033.4867920646,
-      "size_pct": 3.05,
-      "stop_loss_pct": 15.0,
-      "take_profit_pct": 45.0,
-      "opened_at": "2026-10-08T22:37:55.784415+00:00",
-      "last_price": 3.841e-05,
-      "coingecko_id": "hi-dollar"
     }
   },
   "closed": [
@@ -87,6 +77,17 @@
       "exit_reason": "stop_loss",
       "opened_at": "2026-10-06T03:31:37.188332+00:00",
       "closed_at": "2026-10-08T12:24:08.686023+00:00"
+    },
+    {
+      "coin": "HI",
+      "entry_price": 3.841e-05,
+      "exit_price": 2.164e-05,
+      "qty": 76033.4867920646,
+      "size_pct": 3.05,
+      "pnl_pct": -43.661,
+      "exit_reason": "stop_loss (manual: unpriced since 2026-10-10; CoinGecko hi-dollar $0.00002164, token inactive)",
+      "opened_at": "2026-10-08T22:37:55.784415+00:00",
+      "closed_at": "2026-10-11T02:25:12.374379+00:00"
     }
   ],
   "equity_curve": [
@@ -421,6 +422,10 @@
     {
       "t": "2026-10-11T02:24:04.069678+00:00",
       "equity": 96.4598
+    },
+    {
+      "t": "2026-10-11T02:25:12.374554+00:00",
+      "equity": 95.1848
     }
   ]
 }
