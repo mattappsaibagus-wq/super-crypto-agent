@@ -24,6 +24,23 @@ from supercrypto.core.base import BaseAgent
 from supercrypto.core.scoring import score_verdict
 
 
+
+# Microcaps can swing a lot within the signal TTL, but not 3x between two
+# agents' readings; same-ticker collisions are orders of magnitude apart
+# (HI: Hood Inu ~$0.02 vs hi Dollar ~$0.00004).
+MAX_PRICE_SPREAD = 3.0
+
+
+def ticker_conflict(ids, prices, max_spread=MAX_PRICE_SPREAD):
+    """Why one ticker's signals look like several tokens, or "" if they don't."""
+    ids = sorted(set(ids or ()))
+    if len(ids) > 1:
+        return "ids " + ", ".join(ids)
+    prices = [p for p in prices or () if p and p > 0]
+    if len(prices) > 1 and max(prices) / min(prices) > max_spread:
+        return "prices %.3g vs %.3g" % (min(prices), max(prices))
+    return ""
+
 class InvestmentAdvisor(BaseAgent):
     NAME = "advisor"
     EMOJI = "📋"
@@ -110,9 +127,22 @@ class InvestmentAdvisor(BaseAgent):
             if name in ("meta_agent_trusted", "meta_agent_deprioritized"):
                 continue
             bucket = agg.setdefault(
-                coin, {"bias": 0.0, "count": 0, "notes": [], "price": 0, "evidence": []}
+                coin, {"bias": 0.0, "count": 0, "notes": [], "price": 0, "evidence": [],
+                       "ids": set(), "prices": []}
             )
             details = sig.get("details") or {}
+            # Token identity: several tokens can share a ticker (HI was both
+            # Hood Inu and hi Dollar). Kronos prices come from exchange
+            # tickers, which is what is being checked, so they don't count.
+            cid = details.get("coin_id") or details.get("coingecko_id")
+            if cid:
+                bucket["ids"].add(str(cid))
+            try:
+                sig_px = float(details.get("price") or 0)
+            except (TypeError, ValueError):
+                sig_px = 0
+            if sig_px > 0 and sig.get("agent") != "kronos":
+                bucket["prices"].append(sig_px)
             # Per-agent evidence so the dashboard can show who is working on
             # this coin and what each agent actually saw.
             bucket["evidence"].append({
@@ -168,6 +198,12 @@ class InvestmentAdvisor(BaseAgent):
                 dd_buy_threshold=DD_BUY_THRESHOLD,
                 holder_cut=HOLDER_RED_FLAG_CUT,
             )
+            conflict = ticker_conflict(b["ids"], b["prices"])
+            if conflict:
+                if action == "BUY":
+                    action = "WATCH"
+                b["notes"].insert(0, "ticker shared by different tokens (%s): not buying a mixed "
+                                     "verdict" % conflict)
             signal_key = "advisor_{}".format(action.lower())
             if b.get("price", 0) > 0:
                 try:
@@ -192,6 +228,8 @@ class InvestmentAdvisor(BaseAgent):
                     "suggested_size_pct": 0.0,  # risk manager fills this
                     "agents": sorted({e["agent"] for e in b["evidence"]}),
                     "evidence": b["evidence"],
+                    "coingecko_id": next(iter(b["ids"])) if len(b["ids"]) == 1 else None,
+                    "ticker_conflict": conflict or None,
                 }
             )
 
