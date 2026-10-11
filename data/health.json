@@ -1,61 +1,61 @@
 {
- "generated_at": "2026-10-11T02:24:04.071927+00:00",
- "overall": "warn",
- "code_version": "ef35af7",
- "verdict_count": 51,
+ "generated_at": "2026-10-11T02:35:01.776079+00:00",
+ "overall": "ok",
+ "code_version": "e85ce01",
+ "verdict_count": 52,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "83 signals, oldest 47h",
-   "oldest_h": 47.1
+   "detail": "82 signals, oldest 47h",
+   "oldest_h": 47.3
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 10, derivatives 6, kronos 12, macro 1, microcap 28, santiment 6",
+   "detail": "active: dd 10, derivatives 6, kronos 10, macro 1, microcap 29, santiment 6",
    "counts": {
     "dd": 10,
     "macro": 1,
-    "microcap": 28,
+    "microcap": 29,
     "santiment": 6,
     "derivatives": 6,
-    "kronos": 12
+    "kronos": 10
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "51 verdicts"
+   "detail": "52 verdicts"
   },
   {
    "id": "paper_execution",
    "name": "BUY verdicts executed",
    "status": "ok",
-   "detail": "0 BUY executed, 5 positions open"
+   "detail": "1 BUY executed, 5 positions open"
   },
   {
    "id": "price_coverage",
    "name": "Prices found",
-   "status": "warn",
-   "detail": "4/5 priced \u00b7 missing: HI \u00b7 CoinGecko request failed (rate limit or error)",
-   "coverage": 0.8
+   "status": "ok",
+   "detail": "5/5 priced",
+   "coverage": 1.0
   },
   {
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "27/30 coins forecast, 12 signals \u00b7 direction hit rate 46.9% over 469 graded"
+   "detail": "27/30 coins forecast, 10 signals \u00b7 direction hit rate 46.6% over 442 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 96.46, 3.5% below peak",
-   "drawdown_pct": 3.54
+   "detail": "equity 95.20, 4.8% below peak",
+   "drawdown_pct": 4.8
   }
  ],
  "history": [
@@ -146,6 +146,10 @@
   {
    "t": "2026-10-11T02:24:04.071927+00:00",
    "overall": "warn"
+  },
+  {
+   "t": "2026-10-11T02:35:01.776079+00:00",
+   "overall": "ok"
   }
  ]
 }
