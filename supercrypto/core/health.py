@@ -109,7 +109,7 @@ def check_paper_execution(verdicts, paper):
                   "%d BUY executed, %d positions open" % (n, len(held)))
 
 
-def check_price_coverage(wanted, priced, mismatches, voided):
+def check_price_coverage(wanted, priced, mismatches, voided, errors=None):
     wanted = list(wanted or [])
     if not wanted:
         return _check("price_coverage", "Prices found", "ok", "no prices needed this scan")
@@ -121,6 +121,8 @@ def check_price_coverage(wanted, priced, mismatches, voided):
         note = " · same-ticker different token rejected: " + ", ".join(sorted(mismatches))
     if voided:
         note += " · voided: " + ", ".join(voided)
+    if missing and errors:
+        note += " · " + "; ".join(dict.fromkeys(errors))
     status = "fail" if cov < MIN_PRICE_COVERAGE else ("warn" if missing else "ok")
     return _check("price_coverage", "Prices found", status,
                   "%d/%d priced%s%s" % (len(got), len(wanted),
@@ -199,7 +201,8 @@ def run_checks(ctx=None, now=None):
         lambda: check_verdicts(verdicts, prev.get("verdict_count")),
         lambda: check_paper_execution(verdicts, paper),
         lambda: check_price_coverage(ctx.get("price_wanted"), ctx.get("prices"),
-                                     ctx.get("mismatches"), ctx.get("voided")),
+                                     ctx.get("mismatches"), ctx.get("voided"),
+                                     ctx.get("price_errors")),
         lambda: check_kronos(kronos),
         lambda: check_drawdown(paper),
     ]

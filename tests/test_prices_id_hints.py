@@ -26,3 +26,13 @@ def test_id_hint_beats_ambiguous_lookup(monkeypatch):
 def test_hi_is_pinned():
     from supercrypto.config import KNOWN_IDS
     assert KNOWN_IDS["HI"] == "hi-dollar"
+
+
+def test_coingecko_failure_is_reported(monkeypatch):
+    monkeypatch.setattr(P, "api_get", lambda url, params=None, **kw: None if "simple" in url else [])
+    errs = []
+    out = P.get_usd_prices(["HI"], log=lambda *a: None, id_hints={"HI": "hi-dollar"}, errors=errs)
+    assert out == {} and "request failed" in errs[0]
+    from supercrypto.core import health as H
+    c = H.check_price_coverage(["HI"], {}, [], [], errs)
+    assert "CoinGecko request failed" in c["detail"]

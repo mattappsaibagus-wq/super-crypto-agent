@@ -91,11 +91,11 @@ def load_prices(verdicts, extra_coins=(), id_hints=None):
     positions (so stops/targets keep working after a coin's signals expire).
     Binance -> KuCoin -> CoinGecko fallbacks; see supercrypto/core/prices.py."""
     coins = [v["coin"] for v in verdicts if v.get("action") == "BUY"] + list(extra_coins)
-    mismatches = set()
+    mismatches, errors = set(), []
     prices = get_usd_prices(coins, reference=_bus_reference(), mismatches=mismatches,
-                            id_hints=id_hints)
+                            id_hints=id_hints, errors=errors)
     HEALTH_CTX.update(price_wanted=sorted(set(c.upper() for c in coins)),
-                      prices=prices, mismatches=sorted(mismatches))
+                      prices=prices, mismatches=sorted(mismatches), price_errors=errors)
     return prices, mismatches
 
 

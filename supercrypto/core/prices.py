@@ -98,13 +98,15 @@ def parse_kucoin(data) -> dict:
 
 
 def get_usd_prices(coins: Iterable[str], log=print, reference=None, mismatches=None,
-                   id_hints=None) -> dict:
+                   id_hints=None, errors=None) -> dict:
     """Return {TICKER: usd_price} for as many of `coins` as any source knows.
 
     reference: {TICKER: CoinGecko-derived price}; exchange prices that don't
     match it are rejected (and the ticker added to `mismatches`, if given).
     id_hints: {TICKER: CoinGecko id} known for the exact token (e.g. stored on
-    a paper position), used instead of the ambiguous ticker->id lookup."""
+    a paper position), used instead of the ambiguous ticker->id lookup.
+    errors: list that gets a short reason when the CoinGecko step comes back
+    empty, so the health check can say why a coin is unpriced."""
     reference = reference or {}
     id_hints = {k.upper(): v for k, v in (id_hints or {}).items() if v}
     wanted = []
@@ -148,12 +150,17 @@ def get_usd_prices(coins: Iterable[str], log=print, reference=None, mismatches=N
             params = {"ids": ",".join(ids), "vs_currencies": "usd"}
             if COINGECKO_API_KEY:
                 params["x_cg_demo_api_key"] = COINGECKO_API_KEY
-            data = api_get(f"{COINGECKO_BASE}/simple/price", params=params) or {}
+            data = api_get(f"{COINGECKO_BASE}/simple/price", params=params)
+            if data is None and errors is not None:
+                errors.append("CoinGecko request failed (rate limit or error)")
+            data = data or {}
             for cid, c in ids.items():
                 px = (data.get(cid) or {}).get("usd") if isinstance(data, dict) else None
                 # ticker->id lookup can pick a namesake too; same check
                 if px and price_matches(float(px), reference.get(c)):
                     prices[c], source[c] = float(px), "coingecko"
+                elif data and errors is not None:
+                    errors.append("CoinGecko had no usable price for %s (%s)" % (c, cid))
     for c in missing:  # last resort: the reference itself (CoinGecko via the bus)
         if c not in prices and reference.get(c):
             prices[c], source[c] = float(reference[c]), "reference"
