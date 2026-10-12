@@ -1,41 +1,42 @@
 {
- "generated_at": "2026-10-12T02:52:48.787042+00:00",
+ "generated_at": "2026-10-12T13:43:47.135963+00:00",
  "overall": "ok",
- "code_version": "4b5b878",
- "verdict_count": 54,
+ "code_version": "af36098",
+ "verdict_count": 57,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "90 signals, oldest 72h",
-   "oldest_h": 71.6
+   "detail": "90 signals, oldest 64h",
+   "oldest_h": 63.7
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 9, derivatives 7, kronos 14, macro 1, microcap 22, santiment 7",
+   "detail": "active: dd 8, derivatives 4, fundraising 3, kronos 10, macro 1, microcap 15, santiment 6",
    "counts": {
-    "dd": 9,
+    "dd": 8,
     "macro": 1,
-    "microcap": 22,
-    "santiment": 7,
-    "derivatives": 7,
-    "kronos": 14
+    "microcap": 15,
+    "santiment": 6,
+    "derivatives": 4,
+    "fundraising": 3,
+    "kronos": 10
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "54 verdicts"
+   "detail": "57 verdicts"
   },
   {
    "id": "paper_execution",
    "name": "BUY verdicts executed",
    "status": "ok",
-   "detail": "0 BUY executed, 5 positions open"
+   "detail": "0 BUY executed, 4 positions open"
   },
   {
    "id": "price_coverage",
@@ -48,14 +49,14 @@
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "28/30 coins forecast, 14 signals \u00b7 direction hit rate 47.1% over 518 graded"
+   "detail": "27/30 coins forecast, 10 signals \u00b7 direction hit rate 47.8% over 544 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 95.49, 4.5% below peak",
-   "drawdown_pct": 4.51
+   "detail": "equity 94.74, 5.3% below peak",
+   "drawdown_pct": 5.26
   }
  ],
  "history": [
@@ -169,6 +170,10 @@
   },
   {
    "t": "2026-10-12T02:52:48.787042+00:00",
+   "overall": "ok"
+  },
+  {
+   "t": "2026-10-12T13:43:47.135963+00:00",
    "overall": "ok"
   }
  ]

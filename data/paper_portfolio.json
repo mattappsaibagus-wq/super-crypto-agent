@@ -1,8 +1,8 @@
 {
-  "equity": 95.4895,
+  "equity": 94.7385,
   "peak_equity": 100.0,
   "starting_equity": 100.0,
-  "cash": 76.50757494440799,
+  "cash": 79.42445104393049,
   "positions": {
     "SAND": {
       "entry_price": 0.07268,
@@ -11,7 +11,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634468+00:00",
-      "last_price": 0.06475
+      "last_price": 0.06231
     },
     "BTC": {
       "entry_price": 86018.0,
@@ -20,18 +20,8 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634478+00:00",
-      "last_price": 83832.01,
+      "last_price": 82706.0,
       "coingecko_id": "bitcoin"
-    },
-    "PONS": {
-      "entry_price": 0.3979,
-      "qty": 9.424478512188992,
-      "size_pct": 3.75,
-      "stop_loss_pct": 15.0,
-      "take_profit_pct": 45.0,
-      "opened_at": "2026-10-05T11:24:20.634481+00:00",
-      "last_price": 0.3453,
-      "coingecko_id": "pons"
     },
     "NEAR": {
       "entry_price": 5.014,
@@ -40,7 +30,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634484+00:00",
-      "last_price": 5.842,
+      "last_price": 5.637,
       "coingecko_id": "near"
     },
     "PUMP": {
@@ -50,7 +40,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-11T02:35:01.774829+00:00",
-      "last_price": 0.005671,
+      "last_price": 0.005576,
       "coingecko_id": "pump-fun"
     }
   },
@@ -98,6 +88,17 @@
       "exit_reason": "stop_loss (manual: unpriced since 2026-10-10; CoinGecko hi-dollar $0.00002164, token inactive)",
       "opened_at": "2026-10-08T22:37:55.784415+00:00",
       "closed_at": "2026-10-11T02:25:12.374379+00:00"
+    },
+    {
+      "coin": "PONS",
+      "entry_price": 0.3979,
+      "exit_price": 0.3095,
+      "qty": 9.424478512188992,
+      "size_pct": 3.75,
+      "pnl_pct": -22.217,
+      "exit_reason": "stop_loss",
+      "opened_at": "2026-10-05T11:24:20.634481+00:00",
+      "closed_at": "2026-10-12T13:43:47.133784+00:00"
     }
   ],
   "equity_curve": [
@@ -484,6 +485,14 @@
     {
       "t": "2026-10-12T02:52:48.785822+00:00",
       "equity": 95.4895
+    },
+    {
+      "t": "2026-10-12T13:43:47.133801+00:00",
+      "equity": 94.7385
+    },
+    {
+      "t": "2026-10-12T13:43:47.133816+00:00",
+      "equity": 94.7385
     }
   ]
 }
