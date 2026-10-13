@@ -8,7 +8,7 @@
       "price": 248.6,
       "timestamp": "2026-10-02T16:53:21.967393+00:00",
       "outcome_24h": -0.17,
-      "outcome_7d": null
+      "outcome_7d": -13.23
     },
     {
       "coin": "QNT",
@@ -18,7 +18,7 @@
       "price": 229.48,
       "timestamp": "2026-10-02T21:28:59.379477+00:00",
       "outcome_24h": 12.58,
-      "outcome_7d": null
+      "outcome_7d": -6.0
     },
     {
       "coin": "ZEC",
@@ -28,7 +28,7 @@
       "price": 1335.66,
       "timestamp": "2026-10-05T23:24:30.964442+00:00",
       "outcome_24h": -0.66,
-      "outcome_7d": null
+      "outcome_7d": -8.66
     },
     {
       "coin": "ZEC",
@@ -38,7 +38,7 @@
       "price": 1340.63,
       "timestamp": "2026-10-06T03:28:14.089614+00:00",
       "outcome_24h": -1.03,
-      "outcome_7d": null
+      "outcome_7d": -9.0
     },
     {
       "coin": "ZEC",
@@ -48,7 +48,7 @@
       "price": 1372.2,
       "timestamp": "2026-10-06T12:17:43.639571+00:00",
       "outcome_24h": -4.29,
-      "outcome_7d": null
+      "outcome_7d": -11.09
     },
     {
       "coin": "ZEC",
@@ -58,7 +58,7 @@
       "price": 1339.23,
       "timestamp": "2026-10-06T21:56:34.182471+00:00",
       "outcome_24h": -1.93,
-      "outcome_7d": null
+      "outcome_7d": -8.91
     },
     {
       "coin": "XRP",
@@ -117,7 +117,7 @@
       "raw_confidence": 0.621,
       "price": 1.38,
       "timestamp": "2026-10-08T22:32:48.935159+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -0.72,
       "outcome_7d": null
     }
   ],
@@ -162,7 +162,7 @@
     "oi_flush": 0.5,
     "sustainability": 0.5,
     "strong_volume_ratio": 0.5,
-    "dev_activity_up": 0.4095,
+    "dev_activity_up": 0.4002,
     "regime_risk_on": 0.5,
     "whale_down": 0.5,
     "volume_depth": 0.5,
@@ -2782,6 +2782,63 @@
         "kronos_forecast_down": 0.5
       },
       "sample_size": 11
+    },
+    {
+      "weights": {
+        "age_survivorship": 0.5,
+        "news_bearish": 0.5,
+        "price_move": 0.5,
+        "momentum": 0.5,
+        "advisor_watch": 0.5,
+        "pattern_bearish": 0.5,
+        "dex_listing": 0.5,
+        "microcap_opportunity": 0.5,
+        "sentiment_bear": 0.5,
+        "trending_boost": 0.5,
+        "meta_agent_deprioritized": 0.5,
+        "whale_onchain_down": 0.5,
+        "active_addresses_fade": 0.3,
+        "fresh_funding": 0.5,
+        "whale_onchain": 0.5,
+        "news_event": 0.5,
+        "regime_risk_off": 0.5,
+        "correlation_dump": 0.5,
+        "news_bullish": 0.5,
+        "holder_concentration": 0.5,
+        "dd_result": 0.5,
+        "holder_red_flag": 0.5,
+        "social_spike": 0.4,
+        "volume_spike": 0.5,
+        "sentiment_shot": 0.5,
+        "correlation_spike": 0.5,
+        "pattern_bullish": 0.5,
+        "meta_agent_trusted": 0.5,
+        "whale_up": 0.5,
+        "advisor_hold": 0.5,
+        "liquidity_depth": 0.5,
+        "regime_neutral": 0.5,
+        "liquidity_health": 0.5,
+        "advisor_avoid": 0.5,
+        "low_liquidity_risk": 0.5,
+        "active_addresses_spike": 0.45,
+        "oi_buildup": 0.5,
+        "oi_flush": 0.5,
+        "sustainability": 0.5,
+        "strong_volume_ratio": 0.5,
+        "dev_activity_up": 0.4002,
+        "regime_risk_on": 0.5,
+        "whale_down": 0.5,
+        "volume_depth": 0.5,
+        "holder_healthy": 0.5,
+        "market_traction": 0.5,
+        "advisor_buy": 0.5,
+        "funding_squeeze": 0.5,
+        "age_signal": 0.5,
+        "funding_overheated": 0.5,
+        "kronos_forecast_up": 0.5,
+        "kronos_forecast_down": 0.5
+      },
+      "sample_size": 12
     }
   ],
   "calibration": {
@@ -2792,13 +2849,13 @@
         "mean_acc": 0.5
       },
       "2": {
-        "n": 9,
-        "mean_conf": 0.4872,
-        "mean_acc": 0.1111
+        "n": 10,
+        "mean_conf": 0.4851,
+        "mean_acc": 0.1
       }
     },
-    "ece": 0.3623,
-    "n": 11
+    "ece": 0.3709,
+    "n": 12
   },
   "regime_weights": {
     "risk_on": {
@@ -2896,7 +2953,7 @@
       "oi_flush": 0.5,
       "sustainability": 0.5,
       "strong_volume_ratio": 0.5,
-      "dev_activity_up": 0.4102,
+      "dev_activity_up": 0.4007,
       "regime_risk_on": 0.5,
       "whale_down": 0.5,
       "volume_depth": 0.5,
@@ -2966,15 +3023,15 @@
   },
   "agent_stats": {
     "unknown": {
-      "samples": 286,
-      "wins": 64,
-      "avg_return": 0.682,
-      "win_rate": 0.224
+      "samples": 298,
+      "wins": 66,
+      "avg_return": 0.555,
+      "win_rate": 0.221
     }
   },
   "api_usage": {
     "month": "2026-10",
-    "calls": 102
+    "calls": 104
   },
   "slug_cache": {
     "t": 1791582934.0769987,
