@@ -248,7 +248,7 @@
       "price": 0.45717,
       "timestamp": "2026-10-08T03:10:24.608329+00:00",
       "outcome_24h": -4.47,
-      "outcome_7d": null
+      "outcome_7d": -22.59
     },
     {
       "coin": "W",
@@ -258,7 +258,7 @@
       "price": 0.01721,
       "timestamp": "2026-10-08T03:10:24.611377+00:00",
       "outcome_24h": -99.95,
-      "outcome_7d": null
+      "outcome_7d": -99.95
     },
     {
       "coin": "STRK",
@@ -957,7 +957,7 @@
       "raw_confidence": 0.8,
       "price": 0.081705,
       "timestamp": "2026-10-14T10:42:24.610061+00:00",
-      "outcome_24h": null,
+      "outcome_24h": 5.03,
       "outcome_7d": null
     },
     {
@@ -977,6 +977,56 @@
       "raw_confidence": 0.634,
       "price": 0.08979,
       "timestamp": "2026-10-14T21:02:24.182469+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "BLUR",
+      "signal": "funding_squeeze",
+      "confidence": 0.6,
+      "raw_confidence": 0.8,
+      "price": 0.01249,
+      "timestamp": "2026-10-15T10:26:22.774722+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ZK",
+      "signal": "oi_buildup",
+      "confidence": 0.585,
+      "raw_confidence": 0.78,
+      "price": 0.016877,
+      "timestamp": "2026-10-15T10:26:22.778245+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "STRK",
+      "signal": "oi_buildup",
+      "confidence": 0.497,
+      "raw_confidence": 0.663,
+      "price": 0.08812,
+      "timestamp": "2026-10-15T10:26:22.781698+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ALGO",
+      "signal": "oi_flush",
+      "confidence": 0.491,
+      "raw_confidence": 0.654,
+      "price": 0.10817,
+      "timestamp": "2026-10-15T10:26:22.785046+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "BLUR",
+      "signal": "oi_buildup",
+      "confidence": 0.481,
+      "raw_confidence": 0.641,
+      "price": 0.01249,
+      "timestamp": "2026-10-15T10:26:22.788913+00:00",
       "outcome_24h": null,
       "outcome_7d": null
     }
@@ -1018,8 +1068,8 @@
     "advisor_avoid": 0.5,
     "low_liquidity_risk": 0.5,
     "active_addresses_spike": 0.5,
-    "oi_buildup": 0.294,
-    "oi_flush": 0.4535,
+    "oi_buildup": 0.2921,
+    "oi_flush": 0.4524,
     "sustainability": 0.5,
     "strong_volume_ratio": 0.5,
     "dev_activity_up": 0.5,
@@ -1029,13 +1079,13 @@
     "holder_healthy": 0.5,
     "market_traction": 0.5,
     "advisor_buy": 0.5,
-    "funding_squeeze": 0.399,
+    "funding_squeeze": 0.3926,
     "age_signal": 0.5,
-    "funding_overheated": 0.1682,
+    "funding_overheated": 0.1656,
     "kronos_forecast_up": 0.5,
     "kronos_forecast_down": 0.5
   },
-  "runs": 98,
+  "runs": 103,
   "accuracy_history": [
     {
       "weights": {
@@ -3984,6 +4034,63 @@
         "kronos_forecast_down": 0.5
       },
       "sample_size": 89
+    },
+    {
+      "weights": {
+        "age_survivorship": 0.5,
+        "news_bearish": 0.5,
+        "price_move": 0.5,
+        "momentum": 0.5,
+        "advisor_watch": 0.5,
+        "pattern_bearish": 0.5,
+        "dex_listing": 0.5,
+        "microcap_opportunity": 0.5,
+        "sentiment_bear": 0.5,
+        "trending_boost": 0.5,
+        "meta_agent_deprioritized": 0.5,
+        "whale_onchain_down": 0.5,
+        "active_addresses_fade": 0.5,
+        "fresh_funding": 0.5,
+        "whale_onchain": 0.5,
+        "news_event": 0.5,
+        "regime_risk_off": 0.5,
+        "correlation_dump": 0.5,
+        "news_bullish": 0.5,
+        "holder_concentration": 0.5,
+        "dd_result": 0.5,
+        "holder_red_flag": 0.5,
+        "social_spike": 0.5,
+        "volume_spike": 0.5,
+        "sentiment_shot": 0.5,
+        "correlation_spike": 0.5,
+        "pattern_bullish": 0.5,
+        "meta_agent_trusted": 0.5,
+        "whale_up": 0.5,
+        "advisor_hold": 0.5,
+        "liquidity_depth": 0.5,
+        "regime_neutral": 0.5,
+        "liquidity_health": 0.5,
+        "advisor_avoid": 0.5,
+        "low_liquidity_risk": 0.5,
+        "active_addresses_spike": 0.5,
+        "oi_buildup": 0.2921,
+        "oi_flush": 0.4524,
+        "sustainability": 0.5,
+        "strong_volume_ratio": 0.5,
+        "dev_activity_up": 0.5,
+        "regime_risk_on": 0.5,
+        "whale_down": 0.5,
+        "volume_depth": 0.5,
+        "holder_healthy": 0.5,
+        "market_traction": 0.5,
+        "advisor_buy": 0.5,
+        "funding_squeeze": 0.3926,
+        "age_signal": 0.5,
+        "funding_overheated": 0.1656,
+        "kronos_forecast_up": 0.5,
+        "kronos_forecast_down": 0.5
+      },
+      "sample_size": 90
     }
   ],
   "calibration": {
@@ -3994,9 +4101,9 @@
         "mean_acc": 0.8
       },
       "3": {
-        "n": 39,
-        "mean_conf": 0.621,
-        "mean_acc": 0.2051
+        "n": 40,
+        "mean_conf": 0.6205,
+        "mean_acc": 0.225
       },
       "2": {
         "n": 45,
@@ -4004,8 +4111,8 @@
         "mean_acc": 0.2
       }
     },
-    "ece": 0.3401,
-    "n": 89
+    "ece": 0.3319,
+    "n": 90
   },
   "regime_weights": {
     "risk_on": {
@@ -4099,8 +4206,8 @@
       "advisor_avoid": 0.5,
       "low_liquidity_risk": 0.5,
       "active_addresses_spike": 0.5,
-      "oi_buildup": 0.294,
-      "oi_flush": 0.506,
+      "oi_buildup": 0.2921,
+      "oi_flush": 0.4944,
       "sustainability": 0.5,
       "strong_volume_ratio": 0.5,
       "dev_activity_up": 0.5,
@@ -4110,9 +4217,9 @@
       "holder_healthy": 0.5,
       "market_traction": 0.5,
       "advisor_buy": 0.5,
-      "funding_squeeze": 0.399,
+      "funding_squeeze": 0.3926,
       "age_signal": 0.5,
-      "funding_overheated": 0.1699,
+      "funding_overheated": 0.167,
       "kronos_forecast_up": 0.5,
       "kronos_forecast_down": 0.5
     },
@@ -4173,726 +4280,726 @@
   },
   "agent_stats": {
     "unknown": {
-      "samples": 1713,
-      "wins": 663,
-      "avg_return": -6.389,
-      "win_rate": 0.387
+      "samples": 1803,
+      "wins": 685,
+      "avg_return": -6.822,
+      "win_rate": 0.38
     }
   },
   "snapshot": {
-    "t": 1792029630.0498824,
+    "t": 1792059982.7695427,
     "markets": {
       "BTC": {
-        "oi_usd": 3331233836.622552,
-        "price": 81593.4
+        "oi_usd": 3205309236.8658004,
+        "price": 80966.0
       },
       "ETH": {
-        "oi_usd": 2613203485.2893996,
-        "price": 2411.4
+        "oi_usd": 2500230071.3558817,
+        "price": 2362.19
       },
       "ATOM": {
-        "oi_usd": 3840975.09126,
-        "price": 1.7305
+        "oi_usd": 3541227.113172,
+        "price": 1.6737
       },
       "DYDX": {
-        "oi_usd": 2006300.162412,
-        "price": 0.12558
+        "oi_usd": 1806924.1519,
+        "price": 0.1195
       },
       "SOL": {
-        "oi_usd": 605249250.8718,
-        "price": 103.91
+        "oi_usd": 569616273.8424002,
+        "price": 101.88
       },
       "AVAX": {
-        "oi_usd": 23196508.015712004,
-        "price": 9.8599
+        "oi_usd": 20790850.606595997,
+        "price": 9.5109
       },
       "BNB": {
-        "oi_usd": 47018140.75768,
-        "price": 728.12
+        "oi_usd": 46547748.2458,
+        "price": 718.775
       },
       "APE": {
-        "oi_usd": 1248255.3077279998,
-        "price": 0.14157
+        "oi_usd": 1231519.1693759998,
+        "price": 0.13488
       },
       "OP": {
-        "oi_usd": 5477661.933408,
-        "price": 0.14032
+        "oi_usd": 4911936.729000001,
+        "price": 0.13042
       },
       "LTC": {
-        "oi_usd": 27416574.47772,
-        "price": 59.058
+        "oi_usd": 25762528.27092,
+        "price": 58.093
       },
       "ARB": {
-        "oi_usd": 20315670.607568,
-        "price": 0.17986
+        "oi_usd": 17884258.744450003,
+        "price": 0.17305
       },
       "DOGE": {
-        "oi_usd": 101328162.40030001,
-        "price": 0.081337
+        "oi_usd": 98419206.70909199,
+        "price": 0.079774
       },
       "INJ": {
-        "oi_usd": 8898852.892319998,
-        "price": 7.5711
+        "oi_usd": 7905509.9929,
+        "price": 7.1381
       },
       "SUI": {
-        "oi_usd": 63671985.47286001,
-        "price": 1.0119
+        "oi_usd": 60500317.44292801,
+        "price": 0.98284
       },
       "PEPE": {
-        "oi_usd": 25834840.302942,
-        "price": 4.037e-06
+        "oi_usd": 24641930.498184,
+        "price": 3.8790000000000005e-06
       },
       "CRV": {
-        "oi_usd": 18124185.991304003,
-        "price": 0.32644
+        "oi_usd": 21613883.754660003,
+        "price": 0.34318
       },
       "LDO": {
-        "oi_usd": 10044651.026218,
-        "price": 0.39607
+        "oi_usd": 10147009.420439998,
+        "price": 0.3834
       },
       "LINK": {
-        "oi_usd": 59622003.38760001,
-        "price": 12.326
+        "oi_usd": 57865165.35239999,
+        "price": 11.991
       },
       "STX": {
-        "oi_usd": 3731375.743038,
-        "price": 0.42837
+        "oi_usd": 3366342.5080319997,
+        "price": 0.38432
       },
       "CFX": {
-        "oi_usd": 4330159.00812,
-        "price": 0.055044
+        "oi_usd": 4076212.3258499997,
+        "price": 0.054075
       },
       "GMX": {
-        "oi_usd": 1232372.2542599998,
-        "price": 8.4399
+        "oi_usd": 1204885.048044,
+        "price": 8.2101
       },
       "SNX": {
-        "oi_usd": 438581.002604,
-        "price": 0.22511
+        "oi_usd": 440742.262964,
+        "price": 0.21478
       },
       "XRP": {
-        "oi_usd": 251358829.449,
-        "price": 1.3209
+        "oi_usd": 239397446.1384,
+        "price": 1.3068
       },
       "BCH": {
-        "oi_usd": 7413096.98948,
-        "price": 267.26
+        "oi_usd": 6921227.18959,
+        "price": 262.495
       },
       "APT": {
-        "oi_usd": 6068598.717202,
-        "price": 0.8029
+        "oi_usd": 5554462.888739999,
+        "price": 0.7685
       },
       "AAVE": {
-        "oi_usd": 63971420.6772,
-        "price": 153.18
+        "oi_usd": 60979553.3226,
+        "price": 148.83
       },
       "COMP": {
-        "oi_usd": 1199427.59106,
-        "price": 22.683
+        "oi_usd": 1092624.8244999999,
+        "price": 21.709
       },
       "WLD": {
-        "oi_usd": 66947253.14013198,
-        "price": 0.48577
+        "oi_usd": 62533000.73842,
+        "price": 0.4679
       },
       "YGG": {
-        "oi_usd": 177474.787672,
-        "price": 0.025732
+        "oi_usd": 169932.97178,
+        "price": 0.024814
       },
       "TRX": {
-        "oi_usd": 13039098.759,
-        "price": 0.33169
+        "oi_usd": 13049076.19859,
+        "price": 0.331711
       },
       "SHIB": {
-        "oi_usd": 2829623.31659,
-        "price": 5.023e-06
+        "oi_usd": 2785243.424546,
+        "price": 4.939e-06
       },
       "UNI": {
-        "oi_usd": 69754287.1965,
-        "price": 7.0775
+        "oi_usd": 68398149.58176,
+        "price": 6.8604
       },
       "SEI": {
-        "oi_usd": 3850959.6181799998,
-        "price": 0.061409
+        "oi_usd": 3690153.33916,
+        "price": 0.058693
       },
       "RUNE": {
-        "oi_usd": 1610031.9302979999,
-        "price": 0.63737
+        "oi_usd": 1575358.9493739998,
+        "price": 0.62291
       },
       "ZRO": {
-        "oi_usd": 68009185.02889001,
-        "price": 1.89745
+        "oi_usd": 64751072.12260002,
+        "price": 1.8806
       },
       "DOT": {
-        "oi_usd": 6053138.817799999,
-        "price": 1.1345
+        "oi_usd": 5524783.25184,
+        "price": 1.0854
       },
       "BANANA": {
-        "oi_usd": 146057.56524000003,
-        "price": 3.5998
+        "oi_usd": 144947.61866,
+        "price": 3.4841
       },
       "TRB": {
-        "oi_usd": 570552.01824,
-        "price": 17.988
+        "oi_usd": 553231.55832,
+        "price": 17.409
       },
       "BIGTIME": {
-        "oi_usd": 133066.17396,
-        "price": 0.00722
+        "oi_usd": 127200.83157600001,
+        "price": 0.006838
       },
       "KAS": {
-        "oi_usd": 1761453.07468,
-        "price": 0.03653
+        "oi_usd": 1705540.7816200003,
+        "price": 0.035555
       },
       "BLUR": {
-        "oi_usd": 1081268.201904,
-        "price": 0.010364
+        "oi_usd": 1386022.1694999998,
+        "price": 0.01249
       },
       "TIA": {
-        "oi_usd": 10528690.043176,
-        "price": 0.54497
+        "oi_usd": 10387792.56983,
+        "price": 0.53027
       },
       "BSV": {
-        "oi_usd": 983554.70704,
-        "price": 18.068
+        "oi_usd": 958342.87788,
+        "price": 17.718
       },
       "ADA": {
-        "oi_usd": 34892398.244,
-        "price": 0.2266
+        "oi_usd": 33580673.450160004,
+        "price": 0.22062
       },
       "MINA": {
-        "oi_usd": 1256607.57924,
-        "price": 0.072774
+        "oi_usd": 1257592.928064,
+        "price": 0.073032
       },
       "POLYX": {
-        "oi_usd": 47807.93348000001,
-        "price": 0.036665
+        "oi_usd": 45807.93403999999,
+        "price": 0.03541
       },
       "GAS": {
-        "oi_usd": 87172.58242,
-        "price": 1.3069
+        "oi_usd": 86598.66096000001,
+        "price": 1.2733
       },
       "PENDLE": {
-        "oi_usd": 9798712.344800001,
-        "price": 2.0236
+        "oi_usd": 9732255.0328,
+        "price": 1.9226
       },
       "FET": {
-        "oi_usd": 11279181.98592,
-        "price": 0.19764
+        "oi_usd": 11011692.641040001,
+        "price": 0.19292
       },
       "NEAR": {
-        "oi_usd": 314820371.3476799,
-        "price": 4.7276
+        "oi_usd": 286312338.9189,
+        "price": 4.5735
       },
       "MEME": {
-        "oi_usd": 367784.61876,
-        "price": 0.000508
+        "oi_usd": 354798.700498,
+        "price": 0.000491
       },
       "ORDI": {
-        "oi_usd": 395490.63012,
-        "price": 3.9436
+        "oi_usd": 374760.260308,
+        "price": 3.7814
       },
       "NEO": {
-        "oi_usd": 430920.984468,
-        "price": 2.2899
+        "oi_usd": 406978.01660999993,
+        "price": 2.2049
       },
       "ZEN": {
-        "oi_usd": 1001405.1631580001,
-        "price": 5.9419
+        "oi_usd": 847369.4444559999,
+        "price": 5.7619
       },
       "FIL": {
-        "oi_usd": 10103010.40876,
-        "price": 1.0838
+        "oi_usd": 9040509.73888,
+        "price": 1.0246
       },
       "PYTH": {
-        "oi_usd": 6010854.470132,
-        "price": 0.086378
+        "oi_usd": 6246942.095328,
+        "price": 0.086097
       },
       "SUSHI": {
-        "oi_usd": 310865.50251,
-        "price": 0.22535
+        "oi_usd": 293265.84623200004,
+        "price": 0.21479
       },
       "IMX": {
-        "oi_usd": 4398195.993381999,
-        "price": 0.16543
+        "oi_usd": 4242041.718714001,
+        "price": 0.15909
       },
       "BONK": {
-        "oi_usd": 8129539.331372,
-        "price": 3.079e-06
+        "oi_usd": 7596224.780924,
+        "price": 2.9740000000000002e-06
       },
       "GMT": {
-        "oi_usd": 112578.911984,
-        "price": 0.007804
+        "oi_usd": 95888.895,
+        "price": 0.007575
       },
       "SUPER": {
-        "oi_usd": 1039355.2000000001,
-        "price": 0.2
+        "oi_usd": 1294590.6702,
+        "price": 0.18614
       },
       "JUP": {
-        "oi_usd": 12276513.757709999,
-        "price": 0.316845
+        "oi_usd": 10439841.248359999,
+        "price": 0.29782
       },
       "LUNC": {
-        "oi_usd": 290267.29877600004,
-        "price": 4.7579000000000006e-05
+        "oi_usd": 269517.851232,
+        "price": 4.6632e-05
       },
       "RSR": {
-        "oi_usd": 1487196.917404,
-        "price": 0.001997
+        "oi_usd": 1428791.8067939999,
+        "price": 0.001903
       },
       "GALA": {
-        "oi_usd": 509330.78235,
-        "price": 0.002025
+        "oi_usd": 462886.6659,
+        "price": 0.001957
       },
       "JTO": {
-        "oi_usd": 3891519.019532,
-        "price": 0.486298
+        "oi_usd": 4049574.5243039997,
+        "price": 0.454312
       },
       "ACE": {
-        "oi_usd": 259895.5002,
-        "price": 0.1827
+        "oi_usd": 218216.41858799997,
+        "price": 0.1614
       },
       "WIF": {
-        "oi_usd": 5351956.21596,
-        "price": 0.19941
+        "oi_usd": 4902103.06992,
+        "price": 0.19174
       },
       "CAKE": {
-        "oi_usd": 2166323.67378,
-        "price": 2.2239
+        "oi_usd": 1986157.5576399998,
+        "price": 2.1818
       },
       "PEOPLE": {
-        "oi_usd": 270577.935276,
-        "price": 0.007601
+        "oi_usd": 254523.78351399998,
+        "price": 0.007271
       },
       "ENS": {
-        "oi_usd": 2316450.00921,
-        "price": 5.5969
+        "oi_usd": 2264772.0971,
+        "price": 5.455
       },
       "ETC": {
-        "oi_usd": 3321699.274576,
-        "price": 7.8686
+        "oi_usd": 3246581.099854,
+        "price": 7.6513
       },
       "XAI": {
-        "oi_usd": 359950.677328,
-        "price": 0.00872
+        "oi_usd": 348197.35658400005,
+        "price": 0.00847
       },
       "MANTA": {
-        "oi_usd": 487302.77261800005,
-        "price": 0.07237
+        "oi_usd": 419553.710088,
+        "price": 0.06854
       },
       "UMA": {
-        "oi_usd": 158332.57405,
-        "price": 0.38921
+        "oi_usd": 151733.854556,
+        "price": 0.37754
       },
       "ONDO": {
-        "oi_usd": 43705426.52,
-        "price": 0.44002
+        "oi_usd": 38861949.3888,
+        "price": 0.42648
       },
       "ALT": {
-        "oi_usd": 822063.8924639999,
-        "price": 0.007866
+        "oi_usd": 723663.213912,
+        "price": 0.007278
       },
       "ZETA": {
-        "oi_usd": 825939.835768,
-        "price": 0.04292
+        "oi_usd": 794251.3824000001,
+        "price": 0.042
       },
       "DYM": {
-        "oi_usd": 354194.666016,
-        "price": 0.01823
+        "oi_usd": 335708.28601599997,
+        "price": 0.01724
       },
       "W": {
-        "oi_usd": 5861824.550568,
-        "price": 0.01548
+        "oi_usd": 5216537.0143,
+        "price": 0.0145
       },
       "STRK": {
-        "oi_usd": 32324922.190116,
-        "price": 0.07603
+        "oi_usd": 42836647.223400004,
+        "price": 0.08812
       },
       "TAO": {
-        "oi_usd": 50646149.995520025,
-        "price": 266.74
+        "oi_usd": 47692061.59926,
+        "price": 259.61
       },
       "AR": {
-        "oi_usd": 1918375.37292,
-        "price": 3.746
+        "oi_usd": 1845804.178368,
+        "price": 3.6824
       },
       "FLOKI": {
-        "oi_usd": 367029.809048,
-        "price": 2.4476e-05
+        "oi_usd": 349449.81522,
+        "price": 2.3565e-05
       },
       "BOME": {
-        "oi_usd": 1292892.228892,
-        "price": 0.000713
+        "oi_usd": 1149204.253022,
+        "price": 0.000679
       },
       "ETHFI": {
-        "oi_usd": 11756695.457150001,
-        "price": 0.62675
+        "oi_usd": 10815568.516368002,
+        "price": 0.59884
       },
       "ENA": {
-        "oi_usd": 103234375.09,
-        "price": 0.1925
+        "oi_usd": 98444841.68484,
+        "price": 0.18417
       },
       "MNT": {
-        "oi_usd": 5129530.739938,
-        "price": 0.52097
+        "oi_usd": 5019341.985239998,
+        "price": 0.5126
       },
       "TNSR": {
-        "oi_usd": 168992.59174400003,
-        "price": 0.03316
+        "oi_usd": 166143.50171999997,
+        "price": 0.03195
       },
       "SAGA": {
-        "oi_usd": 1277797.6592640001,
-        "price": 0.01998
+        "oi_usd": 1231979.5146720002,
+        "price": 0.01938
       },
       "MERL": {
-        "oi_usd": 546748.0463040001,
-        "price": 0.028108
+        "oi_usd": 518310.786708,
+        "price": 0.027071
       },
       "HBAR": {
-        "oi_usd": 13093295.968056,
-        "price": 0.083581
+        "oi_usd": 12680474.74965,
+        "price": 0.081135
       },
       "POPCAT": {
-        "oi_usd": 1992748.4568,
-        "price": 0.044325
+        "oi_usd": 1889157.827328,
+        "price": 0.043188
       },
       "EIGEN": {
-        "oi_usd": 3470179.672512,
-        "price": 0.2373
+        "oi_usd": 3144458.703918,
+        "price": 0.2261
       },
       "REZ": {
-        "oi_usd": 1862676.452124,
-        "price": 0.003798
+        "oi_usd": 1747109.8943599998,
+        "price": 0.003547
       },
       "NOT": {
-        "oi_usd": 259743.288744,
-        "price": 0.000423
+        "oi_usd": 250415.32711800002,
+        "price": 0.000407
       },
       "TURBO": {
-        "oi_usd": 222090.0372,
-        "price": 0.0009
+        "oi_usd": 204196.173896,
+        "price": 0.000871
       },
       "BRETT": {
-        "oi_usd": 228070.40298,
-        "price": 0.004902
+        "oi_usd": 210371.88816,
+        "price": 0.004655
       },
       "IO": {
-        "oi_usd": 932774.9618159999,
-        "price": 0.16518
+        "oi_usd": 834882.3854,
+        "price": 0.157
       },
       "ZK": {
-        "oi_usd": 3275758.7595120003,
-        "price": 0.015667
+        "oi_usd": 5112559.432414,
+        "price": 0.016877
       },
       "RENDER": {
-        "oi_usd": 3694703.8828800004,
-        "price": 1.8968
+        "oi_usd": 2868667.6823200006,
+        "price": 1.8281
       },
       "POL": {
-        "oi_usd": 6265835.660292,
-        "price": 0.094562
+        "oi_usd": 6144637.1154,
+        "price": 0.092706
       },
       "CELO": {
-        "oi_usd": 339272.238816,
-        "price": 0.086247
+        "oi_usd": 333579.52584,
+        "price": 0.08366
       },
       "HMSTR": {
-        "oi_usd": 1387732.19818,
-        "price": 0.000155
+        "oi_usd": 1348661.5575940001,
+        "price": 0.000151
       },
       "NEIRO": {
-        "oi_usd": 121024.79704,
-        "price": 7.87e-05
+        "oi_usd": 112096.882982,
+        "price": 7.510999999999999e-05
       },
       "GOAT": {
-        "oi_usd": 1106898.11232,
-        "price": 0.015184
+        "oi_usd": 1079653.98528,
+        "price": 0.014976
       },
       "MOODENG": {
-        "oi_usd": 291457.619544,
-        "price": 0.038787
+        "oi_usd": 287887.99833000003,
+        "price": 0.037595
       },
       "GRASS": {
-        "oi_usd": 29196144.4023,
-        "price": 0.6091
+        "oi_usd": 30001504.329599995,
+        "price": 0.62925
       },
       "PURR": {
-        "oi_usd": 10977851.03328,
-        "price": 0.10466
+        "oi_usd": 10574959.248,
+        "price": 0.10224
       },
       "PNUT": {
-        "oi_usd": 1135302.3546999998,
-        "price": 0.04525
+        "oi_usd": 1077942.630016,
+        "price": 0.04361
       },
       "XLM": {
-        "oi_usd": 14750101.8848,
-        "price": 0.1816
+        "oi_usd": 13993146.61332,
+        "price": 0.17934
       },
       "SAND": {
-        "oi_usd": 1961177.6430819998,
-        "price": 0.056371
+        "oi_usd": 1734708.4988,
+        "price": 0.05458
       },
       "IOTA": {
-        "oi_usd": 1539616.00636,
-        "price": 0.046885
+        "oi_usd": 1507582.13074,
+        "price": 0.044933
       },
       "ALGO": {
-        "oi_usd": 6763150.327559999,
-        "price": 0.11374
+        "oi_usd": 4681008.93886,
+        "price": 0.10817
       },
       "HYPE": {
-        "oi_usd": 1618217679.0442598,
-        "price": 79.891
+        "oi_usd": 1627041493.5551999,
+        "price": 79.488
       },
       "ME": {
-        "oi_usd": 213396.35839400004,
-        "price": 0.06317
+        "oi_usd": 204860.47966799999,
+        "price": 0.06071
       },
       "MOVE": {
-        "oi_usd": 288032.54742,
-        "price": 0.007983
+        "oi_usd": 288180.526812,
+        "price": 0.007706
       },
       "VIRTUAL": {
-        "oi_usd": 6678457.808106001,
-        "price": 0.66633
+        "oi_usd": 6342156.41695,
+        "price": 0.64205
       },
       "PENGU": {
-        "oi_usd": 9743812.31718,
-        "price": 0.007515
+        "oi_usd": 9462638.75102,
+        "price": 0.007343
       },
       "USUAL": {
-        "oi_usd": 315375.23912399996,
-        "price": 0.01062
+        "oi_usd": 299079.87564,
+        "price": 0.01015
       },
       "FARTCOIN": {
-        "oi_usd": 34345888.5273,
-        "price": 0.15225
+        "oi_usd": 34088962.77412,
+        "price": 0.14918
       },
       "AIXBT": {
-        "oi_usd": 189516.19563200002,
-        "price": 0.019196
+        "oi_usd": 171208.977876,
+        "price": 0.018594
       },
       "BIO": {
-        "oi_usd": 952383.087348,
-        "price": 0.025914
+        "oi_usd": 890106.918116,
+        "price": 0.024622
       },
       "GRIFFAIN": {
-        "oi_usd": 2234677.1955440002,
-        "price": 0.015298
+        "oi_usd": 2133016.59186,
+        "price": 0.014835
       },
       "SPX": {
-        "oi_usd": 5129254.654452,
-        "price": 0.35346
+        "oi_usd": 5023251.5791420005,
+        "price": 0.35099
       },
       "S": {
-        "oi_usd": 1252656.480816,
-        "price": 0.054444
+        "oi_usd": 1173618.6458100001,
+        "price": 0.052845
       },
       "MORPHO": {
-        "oi_usd": 7121206.713599999,
-        "price": 2.3436
+        "oi_usd": 6601076.618596,
+        "price": 2.31181
       },
       "TRUMP": {
-        "oi_usd": 10422587.919099998,
-        "price": 1.8487
+        "oi_usd": 9561439.8978,
+        "price": 1.803
       },
       "MELANIA": {
-        "oi_usd": 1317219.0567599998,
-        "price": 0.08557
+        "oi_usd": 1256262.784088,
+        "price": 0.08164
       },
       "ANIME": {
-        "oi_usd": 203581.043064,
-        "price": 0.002874
+        "oi_usd": 196319.65227,
+        "price": 0.002787
       },
       "VVV": {
-        "oi_usd": 70308538.20352,
-        "price": 22.544
+        "oi_usd": 68923926.85416,
+        "price": 22.218
       },
       "BERA": {
-        "oi_usd": 2258401.8409280004,
-        "price": 0.23684
+        "oi_usd": 2087902.8500759997,
+        "price": 0.23031
       },
       "LAYER": {
-        "oi_usd": 420016.56137999997,
-        "price": 0.06759
+        "oi_usd": 403470.49783199996,
+        "price": 0.065399
       },
       "KAITO": {
-        "oi_usd": 1767361.27648,
-        "price": 0.29402
+        "oi_usd": 1704837.10768,
+        "price": 0.28213
       },
       "NIL": {
-        "oi_usd": 7507734.129694,
-        "price": 0.086243
+        "oi_usd": 7162016.73576,
+        "price": 0.086145
       },
       "PAXG": {
-        "oi_usd": 24629329.132200003,
-        "price": 4143.1
+        "oi_usd": 24093641.859399997,
+        "price": 4153.9
       },
       "BABY": {
-        "oi_usd": 129895.4283,
-        "price": 0.011946
+        "oi_usd": 147362.25694400002,
+        "price": 0.012193
       },
       "WCT": {
-        "oi_usd": 97889.571048,
-        "price": 0.042244
+        "oi_usd": 73626.90414599999,
+        "price": 0.037949
       },
       "HYPER": {
-        "oi_usd": 58059.441228,
-        "price": 0.064794
+        "oi_usd": 60281.039654,
+        "price": 0.063151
       },
       "ZORA": {
-        "oi_usd": 938810.811104,
-        "price": 0.006508
+        "oi_usd": 906837.287652,
+        "price": 0.006379
       },
       "INIT": {
-        "oi_usd": 474720.7965,
-        "price": 0.12525
+        "oi_usd": 470661.95712000004,
+        "price": 0.12216
       },
       "NXPC": {
-        "oi_usd": 222408.09708,
-        "price": 0.19686
+        "oi_usd": 210547.15128000002,
+        "price": 0.18831
       },
       "SOPH": {
-        "oi_usd": 175227.327792,
-        "price": 0.002871
+        "oi_usd": 149789.45252000002,
+        "price": 0.002537
       },
       "RESOLV": {
-        "oi_usd": 1254690.0063039998,
-        "price": 0.017542
+        "oi_usd": 1190169.869628,
+        "price": 0.016801
       },
       "SYRUP": {
-        "oi_usd": 6894878.903128,
-        "price": 0.208661
+        "oi_usd": 6703434.71406,
+        "price": 0.19803
       },
       "PUMP": {
-        "oi_usd": 182005772.12931,
-        "price": 0.004695
+        "oi_usd": 156634278.237816,
+        "price": 0.004244
       },
       "PROVE": {
-        "oi_usd": 171356.57627999998,
-        "price": 0.18827
+        "oi_usd": 170280.13368,
+        "price": 0.18141
       },
       "XPL": {
-        "oi_usd": 53969963.458622,
-        "price": 0.079529
+        "oi_usd": 50882678.12754,
+        "price": 0.07767
       },
       "WLFI": {
-        "oi_usd": 10485689.6971,
-        "price": 0.05695
+        "oi_usd": 10495888.516614,
+        "price": 0.056913
       },
       "LINEA": {
-        "oi_usd": 2878971.570576,
-        "price": 0.002916
+        "oi_usd": 2772626.573168,
+        "price": 0.002857
       },
       "SKY": {
-        "oi_usd": 4541400.6081,
-        "price": 0.071265
+        "oi_usd": 4292778.589618,
+        "price": 0.069491
       },
       "ASTER": {
-        "oi_usd": 23207073.48,
-        "price": 0.69255
+        "oi_usd": 23552855.9045,
+        "price": 0.68575
       },
       "AVNT": {
-        "oi_usd": 686137.83096,
-        "price": 0.12206
+        "oi_usd": 610437.85044,
+        "price": 0.11166
       },
       "STBL": {
-        "oi_usd": 1439783.3916,
-        "price": 0.021585
+        "oi_usd": 1380406.740128,
+        "price": 0.020813
       },
       "0G": {
-        "oi_usd": 2172298.51636,
-        "price": 0.24086
+        "oi_usd": 2126878.0407000002,
+        "price": 0.23499
       },
       "HEMI": {
-        "oi_usd": 375692.83613999997,
-        "price": 0.00537
+        "oi_usd": 343899.76753199997,
+        "price": 0.005142
       },
       "APEX": {
-        "oi_usd": 1849002.18944,
-        "price": 0.23128
+        "oi_usd": 1803027.12832,
+        "price": 0.22616
       },
       "2Z": {
-        "oi_usd": 1190515.696146,
-        "price": 0.033103
+        "oi_usd": 1172276.15141,
+        "price": 0.032305
       },
       "ZEC": {
-        "oi_usd": 542054527.1100003,
-        "price": 1130.7
+        "oi_usd": 517241728.1980005,
+        "price": 1078.9
       },
       "MON": {
-        "oi_usd": 41250514.24272,
-        "price": 0.023818
+        "oi_usd": 36328685.42574,
+        "price": 0.02237
       },
       "MET": {
-        "oi_usd": 4568420.4927199995,
-        "price": 0.37394
+        "oi_usd": 4111004.3699999996,
+        "price": 0.355
       },
       "MEGA": {
-        "oi_usd": 7536783.701400001,
-        "price": 0.045671
+        "oi_usd": 8132647.294632,
+        "price": 0.047137
       },
       "CC": {
-        "oi_usd": 6008228.7258399995,
-        "price": 0.113644
+        "oi_usd": 5452362.796,
+        "price": 0.1058
       },
       "ICP": {
-        "oi_usd": 4182194.0997599997,
-        "price": 2.9996
+        "oi_usd": 3555558.0260400004,
+        "price": 2.8753
       },
       "AERO": {
-        "oi_usd": 34204378.6168,
-        "price": 0.8819
+        "oi_usd": 31062426.20492,
+        "price": 0.83579
       },
       "STABLE": {
-        "oi_usd": 880204.669374,
-        "price": 0.026581
+        "oi_usd": 871471.17731,
+        "price": 0.026095
       },
       "FOGO": {
-        "oi_usd": 386288.17574800004,
-        "price": 0.004531
+        "oi_usd": 343957.73283600004,
+        "price": 0.004133
       },
       "LIT": {
-        "oi_usd": 137570689.933664,
-        "price": 3.063814
+        "oi_usd": 128883071.97479999,
+        "price": 2.9326
       },
       "XMR": {
-        "oi_usd": 67036352.53584,
-        "price": 551.28
+        "oi_usd": 64424445.66791999,
+        "price": 537.42
       },
       "AXS": {
-        "oi_usd": 474094.67423999996,
-        "price": 1.0628
+        "oi_usd": 470549.41663999995,
+        "price": 1.0168
       },
       "DASH": {
-        "oi_usd": 3400551.3474,
-        "price": 48.467
+        "oi_usd": 2998845.0996000003,
+        "price": 47.274
       },
       "SKR": {
-        "oi_usd": 351951.106612,
-        "price": 0.014842
+        "oi_usd": 372302.535572,
+        "price": 0.014111
       },
       "AZTEC": {
-        "oi_usd": 2756043.148964,
-        "price": 0.019733
+        "oi_usd": 2396643.724794,
+        "price": 0.018653
       },
       "CHIP": {
-        "oi_usd": 11433104.32206,
-        "price": 0.049305
+        "oi_usd": 9072568.106368,
+        "price": 0.043784
       },
       "GRAM": {
-        "oi_usd": 27595356.8462,
-        "price": 1.3429
+        "oi_usd": 28038450.4914,
+        "price": 1.3471
       },
       "CASHCAT": {
-        "oi_usd": 26225395.31304,
-        "price": 0.11844
+        "oi_usd": 22899191.87678,
+        "price": 0.10657
       },
       "PONS": {
-        "oi_usd": 28900222.561279997,
-        "price": 0.31076
+        "oi_usd": 29544662.745599996,
+        "price": 0.30848
       },
       "USELESS": {
-        "oi_usd": 8749814.90688,
-        "price": 0.16384
+        "oi_usd": 8002844.040099999,
+        "price": 0.15485
       }
     }
   }
