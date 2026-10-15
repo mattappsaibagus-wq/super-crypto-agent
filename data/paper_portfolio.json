@@ -1,8 +1,8 @@
 {
-  "equity": 93.0561,
+  "equity": 92.9156,
   "peak_equity": 100.0,
   "starting_equity": 100.0,
-  "cash": 76.01460558486025,
+  "cash": 79.0802325399692,
   "positions": {
     "BTC": {
       "entry_price": 86018.0,
@@ -11,7 +11,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634478+00:00",
-      "last_price": 81752.0,
+      "last_price": 81555.01,
       "coingecko_id": "bitcoin"
     },
     "NEAR": {
@@ -21,18 +21,8 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634484+00:00",
-      "last_price": 4.804,
+      "last_price": 4.749,
       "coingecko_id": "near"
-    },
-    "PUMP": {
-      "entry_price": 0.005533,
-      "qty": 653.7912039046618,
-      "size_pct": 3.8,
-      "stop_loss_pct": 15.0,
-      "take_profit_pct": 45.0,
-      "opened_at": "2026-10-11T02:35:01.774829+00:00",
-      "last_price": 0.004752,
-      "coingecko_id": "pump-fun"
     },
     "ETH": {
       "entry_price": 2447.14,
@@ -41,7 +31,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-12T23:57:16.432723+00:00",
-      "last_price": 2412.02,
+      "last_price": 2408.85,
       "coingecko_id": "ethereum"
     },
     "STRK": {
@@ -51,7 +41,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-13T04:09:57.926093+00:00",
-      "last_price": 0.07696,
+      "last_price": 0.07588,
       "coingecko_id": "starknet"
     }
   },
@@ -121,6 +111,17 @@
       "exit_reason": "stop_loss",
       "opened_at": "2026-10-05T11:24:20.634468+00:00",
       "closed_at": "2026-10-12T23:57:16.432699+00:00"
+    },
+    {
+      "coin": "PUMP",
+      "entry_price": 0.005533,
+      "exit_price": 0.004689,
+      "qty": 653.7912039046618,
+      "size_pct": 3.8,
+      "pnl_pct": -15.254,
+      "exit_reason": "stop_loss",
+      "opened_at": "2026-10-11T02:35:01.774829+00:00",
+      "closed_at": "2026-10-15T02:04:35.795714+00:00"
     }
   ],
   "equity_curve": [
@@ -579,6 +580,14 @@
     {
       "t": "2026-10-14T21:05:40.681636+00:00",
       "equity": 93.0561
+    },
+    {
+      "t": "2026-10-15T02:04:35.795731+00:00",
+      "equity": 92.9156
+    },
+    {
+      "t": "2026-10-15T02:04:35.795747+00:00",
+      "equity": 92.9156
     }
   ]
 }
