@@ -1,41 +1,42 @@
 {
- "generated_at": "2026-10-17T09:52:04.773001+00:00",
+ "generated_at": "2026-10-17T14:35:14.681435+00:00",
  "overall": "ok",
- "code_version": "472e1c2",
- "verdict_count": 45,
+ "code_version": "6dbe917",
+ "verdict_count": 44,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "64 signals, oldest 71h",
-   "oldest_h": 71.1
+   "detail": "68 signals, oldest 70h",
+   "oldest_h": 70.5
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 8, fundraising 1, kronos 5, macro 1, microcap 15, santiment 1",
+   "detail": "active: dd 11, derivatives 2, fundraising 1, kronos 7, macro 1, microcap 22, santiment 1",
    "counts": {
-    "dd": 8,
+    "dd": 11,
     "macro": 1,
-    "microcap": 15,
+    "microcap": 22,
     "fundraising": 1,
     "santiment": 1,
-    "kronos": 5
+    "derivatives": 2,
+    "kronos": 7
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "45 verdicts"
+   "detail": "44 verdicts"
   },
   {
    "id": "paper_execution",
    "name": "BUY verdicts executed",
    "status": "ok",
-   "detail": "0 BUY executed, 5 positions open"
+   "detail": "0 BUY executed, 4 positions open"
   },
   {
    "id": "price_coverage",
@@ -48,14 +49,14 @@
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "25/30 coins forecast, 5 signals \u00b7 direction hit rate 54.9% over 552 graded"
+   "detail": "27/30 coins forecast, 7 signals \u00b7 direction hit rate 55.8% over 527 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 93.02, 7.0% below peak",
-   "drawdown_pct": 6.98
+   "detail": "equity 92.83, 7.2% below peak",
+   "drawdown_pct": 7.17
   }
  ],
  "history": [
@@ -245,6 +246,10 @@
   },
   {
    "t": "2026-10-17T09:52:04.773001+00:00",
+   "overall": "ok"
+  },
+  {
+   "t": "2026-10-17T14:35:14.681435+00:00",
    "overall": "ok"
   }
  ]
