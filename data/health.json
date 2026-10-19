@@ -1,42 +1,41 @@
 {
- "generated_at": "2026-10-19T02:03:11.636735+00:00",
+ "generated_at": "2026-10-19T11:26:56.628345+00:00",
  "overall": "ok",
- "code_version": "650e4a4",
- "verdict_count": 47,
+ "code_version": "4140baf",
+ "verdict_count": 48,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "73 signals, oldest 54h",
-   "oldest_h": 53.8
+   "detail": "73 signals, oldest 63h",
+   "oldest_h": 63.2
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 14, derivatives 1, fundraising 1, kronos 8, macro 1, microcap 23, santiment 2",
+   "detail": "active: dd 8, derivatives 1, fundraising 1, kronos 11, macro 1, microcap 16",
    "counts": {
-    "dd": 14,
-    "microcap": 23,
+    "dd": 8,
+    "microcap": 16,
     "fundraising": 1,
-    "santiment": 2,
-    "derivatives": 1,
     "macro": 1,
-    "kronos": 8
+    "derivatives": 1,
+    "kronos": 11
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "47 verdicts"
+   "detail": "48 verdicts"
   },
   {
    "id": "paper_execution",
    "name": "BUY verdicts executed",
    "status": "ok",
-   "detail": "1 BUY executed, 5 positions open"
+   "detail": "0 BUY executed, 5 positions open"
   },
   {
    "id": "price_coverage",
@@ -49,14 +48,14 @@
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "26/30 coins forecast, 8 signals \u00b7 direction hit rate 55.1% over 519 graded"
+   "detail": "26/30 coins forecast, 11 signals \u00b7 direction hit rate 55.8% over 547 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 92.10, 7.9% below peak",
-   "drawdown_pct": 7.9
+   "detail": "equity 91.81, 8.2% below peak",
+   "drawdown_pct": 8.19
   }
  ],
  "history": [
@@ -274,6 +273,10 @@
   },
   {
    "t": "2026-10-19T02:03:11.636735+00:00",
+   "overall": "ok"
+  },
+  {
+   "t": "2026-10-19T11:26:56.628345+00:00",
    "overall": "ok"
   }
  ]
