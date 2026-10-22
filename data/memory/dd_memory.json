@@ -5129,6 +5129,66 @@
       "timestamp": "2026-10-21T21:00:24.141968+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "CARDS",
+      "signal": "dd_result",
+      "confidence": 0.608,
+      "raw_confidence": 0.81,
+      "price": 0.364303,
+      "timestamp": "2026-10-22T02:07:50.112337+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "NEAR",
+      "signal": "dd_result",
+      "confidence": 0.63,
+      "raw_confidence": 0.84,
+      "price": 5.2,
+      "timestamp": "2026-10-22T02:07:50.119482+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "AAVE",
+      "signal": "dd_result",
+      "confidence": 0.63,
+      "raw_confidence": 0.84,
+      "price": 152.33,
+      "timestamp": "2026-10-22T02:07:50.127888+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PUMP",
+      "signal": "dd_result",
+      "confidence": 0.63,
+      "raw_confidence": 0.84,
+      "price": 0.0051078,
+      "timestamp": "2026-10-22T02:07:50.136384+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ZRO",
+      "signal": "dd_result",
+      "confidence": 0.63,
+      "raw_confidence": 0.84,
+      "price": 1.93,
+      "timestamp": "2026-10-22T02:07:50.144951+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PYTH",
+      "signal": "dd_result",
+      "confidence": 0.622,
+      "raw_confidence": 0.83,
+      "price": 0.078226,
+      "timestamp": "2026-10-22T02:07:50.154093+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -5150,7 +5210,7 @@
     "price_move": 0.5,
     "holder_healthy": 0.5,
     "news_bearish": 0.5,
-    "dd_result": 0.3381,
+    "dd_result": 0.3329,
     "regime_risk_off": 0.5,
     "correlation_spike": 0.5,
     "strong_volume_ratio": 0.5,
@@ -5185,7 +5245,7 @@
     "kronos_forecast_up": 0.5,
     "kronos_forecast_down": 0.5
   },
-  "runs": 513,
+  "runs": 519,
   "accuracy_history": [
     {
       "weights": {
@@ -8663,6 +8723,63 @@
         "kronos_forecast_down": 0.5
       },
       "sample_size": 475
+    },
+    {
+      "weights": {
+        "liquidity_depth": 0.5,
+        "meta_agent_trusted": 0.5,
+        "market_traction": 0.15,
+        "meta_agent_deprioritized": 0.5,
+        "trending_boost": 0.5,
+        "momentum": 0.5,
+        "news_bullish": 0.5,
+        "sustainability": 0.5,
+        "whale_onchain": 0.5,
+        "age_survivorship": 0.15,
+        "volume_depth": 0.2,
+        "holder_red_flag": 0.5,
+        "regime_neutral": 0.5,
+        "advisor_buy": 0.5,
+        "whale_onchain_down": 0.5,
+        "price_move": 0.5,
+        "holder_healthy": 0.5,
+        "news_bearish": 0.5,
+        "dd_result": 0.3329,
+        "regime_risk_off": 0.5,
+        "correlation_spike": 0.5,
+        "strong_volume_ratio": 0.5,
+        "whale_up": 0.5,
+        "pattern_bullish": 0.5,
+        "age_signal": 0.5,
+        "liquidity_health": 0.25,
+        "low_liquidity_risk": 0.5,
+        "pattern_bearish": 0.5,
+        "correlation_dump": 0.5,
+        "volume_spike": 0.5,
+        "microcap_opportunity": 0.5,
+        "dex_listing": 0.5,
+        "whale_down": 0.5,
+        "news_event": 0.5,
+        "holder_concentration": 0.25,
+        "advisor_hold": 0.5,
+        "sentiment_bear": 0.5,
+        "advisor_watch": 0.5,
+        "regime_risk_on": 0.5,
+        "advisor_avoid": 0.5,
+        "sentiment_shot": 0.5,
+        "active_addresses_fade": 0.5,
+        "fresh_funding": 0.5,
+        "social_spike": 0.5,
+        "active_addresses_spike": 0.5,
+        "oi_buildup": 0.5,
+        "oi_flush": 0.5,
+        "dev_activity_up": 0.5,
+        "funding_squeeze": 0.5,
+        "funding_overheated": 0.5,
+        "kronos_forecast_up": 0.5,
+        "kronos_forecast_down": 0.5
+      },
+      "sample_size": 475
     }
   ],
   "calibration": {
@@ -8760,7 +8877,7 @@
       "price_move": 0.5,
       "holder_healthy": 0.5,
       "news_bearish": 0.5,
-      "dd_result": 0.3381,
+      "dd_result": 0.3329,
       "regime_risk_off": 0.5,
       "correlation_spike": 0.5,
       "strong_volume_ratio": 0.5,
@@ -8852,10 +8969,10 @@
   },
   "agent_stats": {
     "unknown": {
-      "samples": 10266,
-      "wins": 4488,
-      "avg_return": -4.652,
-      "win_rate": 0.437
+      "samples": 10741,
+      "wins": 4608,
+      "avg_return": -4.795,
+      "win_rate": 0.429
     }
   }
 }
