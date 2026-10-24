@@ -1,35 +1,35 @@
 {
- "generated_at": "2026-10-24T02:10:56.524218+00:00",
+ "generated_at": "2026-10-24T09:57:32.899966+00:00",
  "overall": "ok",
- "code_version": "dc8fd46",
- "verdict_count": 48,
+ "code_version": "2a66851",
+ "verdict_count": 47,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "73 signals, oldest 72h",
-   "oldest_h": 72.0
+   "detail": "71 signals, oldest 66h",
+   "oldest_h": 65.7
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 10, derivatives 3, kronos 9, macro 1, microcap 24, santiment 1",
+   "detail": "active: dd 8, derivatives 1, kronos 7, macro 1, microcap 15, santiment 1",
    "counts": {
-    "dd": 10,
-    "microcap": 24,
-    "macro": 1,
+    "dd": 8,
+    "microcap": 15,
     "santiment": 1,
-    "derivatives": 3,
-    "kronos": 9
+    "macro": 1,
+    "derivatives": 1,
+    "kronos": 7
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "48 verdicts"
+   "detail": "47 verdicts"
   },
   {
    "id": "paper_execution",
@@ -48,21 +48,17 @@
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "23/30 coins forecast, 9 signals \u00b7 direction hit rate 55.7% over 530 graded"
+   "detail": "23/30 coins forecast, 7 signals \u00b7 direction hit rate 54.9% over 532 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 90.79, 9.2% below peak",
-   "drawdown_pct": 9.21
+   "detail": "equity 90.53, 9.5% below peak",
+   "drawdown_pct": 9.47
   }
  ],
  "history": [
-  {
-   "t": "2026-10-09T22:00:32.129786+00:00",
-   "overall": "ok"
-  },
   {
    "t": "2026-10-10T03:00:06.788193+00:00",
    "overall": "warn"
@@ -297,6 +293,10 @@
   },
   {
    "t": "2026-10-24T02:10:56.524218+00:00",
+   "overall": "ok"
+  },
+  {
+   "t": "2026-10-24T09:57:32.899966+00:00",
    "overall": "ok"
   }
  ]
