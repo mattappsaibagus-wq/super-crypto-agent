@@ -1,8 +1,8 @@
 {
-  "equity": 90.3802,
+  "equity": 90.1183,
   "peak_equity": 100.0,
   "starting_equity": 100.0,
-  "cash": 74.4820297122609,
+  "cash": 77.24601969757367,
   "positions": {
     "BTC": {
       "entry_price": 86018.0,
@@ -11,7 +11,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634478+00:00",
-      "last_price": 80878.02,
+      "last_price": 80400.69,
       "coingecko_id": "bitcoin"
     },
     "NEAR": {
@@ -21,7 +21,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634484+00:00",
-      "last_price": 4.499,
+      "last_price": 4.387,
       "coingecko_id": "near"
     },
     "ETH": {
@@ -31,17 +31,8 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-12T23:57:16.432723+00:00",
-      "last_price": 2363.68,
+      "last_price": 2329.91,
       "coingecko_id": "ethereum"
-    },
-    "RSR": {
-      "entry_price": 0.001905,
-      "qty": 1740.5478496931846,
-      "size_pct": 3.6,
-      "stop_loss_pct": 15.0,
-      "take_profit_pct": 45.0,
-      "opened_at": "2026-10-19T02:03:11.635337+00:00",
-      "last_price": 0.001628
     },
     "BLUR": {
       "entry_price": 0.00878,
@@ -50,7 +41,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-23T02:14:00.070467+00:00",
-      "last_price": 0.00792
+      "last_price": 0.00781
     }
   },
   "closed": [
@@ -163,6 +154,17 @@
       "exit_reason": "stop_loss",
       "opened_at": "2026-10-17T19:50:34.618337+00:00",
       "closed_at": "2026-10-22T20:59:12.908382+00:00"
+    },
+    {
+      "coin": "RSR",
+      "entry_price": 0.001905,
+      "exit_price": 0.001588,
+      "qty": 1740.5478496931846,
+      "size_pct": 3.6,
+      "pnl_pct": -16.64,
+      "exit_reason": "stop_loss",
+      "opened_at": "2026-10-19T02:03:11.635337+00:00",
+      "closed_at": "2026-10-25T10:19:32.214114+00:00"
     }
   ],
   "equity_curve": [
@@ -949,6 +951,14 @@
     {
       "t": "2026-10-25T01:58:49.154412+00:00",
       "equity": 90.3802
+    },
+    {
+      "t": "2026-10-25T10:19:32.214131+00:00",
+      "equity": 90.1183
+    },
+    {
+      "t": "2026-10-25T10:19:32.214146+00:00",
+      "equity": 90.1183
     }
   ]
 }
