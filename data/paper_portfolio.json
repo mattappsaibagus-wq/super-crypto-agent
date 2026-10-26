@@ -1,8 +1,8 @@
 {
-  "equity": 90.276,
+  "equity": 89.4046,
   "peak_equity": 100.0,
   "starting_equity": 100.0,
-  "cash": 73.68395350874125,
+  "cash": 78.9302647422229,
   "positions": {
     "BTC": {
       "entry_price": 86018.0,
@@ -11,7 +11,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634478+00:00",
-      "last_price": 79725.66,
+      "last_price": 80426.01,
       "coingecko_id": "bitcoin"
     },
     "NEAR": {
@@ -21,7 +21,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634484+00:00",
-      "last_price": 4.516,
+      "last_price": 4.59,
       "coingecko_id": "near"
     },
     "ETH": {
@@ -31,27 +31,8 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-12T23:57:16.432723+00:00",
-      "last_price": 2314.61,
+      "last_price": 2333.79,
       "coingecko_id": "ethereum"
-    },
-    "BLUR": {
-      "entry_price": 0.00878,
-      "qty": 327.8635528777567,
-      "size_pct": 3.15,
-      "stop_loss_pct": 15.0,
-      "take_profit_pct": 45.0,
-      "opened_at": "2026-10-23T02:14:00.070467+00:00",
-      "last_price": 0.00748
-    },
-    "IRYS": {
-      "entry_price": 0.03628,
-      "qty": 98.18264026550213,
-      "size_pct": 3.95,
-      "stop_loss_pct": 15.0,
-      "take_profit_pct": 45.0,
-      "opened_at": "2026-10-25T15:11:54.684942+00:00",
-      "last_price": 0.03851,
-      "coingecko_id": "irys"
     }
   },
   "closed": [
@@ -175,6 +156,28 @@
       "exit_reason": "stop_loss",
       "opened_at": "2026-10-19T02:03:11.635337+00:00",
       "closed_at": "2026-10-25T10:19:32.214114+00:00"
+    },
+    {
+      "coin": "BLUR",
+      "entry_price": 0.00878,
+      "exit_price": 0.00738,
+      "qty": 327.8635528777567,
+      "size_pct": 3.15,
+      "pnl_pct": -15.945,
+      "exit_reason": "stop_loss",
+      "opened_at": "2026-10-23T02:14:00.070467+00:00",
+      "closed_at": "2026-10-26T11:42:36.824699+00:00"
+    },
+    {
+      "coin": "IRYS",
+      "entry_price": 0.03628,
+      "exit_price": 0.02879,
+      "qty": 98.18264026550213,
+      "size_pct": 3.95,
+      "pnl_pct": -20.645,
+      "exit_reason": "stop_loss",
+      "opened_at": "2026-10-25T15:11:54.684942+00:00",
+      "closed_at": "2026-10-26T11:42:36.824713+00:00"
     }
   ],
   "equity_curve": [
@@ -993,6 +996,14 @@
     {
       "t": "2026-10-26T02:00:43.537771+00:00",
       "equity": 90.276
+    },
+    {
+      "t": "2026-10-26T11:42:36.824723+00:00",
+      "equity": 89.4046
+    },
+    {
+      "t": "2026-10-26T11:42:36.824730+00:00",
+      "equity": 89.4046
     }
   ]
 }
