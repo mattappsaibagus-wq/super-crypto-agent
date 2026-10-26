@@ -1,8 +1,8 @@
 {
-  "equity": 89.3064,
+  "equity": 89.2607,
   "peak_equity": 100.0,
   "starting_equity": 100.0,
-  "cash": 71.9643671482489,
+  "cash": 71.96601000608268,
   "positions": {
     "BTC": {
       "entry_price": 86018.0,
@@ -11,7 +11,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634478+00:00",
-      "last_price": 80195.62,
+      "last_price": 80078.01,
       "coingecko_id": "bitcoin"
     },
     "NEAR": {
@@ -21,7 +21,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634484+00:00",
-      "last_price": 4.498,
+      "last_price": 4.472,
       "coingecko_id": "near"
     },
     "ETH": {
@@ -31,18 +31,8 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-12T23:57:16.432723+00:00",
-      "last_price": 2321.86,
+      "last_price": 2312.3,
       "coingecko_id": "ethereum"
-    },
-    "IRYS": {
-      "entry_price": 0.03801895846129149,
-      "qty": 84.56385416319537,
-      "size_pct": 3.6,
-      "stop_loss_pct": 15.0,
-      "take_profit_pct": 45.0,
-      "opened_at": "2026-10-26T17:47:52.318194+00:00",
-      "last_price": 0.03801895846129149,
-      "coingecko_id": "irys"
     },
     "SUI": {
       "entry_price": 0.9148,
@@ -51,8 +41,17 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-26T17:47:52.318199+00:00",
-      "last_price": 0.9148,
+      "last_price": 0.9132,
       "coingecko_id": "sui"
+    },
+    "IRYS": {
+      "entry_price": 0.03928812,
+      "qty": 81.79029184708862,
+      "size_pct": 3.6,
+      "stop_loss_pct": 15.0,
+      "take_profit_pct": 45.0,
+      "opened_at": "2026-10-26T22:02:25.238456+00:00",
+      "last_price": 0.03928812
     }
   },
   "closed": [
@@ -198,6 +197,17 @@
       "exit_reason": "stop_loss",
       "opened_at": "2026-10-25T15:11:54.684942+00:00",
       "closed_at": "2026-10-26T11:42:36.824713+00:00"
+    },
+    {
+      "coin": "IRYS",
+      "entry_price": 0.03801895846129149,
+      "exit_price": 0.03801895846129149,
+      "qty": 84.56385416319537,
+      "size_pct": 3.6,
+      "pnl_pct": 0.0,
+      "exit_reason": "voided: exchange ticker was a different asset",
+      "opened_at": "2026-10-26T17:47:52.318194+00:00",
+      "closed_at": "2026-10-26T22:02:19.849469+00:00"
     }
   ],
   "equity_curve": [
@@ -1032,6 +1042,14 @@
     {
       "t": "2026-10-26T17:47:52.318210+00:00",
       "equity": 89.3064
+    },
+    {
+      "t": "2026-10-26T22:02:25.238438+00:00",
+      "equity": 89.2607
+    },
+    {
+      "t": "2026-10-26T22:02:25.238470+00:00",
+      "equity": 89.2607
     }
   ]
 }
