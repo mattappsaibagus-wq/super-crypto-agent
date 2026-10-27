@@ -1,8 +1,8 @@
 {
-  "equity": 89.2607,
+  "equity": 88.6155,
   "peak_equity": 100.0,
   "starting_equity": 100.0,
-  "cash": 71.96601000608268,
+  "cash": 74.57675612184175,
   "positions": {
     "BTC": {
       "entry_price": 86018.0,
@@ -11,7 +11,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634478+00:00",
-      "last_price": 80078.01,
+      "last_price": 79900.0,
       "coingecko_id": "bitcoin"
     },
     "NEAR": {
@@ -21,7 +21,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634484+00:00",
-      "last_price": 4.472,
+      "last_price": 4.435,
       "coingecko_id": "near"
     },
     "ETH": {
@@ -31,7 +31,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-12T23:57:16.432723+00:00",
-      "last_price": 2312.3,
+      "last_price": 2316.42,
       "coingecko_id": "ethereum"
     },
     "SUI": {
@@ -41,17 +41,8 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-26T17:47:52.318199+00:00",
-      "last_price": 0.9132,
+      "last_price": 0.9102,
       "coingecko_id": "sui"
-    },
-    "IRYS": {
-      "entry_price": 0.03928812,
-      "qty": 81.79029184708862,
-      "size_pct": 3.6,
-      "stop_loss_pct": 15.0,
-      "take_profit_pct": 45.0,
-      "opened_at": "2026-10-26T22:02:25.238456+00:00",
-      "last_price": 0.03928812
     }
   },
   "closed": [
@@ -208,6 +199,17 @@
       "exit_reason": "voided: exchange ticker was a different asset",
       "opened_at": "2026-10-26T17:47:52.318194+00:00",
       "closed_at": "2026-10-26T22:02:19.849469+00:00"
+    },
+    {
+      "coin": "IRYS",
+      "entry_price": 0.03928812,
+      "exit_price": 0.03192,
+      "qty": 81.79029184708862,
+      "size_pct": 3.6,
+      "pnl_pct": -18.754,
+      "exit_reason": "stop_loss",
+      "opened_at": "2026-10-26T22:02:25.238456+00:00",
+      "closed_at": "2026-10-27T02:38:54.310305+00:00"
     }
   ],
   "equity_curve": [
@@ -1050,6 +1052,14 @@
     {
       "t": "2026-10-26T22:02:25.238470+00:00",
       "equity": 89.2607
+    },
+    {
+      "t": "2026-10-27T02:38:54.310324+00:00",
+      "equity": 88.6155
+    },
+    {
+      "t": "2026-10-27T02:38:54.310340+00:00",
+      "equity": 88.6155
     }
   ]
 }

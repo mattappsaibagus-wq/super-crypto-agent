@@ -1,68 +1,64 @@
 {
- "generated_at": "2026-10-26T22:02:25.240921+00:00",
+ "generated_at": "2026-10-27T02:38:54.313350+00:00",
  "overall": "ok",
- "code_version": "fc8d624",
- "verdict_count": 44,
+ "code_version": "450e657",
+ "verdict_count": 43,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "62 signals, oldest 68h",
-   "oldest_h": 67.9
+   "detail": "64 signals, oldest 60h",
+   "oldest_h": 59.6
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 9, derivatives 2, kronos 5, macro 1, microcap 22, santiment 1",
+   "detail": "active: dd 9, derivatives 1, kronos 7, macro 1, microcap 22, santiment 3",
    "counts": {
     "dd": 9,
     "microcap": 22,
-    "santiment": 1,
+    "santiment": 3,
     "macro": 1,
-    "derivatives": 2,
-    "kronos": 5
+    "derivatives": 1,
+    "kronos": 7
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "44 verdicts"
+   "detail": "43 verdicts"
   },
   {
    "id": "paper_execution",
    "name": "BUY verdicts executed",
    "status": "ok",
-   "detail": "1 BUY executed, 5 positions open"
+   "detail": "0 BUY executed, 4 positions open"
   },
   {
    "id": "price_coverage",
    "name": "Prices found",
    "status": "ok",
-   "detail": "5/5 priced \u00b7 same-ticker different token rejected: IRYS \u00b7 voided: IRYS",
+   "detail": "5/5 priced",
    "coverage": 1.0
   },
   {
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "22/30 coins forecast, 5 signals \u00b7 direction hit rate 51.4% over 555 graded"
+   "detail": "23/30 coins forecast, 7 signals \u00b7 direction hit rate 52.3% over 533 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 89.26, 10.7% below peak",
-   "drawdown_pct": 10.74
+   "detail": "equity 88.62, 11.4% below peak",
+   "drawdown_pct": 11.38
   }
  ],
  "history": [
-  {
-   "t": "2026-10-11T16:56:56.707018+00:00",
-   "overall": "ok"
-  },
   {
    "t": "2026-10-11T21:11:59.144277+00:00",
    "overall": "ok"
@@ -297,6 +293,10 @@
   },
   {
    "t": "2026-10-26T22:02:25.240921+00:00",
+   "overall": "ok"
+  },
+  {
+   "t": "2026-10-27T02:38:54.313350+00:00",
    "overall": "ok"
   }
  ]
