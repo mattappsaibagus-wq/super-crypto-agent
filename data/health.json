@@ -1,68 +1,64 @@
 {
- "generated_at": "2026-10-28T02:48:33.905542+00:00",
+ "generated_at": "2026-10-28T11:49:51.979303+00:00",
  "overall": "ok",
- "code_version": "9bd2d65",
- "verdict_count": 44,
+ "code_version": "326affe",
+ "verdict_count": 43,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "75 signals, oldest 64h",
-   "oldest_h": 64.5
+   "detail": "69 signals, oldest 64h",
+   "oldest_h": 63.7
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 10, derivatives 3, kronos 11, macro 1, microcap 24, santiment 6",
+   "detail": "active: dd 8, derivatives 2, kronos 6, macro 1, microcap 15, santiment 5",
    "counts": {
-    "dd": 10,
-    "microcap": 24,
-    "santiment": 6,
+    "dd": 8,
+    "microcap": 15,
+    "santiment": 5,
+    "derivatives": 2,
     "macro": 1,
-    "derivatives": 3,
-    "kronos": 11
+    "kronos": 6
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "44 verdicts"
+   "detail": "43 verdicts"
   },
   {
    "id": "paper_execution",
    "name": "BUY verdicts executed",
    "status": "ok",
-   "detail": "1 BUY executed, 5 positions open"
+   "detail": "0 BUY executed, 4 positions open"
   },
   {
    "id": "price_coverage",
    "name": "Prices found",
    "status": "ok",
-   "detail": "5/5 priced \u00b7 same-ticker different token rejected: IRYS \u00b7 voided: IRYS",
+   "detail": "5/5 priced",
    "coverage": 1.0
   },
   {
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "26/30 coins forecast, 11 signals \u00b7 direction hit rate 53.7% over 527 graded"
+   "detail": "25/30 coins forecast, 6 signals \u00b7 direction hit rate 52.1% over 524 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 89.04, 11.0% below peak",
-   "drawdown_pct": 10.96
+   "detail": "equity 88.16, 11.8% below peak",
+   "drawdown_pct": 11.84
   }
  ],
  "history": [
-  {
-   "t": "2026-10-13T04:09:57.928523+00:00",
-   "overall": "ok"
-  },
   {
    "t": "2026-10-13T13:04:23.441769+00:00",
    "overall": "ok"
@@ -297,6 +293,10 @@
   },
   {
    "t": "2026-10-28T02:48:33.905542+00:00",
+   "overall": "ok"
+  },
+  {
+   "t": "2026-10-28T11:49:51.979303+00:00",
    "overall": "ok"
   }
  ]
