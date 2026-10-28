@@ -1,8 +1,8 @@
 {
-  "equity": 89.1556,
+  "equity": 89.0439,
   "peak_equity": 100.0,
   "starting_equity": 100.0,
-  "cash": 71.07267810146587,
+  "cash": 71.05952158124641,
   "positions": {
     "BTC": {
       "entry_price": 86018.0,
@@ -11,7 +11,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634478+00:00",
-      "last_price": 81236.66,
+      "last_price": 80932.0,
       "coingecko_id": "bitcoin"
     },
     "NEAR": {
@@ -21,7 +21,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-05T11:24:20.634484+00:00",
-      "last_price": 4.74,
+      "last_price": 4.713,
       "coingecko_id": "near"
     },
     "ETH": {
@@ -31,7 +31,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-12T23:57:16.432723+00:00",
-      "last_price": 2360.4,
+      "last_price": 2358.39,
       "coingecko_id": "ethereum"
     },
     "SUI": {
@@ -41,17 +41,17 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-10-26T17:47:52.318199+00:00",
-      "last_price": 0.9342,
+      "last_price": 0.9366,
       "coingecko_id": "sui"
     },
     "IRYS": {
-      "entry_price": 0.02491,
-      "qty": 140.66953112709268,
+      "entry_price": 0.0317796,
+      "qty": 110.67585937505015,
       "size_pct": 3.95,
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
-      "opened_at": "2026-10-27T11:13:19.516453+00:00",
-      "last_price": 0.02551
+      "opened_at": "2026-10-28T02:48:33.903160+00:00",
+      "last_price": 0.0317796
     }
   },
   "closed": [
@@ -219,6 +219,17 @@
       "exit_reason": "stop_loss",
       "opened_at": "2026-10-26T22:02:25.238456+00:00",
       "closed_at": "2026-10-27T02:38:54.310305+00:00"
+    },
+    {
+      "coin": "IRYS",
+      "entry_price": 0.02491,
+      "exit_price": 0.02491,
+      "qty": 140.66953112709268,
+      "size_pct": 3.95,
+      "pnl_pct": 0.0,
+      "exit_reason": "voided: exchange ticker was a different asset",
+      "opened_at": "2026-10-27T11:13:19.516453+00:00",
+      "closed_at": "2026-10-28T02:48:28.260507+00:00"
     }
   ],
   "equity_curve": [
@@ -1093,6 +1104,14 @@
     {
       "t": "2026-10-27T21:35:10.813308+00:00",
       "equity": 89.1556
+    },
+    {
+      "t": "2026-10-28T02:48:33.903138+00:00",
+      "equity": 89.0439
+    },
+    {
+      "t": "2026-10-28T02:48:33.903176+00:00",
+      "equity": 89.0439
     }
   ]
 }

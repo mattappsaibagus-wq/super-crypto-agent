@@ -1,28 +1,28 @@
 {
- "generated_at": "2026-10-27T21:35:10.814844+00:00",
+ "generated_at": "2026-10-28T02:48:33.905542+00:00",
  "overall": "ok",
- "code_version": "b19777f",
+ "code_version": "9bd2d65",
  "verdict_count": 44,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "69 signals, oldest 68h",
-   "oldest_h": 67.6
+   "detail": "75 signals, oldest 64h",
+   "oldest_h": 64.5
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 8, derivatives 3, kronos 7, macro 1, microcap 24, santiment 4",
+   "detail": "active: dd 10, derivatives 3, kronos 11, macro 1, microcap 24, santiment 6",
    "counts": {
-    "dd": 8,
+    "dd": 10,
     "microcap": 24,
-    "santiment": 4,
+    "santiment": 6,
     "macro": 1,
     "derivatives": 3,
-    "kronos": 7
+    "kronos": 11
    }
   },
   {
@@ -35,34 +35,30 @@
    "id": "paper_execution",
    "name": "BUY verdicts executed",
    "status": "ok",
-   "detail": "0 BUY executed, 5 positions open"
+   "detail": "1 BUY executed, 5 positions open"
   },
   {
    "id": "price_coverage",
    "name": "Prices found",
    "status": "ok",
-   "detail": "5/5 priced",
+   "detail": "5/5 priced \u00b7 same-ticker different token rejected: IRYS \u00b7 voided: IRYS",
    "coverage": 1.0
   },
   {
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "26/30 coins forecast, 7 signals \u00b7 direction hit rate 54.8% over 553 graded"
+   "detail": "26/30 coins forecast, 11 signals \u00b7 direction hit rate 53.7% over 527 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 89.16, 10.8% below peak",
-   "drawdown_pct": 10.84
+   "detail": "equity 89.04, 11.0% below peak",
+   "drawdown_pct": 10.96
   }
  ],
  "history": [
-  {
-   "t": "2026-10-12T23:57:16.436225+00:00",
-   "overall": "ok"
-  },
   {
    "t": "2026-10-13T04:09:57.928523+00:00",
    "overall": "ok"
@@ -297,6 +293,10 @@
   },
   {
    "t": "2026-10-27T21:35:10.814844+00:00",
+   "overall": "ok"
+  },
+  {
+   "t": "2026-10-28T02:48:33.905542+00:00",
    "overall": "ok"
   }
  ]
