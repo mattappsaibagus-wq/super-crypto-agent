@@ -1,15 +1,15 @@
 {
- "generated_at": "2026-10-29T22:09:07.054671+00:00",
+ "generated_at": "2026-10-30T03:12:28.529906+00:00",
  "overall": "warn",
- "code_version": "18fee99",
- "verdict_count": 42,
+ "code_version": "d87559d",
+ "verdict_count": 47,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "88 signals, oldest 59h",
-   "oldest_h": 58.9
+   "detail": "92 signals, oldest 64h",
+   "oldest_h": 64.0
   },
   {
    "id": "agents_active",
@@ -17,24 +17,24 @@
    "status": "warn",
    "detail": "silent this scan: dd",
    "counts": {
-    "microcap": 23,
-    "santiment": 7,
-    "macro": 1,
-    "derivatives": 6,
-    "kronos": 19
+    "microcap": 22,
+    "santiment": 11,
+    "macro": 2,
+    "derivatives": 8,
+    "kronos": 13
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "42 verdicts"
+   "detail": "47 verdicts"
   },
   {
    "id": "paper_execution",
    "name": "BUY verdicts executed",
    "status": "ok",
-   "detail": "0 BUY executed, 4 positions open"
+   "detail": "1 BUY executed, 5 positions open"
   },
   {
    "id": "price_coverage",
@@ -47,21 +47,17 @@
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "26/30 coins forecast, 19 signals \u00b7 direction hit rate 52.5% over 549 graded"
+   "detail": "26/30 coins forecast, 13 signals \u00b7 direction hit rate 52.6% over 523 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 87.00, 13.0% below peak",
-   "drawdown_pct": 13.0
+   "detail": "equity 86.89, 13.1% below peak",
+   "drawdown_pct": 13.11
   }
  ],
  "history": [
-  {
-   "t": "2026-10-15T02:04:35.797975+00:00",
-   "overall": "ok"
-  },
   {
    "t": "2026-10-15T10:30:06.118708+00:00",
    "overall": "ok"
@@ -296,6 +292,10 @@
   },
   {
    "t": "2026-10-29T22:09:07.054671+00:00",
+   "overall": "warn"
+  },
+  {
+   "t": "2026-10-30T03:12:28.529906+00:00",
    "overall": "warn"
   }
  ]
