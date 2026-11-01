@@ -1,110 +1,20 @@
 [
   {
-    "coin": "NEAR",
-    "signal": "dd_result",
-    "confidence": 0.84,
-    "source": "duediligence",
-    "details": {
-      "reasons": [
-        "liquidity_health: mcap > $5M ($5871.4M)",
-        "holder_concentration: liquidity spread across 25 pairs (top 13%)",
-        "volume_depth: healthy volume/mcap 0.08",
-        "age_survivorship: indexed; only 0% below ATH",
-        "market_traction: 7d +0%, rank #20"
-      ],
-      "score_breakdown": {
-        "mcap": 5871424184,
-        "vol": 498844966,
-        "ath_change_pct": 0,
-        "price": 4.48,
-        "rank": 20,
-        "change_7d": null,
-        "change_30d": null,
-        "pair_count": 25,
-        "top_pair_liq_share": 0.129,
-        "rag_status": "indexed"
-      },
-      "price": 4.48
-    },
-    "timestamp": "2026-10-29T03:06:44.073591+00:00",
-    "agent": "dd"
-  },
-  {
-    "coin": "AAVE",
-    "signal": "dd_result",
-    "confidence": 0.84,
-    "source": "duediligence",
-    "details": {
-      "reasons": [
-        "liquidity_health: mcap > $5M ($2063.3M)",
-        "holder_concentration: liquidity spread across 25 pairs (top 30%)",
-        "volume_depth: healthy volume/mcap 0.11",
-        "age_survivorship: indexed; only 0% below ATH",
-        "market_traction: 7d +0%, rank #49"
-      ],
-      "score_breakdown": {
-        "mcap": 2063309955,
-        "vol": 218828012,
-        "ath_change_pct": 0,
-        "price": 133.67,
-        "rank": 49,
-        "change_7d": null,
-        "change_30d": null,
-        "pair_count": 25,
-        "top_pair_liq_share": 0.296,
-        "rag_status": "indexed"
-      },
-      "price": 133.67
-    },
-    "timestamp": "2026-10-29T11:55:47.377085+00:00",
-    "agent": "dd"
-  },
-  {
-    "coin": "PUMP",
-    "signal": "dd_result",
-    "confidence": 0.49,
-    "source": "duediligence",
-    "details": {
-      "reasons": [
-        "liquidity_health: not fully indexed \u2014 liquidity unverified",
-        "holder_concentration: liquidity spread across 25 pairs (top 44%)",
-        "volume_depth: no price \u2014 volume depth unknown",
-        "age_survivorship: found on CoinGecko",
-        "market_traction: 7d +0%"
-      ],
-      "score_breakdown": {
-        "mcap": 0,
-        "vol": 0,
-        "ath_change_pct": 0,
-        "price": 0,
-        "rank": null,
-        "change_7d": null,
-        "change_30d": null,
-        "pair_count": 25,
-        "top_pair_liq_share": 0.435,
-        "rag_status": "indexed_unverified"
-      },
-      "price": 0
-    },
-    "timestamp": "2026-10-29T11:55:47.377097+00:00",
-    "agent": "dd"
-  },
-  {
     "coin": "PENGU",
     "signal": "microcap_opportunity",
     "confidence": 0.55,
     "source": "coingecko_trending",
     "details": {
-      "mcap": "$455,635,552",
+      "mcap": "$460,276,327",
       "vol": null,
       "age_days": null,
       "reasons": [
         "trending on CoinGecko right now"
       ],
-      "price": 0.007249088953318294,
+      "price": 0.007322198963394055,
       "coin_id": "pudgy-penguins"
     },
-    "timestamp": "2026-11-01T02:46:39.831958+00:00",
+    "timestamp": "2026-11-01T12:08:32.396345+00:00",
     "agent": "microcap"
   },
   {
@@ -113,16 +23,16 @@
     "confidence": 0.55,
     "source": "coingecko_trending",
     "details": {
-      "mcap": "$1,557,942,676,096",
+      "mcap": "$1,565,381,793,603",
       "vol": null,
       "age_days": null,
       "reasons": [
         "trending on CoinGecko right now"
       ],
-      "price": 77489.09752666399,
+      "price": 77858.9094802996,
       "coin_id": "bitcoin"
     },
-    "timestamp": "2026-10-31T20:43:40.652617+00:00",
+    "timestamp": "2026-11-01T12:08:32.396336+00:00",
     "agent": "microcap"
   },
   {
@@ -131,77 +41,17 @@
     "confidence": 0.55,
     "source": "coingecko_trending",
     "details": {
-      "mcap": "$523,351,500",
+      "mcap": "$552,809,345",
       "vol": null,
       "age_days": null,
       "reasons": [
         "trending on CoinGecko right now"
       ],
-      "price": 1.4343536434678907,
+      "price": 1.514327202035057,
       "coin_id": "pearl-2"
     },
-    "timestamp": "2026-11-01T02:46:39.831928+00:00",
+    "timestamp": "2026-11-01T12:08:32.396341+00:00",
     "agent": "microcap"
-  },
-  {
-    "coin": "CARDS",
-    "signal": "dd_result",
-    "confidence": 0.64,
-    "source": "duediligence",
-    "details": {
-      "reasons": [
-        "liquidity_health: mcap > $5M ($246.6M)",
-        "holder_concentration: liquidity concentrated (99% in top pair)",
-        "volume_depth: volume/mcap 0.019",
-        "age_survivorship: indexed; only -27% below ATH",
-        "market_traction: 7d -17%, 30d +21%, rank #153"
-      ],
-      "score_breakdown": {
-        "mcap": 246591269,
-        "vol": 4575877,
-        "ath_change_pct": -27.20715,
-        "price": 0.278433,
-        "rank": 153,
-        "change_7d": -16.9409,
-        "change_30d": 21.18216,
-        "pair_count": 25,
-        "top_pair_liq_share": 0.991,
-        "rag_status": "indexed"
-      },
-      "price": 0.278433
-    },
-    "timestamp": "2026-10-29T11:55:47.377087+00:00",
-    "agent": "dd"
-  },
-  {
-    "coin": "SUI",
-    "signal": "dd_result",
-    "confidence": 0.84,
-    "source": "duediligence",
-    "details": {
-      "reasons": [
-        "liquidity_health: mcap > $5M ($3803.4M)",
-        "holder_concentration: liquidity spread across 25 pairs (top 38%)",
-        "volume_depth: healthy volume/mcap 0.10",
-        "age_survivorship: indexed; only 0% below ATH",
-        "market_traction: 7d +0%, rank #30"
-      ],
-      "score_breakdown": {
-        "mcap": 3803360773,
-        "vol": 385649377,
-        "ath_change_pct": 0,
-        "price": 0.922967,
-        "rank": 30,
-        "change_7d": null,
-        "change_30d": null,
-        "pair_count": 25,
-        "top_pair_liq_share": 0.379,
-        "rag_status": "indexed"
-      },
-      "price": 0.922967
-    },
-    "timestamp": "2026-10-29T11:55:47.377090+00:00",
-    "agent": "dd"
   },
   {
     "coin": "SOL",
@@ -209,16 +59,16 @@
     "confidence": 0.55,
     "source": "coingecko_trending",
     "details": {
-      "mcap": "$56,284,700,132",
+      "mcap": "$56,205,472,409",
       "vol": null,
       "age_days": null,
       "reasons": [
         "trending on CoinGecko right now"
       ],
-      "price": 95.39285911273001,
+      "price": 95.23922528177592,
       "coin_id": "solana"
     },
-    "timestamp": "2026-11-01T02:46:39.831950+00:00",
+    "timestamp": "2026-11-01T12:08:32.396356+00:00",
     "agent": "microcap"
   },
   {
@@ -227,16 +77,16 @@
     "confidence": 0.55,
     "source": "coingecko_trending",
     "details": {
-      "mcap": "$21,015,108,402",
+      "mcap": "$21,032,087,745",
       "vol": null,
       "age_days": null,
       "reasons": [
         "trending on CoinGecko right now"
       ],
-      "price": 87.82440844748571,
+      "price": 87.85083164682214,
       "coin_id": "hyperliquid"
     },
-    "timestamp": "2026-11-01T02:46:39.831961+00:00",
+    "timestamp": "2026-11-01T12:08:32.396338+00:00",
     "agent": "microcap"
   },
   {
@@ -249,9 +99,9 @@
         "dev activity 21.7x its 3-week pace (Santiment)"
       ],
       "slug": "aave",
-      "price": 135.89
+      "price": 137.6
     },
-    "timestamp": "2026-11-01T02:46:44.233760+00:00",
+    "timestamp": "2026-11-01T12:08:37.770508+00:00",
     "agent": "santiment"
   },
   {
@@ -265,38 +115,8 @@
       ],
       "slug": "irys"
     },
-    "timestamp": "2026-11-01T02:46:44.233778+00:00",
+    "timestamp": "2026-11-01T12:08:37.770510+00:00",
     "agent": "santiment"
-  },
-  {
-    "coin": "REZ",
-    "signal": "dd_result",
-    "confidence": 0.82,
-    "source": "duediligence",
-    "details": {
-      "reasons": [
-        "liquidity_health: mcap > $5M ($39.1M)",
-        "holder_concentration: liquidity spread across 11 pairs (top 57%)",
-        "volume_depth: healthy volume/mcap 0.33",
-        "age_survivorship: found on CoinGecko",
-        "market_traction: 7d +14%"
-      ],
-      "score_breakdown": {
-        "mcap": 39099322,
-        "vol": 12988372,
-        "ath_change_pct": -98.48385,
-        "price": 0.00421813,
-        "rank": 551,
-        "change_7d": 13.94705,
-        "change_30d": 2.25524,
-        "pair_count": 11,
-        "top_pair_liq_share": 0.575,
-        "rag_status": "indexed"
-      },
-      "price": 0.00421813
-    },
-    "timestamp": "2026-10-29T11:55:47.377092+00:00",
-    "agent": "dd"
   },
   {
     "coin": "PEPE",
@@ -322,16 +142,16 @@
     "confidence": 0.55,
     "source": "coingecko_trending",
     "details": {
-      "mcap": "$779,355,053",
+      "mcap": "$814,174,473",
       "vol": null,
       "age_days": null,
       "reasons": [
         "trending on CoinGecko right now"
       ],
-      "price": 3.1167165920439257,
+      "price": 3.256697892295807,
       "coin_id": "lighter"
     },
-    "timestamp": "2026-11-01T02:46:39.831924+00:00",
+    "timestamp": "2026-11-01T12:08:32.396332+00:00",
     "agent": "microcap"
   },
   {
@@ -344,9 +164,9 @@
         "dev activity 6.3x its 3-week pace (Santiment)"
       ],
       "slug": "sui",
-      "price": 0.898988
+      "price": 0.903463
     },
-    "timestamp": "2026-11-01T02:46:44.233762+00:00",
+    "timestamp": "2026-11-01T12:08:37.770526+00:00",
     "agent": "santiment"
   },
   {
@@ -355,77 +175,17 @@
     "confidence": 0.55,
     "source": "coingecko_trending",
     "details": {
-      "mcap": "$182,282,043",
+      "mcap": "$175,839,415",
       "vol": null,
       "age_days": null,
       "reasons": [
         "trending on CoinGecko right now"
       ],
-      "price": 0.570287776520787,
+      "price": 0.5501452017333648,
       "coin_id": "kinetiq"
     },
-    "timestamp": "2026-11-01T02:46:39.831931+00:00",
+    "timestamp": "2026-11-01T12:08:32.396351+00:00",
     "agent": "microcap"
-  },
-  {
-    "coin": "INIT",
-    "signal": "dd_result",
-    "confidence": 0.86,
-    "source": "duediligence",
-    "details": {
-      "reasons": [
-        "liquidity_health: mcap > $5M ($49.4M)",
-        "holder_concentration: liquidity spread across 11 pairs (top 31%)",
-        "volume_depth: healthy volume/mcap 2.01",
-        "age_survivorship: found on CoinGecko",
-        "market_traction: 7d +85%, 30d +137%, rank #456"
-      ],
-      "score_breakdown": {
-        "mcap": 49411856,
-        "vol": 99457260,
-        "ath_change_pct": -83.61864,
-        "price": 0.233223,
-        "rank": 456,
-        "change_7d": 85.47541,
-        "change_30d": 136.89155,
-        "pair_count": 11,
-        "top_pair_liq_share": 0.307,
-        "rag_status": "indexed"
-      },
-      "price": 0.233223
-    },
-    "timestamp": "2026-10-29T11:55:47.377071+00:00",
-    "agent": "dd"
-  },
-  {
-    "coin": "BNB",
-    "signal": "dd_result",
-    "confidence": 0.76,
-    "source": "duediligence",
-    "details": {
-      "reasons": [
-        "liquidity_health: mcap > $5M ($97252.7M)",
-        "holder_concentration: liquidity spread across 25 pairs (top 16%)",
-        "volume_depth: volume/mcap 0.017",
-        "age_survivorship: indexed; only 0% below ATH",
-        "market_traction: 7d +0%, rank #4"
-      ],
-      "score_breakdown": {
-        "mcap": 97252735297,
-        "vol": 1624669289,
-        "ath_change_pct": 0,
-        "price": 739.27,
-        "rank": 4,
-        "change_7d": null,
-        "change_30d": null,
-        "pair_count": 25,
-        "top_pair_liq_share": 0.156,
-        "rag_status": "indexed"
-      },
-      "price": 739.27
-    },
-    "timestamp": "2026-10-29T11:55:47.377095+00:00",
-    "agent": "dd"
   },
   {
     "coin": "ETH",
@@ -473,130 +233,10 @@
         "dev activity 5.4x its 3-week pace (Santiment)"
       ],
       "slug": "near-protocol",
-      "price": 4.42
+      "price": 4.38
     },
-    "timestamp": "2026-11-01T02:46:44.233756+00:00",
+    "timestamp": "2026-11-01T12:08:37.770515+00:00",
     "agent": "santiment"
-  },
-  {
-    "coin": "BTC",
-    "signal": "dd_result",
-    "confidence": 0.76,
-    "source": "duediligence",
-    "details": {
-      "reasons": [
-        "liquidity_health: mcap > $5M ($1606420.0M)",
-        "holder_concentration: liquidity spread across 25 pairs (top 18%)",
-        "volume_depth: volume/mcap 0.016",
-        "age_survivorship: indexed; only 0% below ATH",
-        "market_traction: 7d +0%, rank #1"
-      ],
-      "score_breakdown": {
-        "mcap": 1606419995959,
-        "vol": 26408625999,
-        "ath_change_pct": 0,
-        "price": 79902,
-        "rank": 1,
-        "change_7d": null,
-        "change_30d": null,
-        "pair_count": 25,
-        "top_pair_liq_share": 0.184,
-        "rag_status": "indexed"
-      },
-      "price": 79902
-    },
-    "timestamp": "2026-10-29T03:06:44.073563+00:00",
-    "agent": "dd"
-  },
-  {
-    "coin": "ZEC",
-    "signal": "dd_result",
-    "confidence": 0.76,
-    "source": "duediligence",
-    "details": {
-      "reasons": [
-        "liquidity_health: mcap > $5M ($21151.4M)",
-        "holder_concentration: liquidity spread across 25 pairs (top 16%)",
-        "volume_depth: volume/mcap 0.038",
-        "age_survivorship: indexed; only 0% below ATH",
-        "market_traction: 7d +0%, rank #10"
-      ],
-      "score_breakdown": {
-        "mcap": 21151372840,
-        "vol": 800854096,
-        "ath_change_pct": 0,
-        "price": 1243.42,
-        "rank": 10,
-        "change_7d": null,
-        "change_30d": null,
-        "pair_count": 25,
-        "top_pair_liq_share": 0.159,
-        "rag_status": "indexed"
-      },
-      "price": 1243.42
-    },
-    "timestamp": "2026-10-29T03:06:44.073579+00:00",
-    "agent": "dd"
-  },
-  {
-    "coin": "LIT",
-    "signal": "dd_result",
-    "confidence": 0.75,
-    "source": "duediligence",
-    "details": {
-      "reasons": [
-        "liquidity_health: mcap > $5M ($708.9M)",
-        "holder_concentration: liquidity spread across 24 pairs (top 27%)",
-        "volume_depth: healthy volume/mcap 0.10",
-        "age_survivorship: found on CoinGecko",
-        "market_traction: fading traction (7d -25%, 30d -35%)"
-      ],
-      "score_breakdown": {
-        "mcap": 708865695,
-        "vol": 69466804,
-        "ath_change_pct": -63.9245,
-        "price": 2.84,
-        "rank": 86,
-        "change_7d": -24.58108,
-        "change_30d": -34.54955,
-        "pair_count": 24,
-        "top_pair_liq_share": 0.273,
-        "rag_status": "indexed"
-      },
-      "price": 2.84
-    },
-    "timestamp": "2026-10-29T03:06:44.073584+00:00",
-    "agent": "dd"
-  },
-  {
-    "coin": "XRP",
-    "signal": "dd_result",
-    "confidence": 0.76,
-    "source": "duediligence",
-    "details": {
-      "reasons": [
-        "liquidity_health: mcap > $5M ($82163.5M)",
-        "holder_concentration: liquidity spread across 25 pairs (top 19%)",
-        "volume_depth: volume/mcap 0.022",
-        "age_survivorship: indexed; only 0% below ATH",
-        "market_traction: 7d +0%, rank #5"
-      ],
-      "score_breakdown": {
-        "mcap": 82163480155,
-        "vol": 1804981697,
-        "ath_change_pct": 0,
-        "price": 1.3,
-        "rank": 5,
-        "change_7d": null,
-        "change_30d": null,
-        "pair_count": 25,
-        "top_pair_liq_share": 0.186,
-        "rag_status": "indexed"
-      },
-      "price": 1.3
-    },
-    "timestamp": "2026-10-29T03:06:44.073589+00:00",
-    "agent": "dd"
   },
   {
     "coin": "BNB",
@@ -608,40 +248,10 @@
         "dev activity 4.7x its 3-week pace (Santiment)"
       ],
       "slug": "binance-coin",
-      "price": 702.05
+      "price": 714.03
     },
-    "timestamp": "2026-11-01T02:46:44.233767+00:00",
+    "timestamp": "2026-11-01T12:08:37.770517+00:00",
     "agent": "santiment"
-  },
-  {
-    "coin": "VVV",
-    "signal": "dd_result",
-    "confidence": 0.49,
-    "source": "duediligence",
-    "details": {
-      "reasons": [
-        "liquidity_health: not fully indexed \u2014 liquidity unverified",
-        "holder_concentration: liquidity spread across 24 pairs (top 20%)",
-        "volume_depth: no price \u2014 volume depth unknown",
-        "age_survivorship: found on CoinGecko",
-        "market_traction: 7d +0%"
-      ],
-      "score_breakdown": {
-        "mcap": 0,
-        "vol": 0,
-        "ath_change_pct": 0,
-        "price": 0,
-        "rank": null,
-        "change_7d": null,
-        "change_30d": null,
-        "pair_count": 24,
-        "top_pair_liq_share": 0.203,
-        "rag_status": "indexed_unverified"
-      },
-      "price": 0
-    },
-    "timestamp": "2026-10-29T11:55:47.377094+00:00",
-    "agent": "dd"
   },
   {
     "coin": "XMR",
@@ -687,9 +297,9 @@
         "dev activity 3.5x its 3-week pace (Santiment)"
       ],
       "slug": "tron",
-      "price": 0.309957
+      "price": 0.310558
     },
-    "timestamp": "2026-11-01T02:46:44.233769+00:00",
+    "timestamp": "2026-11-01T12:08:37.770520+00:00",
     "agent": "santiment"
   },
   {
@@ -709,57 +319,21 @@
     "agent": "macro"
   },
   {
-    "coin": "AAVE",
-    "signal": "microcap_opportunity",
-    "confidence": 0.55,
-    "source": "coingecko_trending",
-    "details": {
-      "mcap": "$2,047,158,994",
-      "vol": null,
-      "age_days": null,
-      "reasons": [
-        "trending on CoinGecko right now"
-      ],
-      "price": 132.59207243743003,
-      "coin_id": "aave"
-    },
-    "timestamp": "2026-10-31T11:18:18.270134+00:00",
-    "agent": "microcap"
-  },
-  {
-    "coin": "ONDO",
-    "signal": "microcap_opportunity",
-    "confidence": 0.55,
-    "source": "coingecko_trending",
-    "details": {
-      "mcap": "$2,040,054,734",
-      "vol": null,
-      "age_days": null,
-      "reasons": [
-        "trending on CoinGecko right now"
-      ],
-      "price": 0.41902573063028514,
-      "coin_id": "ondo-finance"
-    },
-    "timestamp": "2026-10-31T02:53:49.682938+00:00",
-    "agent": "microcap"
-  },
-  {
     "coin": "AERO",
     "signal": "microcap_opportunity",
     "confidence": 0.55,
     "source": "coingecko_trending",
     "details": {
-      "mcap": "$514,256,646",
+      "mcap": "$514,398,128",
       "vol": null,
       "age_days": null,
       "reasons": [
         "trending on CoinGecko right now"
       ],
-      "price": 0.6378488030177457,
+      "price": 0.6386748390911655,
       "coin_id": "aerodrome-finance"
     },
-    "timestamp": "2026-10-31T20:43:40.652645+00:00",
+    "timestamp": "2026-11-01T12:08:32.396363+00:00",
     "agent": "microcap"
   },
   {
@@ -772,9 +346,9 @@
         "dev activity 3.1x its 3-week pace (Santiment)"
       ],
       "slug": "bitcoin",
-      "price": 77607
+      "price": 77918
     },
-    "timestamp": "2026-11-01T02:46:44.233742+00:00",
+    "timestamp": "2026-11-01T12:08:37.770490+00:00",
     "agent": "santiment"
   },
   {
@@ -787,9 +361,9 @@
         "dev activity 3.3x its 3-week pace (Santiment)"
       ],
       "slug": "solana",
-      "price": 95.34
+      "price": 95.24
     },
-    "timestamp": "2026-11-01T02:46:44.233771+00:00",
+    "timestamp": "2026-11-01T12:08:37.770505+00:00",
     "agent": "santiment"
   },
   {
@@ -803,7 +377,7 @@
       ],
       "slug": "initia"
     },
-    "timestamp": "2026-11-01T02:46:44.233765+00:00",
+    "timestamp": "2026-11-01T12:08:37.770522+00:00",
     "agent": "santiment"
   },
   {
@@ -816,9 +390,9 @@
         "dev activity 2.8x its 3-week pace (Santiment)"
       ],
       "slug": "ethereum",
-      "price": 2264.1
+      "price": 2267.66
     },
-    "timestamp": "2026-11-01T02:46:44.233773+00:00",
+    "timestamp": "2026-11-01T12:08:37.770513+00:00",
     "agent": "santiment"
   },
   {
@@ -840,39 +414,21 @@
     "agent": "microcap"
   },
   {
-    "coin": "SUI",
-    "signal": "microcap_opportunity",
-    "confidence": 0.55,
-    "source": "coingecko_trending",
-    "details": {
-      "mcap": "$3,687,229,292",
-      "vol": null,
-      "age_days": null,
-      "reasons": [
-        "trending on CoinGecko right now"
-      ],
-      "price": 0.8953344223084609,
-      "coin_id": "sui"
-    },
-    "timestamp": "2026-10-31T11:18:18.270130+00:00",
-    "agent": "microcap"
-  },
-  {
     "coin": "CC",
     "signal": "microcap_opportunity",
     "confidence": 0.55,
     "source": "coingecko_trending",
     "details": {
-      "mcap": "$3,902,459,785",
+      "mcap": "$3,890,049,065",
       "vol": null,
       "age_days": null,
       "reasons": [
         "trending on CoinGecko right now"
       ],
-      "price": 0.09762582326197872,
+      "price": 0.09731304515511895,
       "coin_id": "canton-network"
     },
-    "timestamp": "2026-11-01T02:46:39.831943+00:00",
+    "timestamp": "2026-11-01T12:08:32.396354+00:00",
     "agent": "microcap"
   },
   {
@@ -892,93 +448,21 @@
     "agent": "derivatives"
   },
   {
-    "coin": "AIN",
-    "signal": "microcap_opportunity",
-    "confidence": 0.55,
-    "source": "coingecko_trending",
-    "details": {
-      "mcap": "$48,123,710",
-      "vol": null,
-      "age_days": null,
-      "reasons": [
-        "trending on CoinGecko right now"
-      ],
-      "price": 0.2597070150500857,
-      "coin_id": "infinity-ground"
-    },
-    "timestamp": "2026-10-31T11:18:18.270132+00:00",
-    "agent": "microcap"
-  },
-  {
     "coin": "PONS",
     "signal": "microcap_opportunity",
     "confidence": 0.55,
     "source": "coingecko_trending",
     "details": {
-      "mcap": "$155,789,685",
+      "mcap": "$164,466,237",
       "vol": null,
       "age_days": null,
       "reasons": [
         "trending on CoinGecko right now"
       ],
-      "price": 0.23184827192159949,
+      "price": 0.24497451083649444,
       "coin_id": "pons"
     },
-    "timestamp": "2026-11-01T02:46:39.831956+00:00",
-    "agent": "microcap"
-  },
-  {
-    "coin": "XRP",
-    "signal": "microcap_opportunity",
-    "confidence": 0.55,
-    "source": "coingecko_trending",
-    "details": {
-      "mcap": "$79,540,182,450",
-      "vol": null,
-      "age_days": null,
-      "reasons": [
-        "trending on CoinGecko right now"
-      ],
-      "price": 1.255433366452918,
-      "coin_id": "ripple"
-    },
-    "timestamp": "2026-10-31T02:53:49.682936+00:00",
-    "agent": "microcap"
-  },
-  {
-    "coin": "TRX",
-    "signal": "microcap_opportunity",
-    "confidence": 0.55,
-    "source": "coingecko_trending",
-    "details": {
-      "mcap": "$30,939,475,478",
-      "vol": null,
-      "age_days": null,
-      "reasons": [
-        "trending on CoinGecko right now"
-      ],
-      "price": 0.3255383307576366,
-      "coin_id": "tron"
-    },
-    "timestamp": "2026-10-31T02:53:49.682941+00:00",
-    "agent": "microcap"
-  },
-  {
-    "coin": "AKE",
-    "signal": "microcap_opportunity",
-    "confidence": 0.55,
-    "source": "coingecko_trending",
-    "details": {
-      "mcap": "$265,287,675",
-      "vol": null,
-      "age_days": null,
-      "reasons": [
-        "trending on CoinGecko right now"
-      ],
-      "price": 0.011635404118499077,
-      "coin_id": "akedo"
-    },
-    "timestamp": "2026-10-31T02:53:49.682945+00:00",
+    "timestamp": "2026-11-01T12:08:32.396349+00:00",
     "agent": "microcap"
   },
   {
@@ -996,40 +480,6 @@
     "agent": "santiment"
   },
   {
-    "coin": "TAO",
-    "signal": "microcap_opportunity",
-    "confidence": 0.55,
-    "source": "coingecko_trending",
-    "details": {
-      "mcap": "$2,743,992,553",
-      "vol": null,
-      "age_days": null,
-      "reasons": [
-        "trending on CoinGecko right now"
-      ],
-      "price": 234.99313284207082,
-      "coin_id": "bittensor"
-    },
-    "timestamp": "2026-10-31T11:18:18.270147+00:00",
-    "agent": "microcap"
-  },
-  {
-    "coin": "PONS",
-    "signal": "funding_overheated",
-    "confidence": 0.57,
-    "source": "hyperliquid",
-    "details": {
-      "reasons": [
-        "longs paying 105% APR funding \u2014 crowded (Hyperliquid)"
-      ],
-      "price": 0.22811,
-      "funding_hourly": 0.0001199268,
-      "open_interest_usd": 17516389
-    },
-    "timestamp": "2026-10-31T11:18:21.267806+00:00",
-    "agent": "derivatives"
-  },
-  {
     "coin": "CARS",
     "signal": "fresh_funding",
     "confidence": 0.5,
@@ -1043,7 +493,7 @@
       "raised_usd": 0.0,
       "investors": "+4 DBA , Colosseum, Kyle Samani, Novora, Anas Khader, Sacha Saint-Leger, Erik C."
     },
-    "timestamp": "2026-11-01T02:46:43.676471+00:00",
+    "timestamp": "2026-11-01T12:08:36.243805+00:00",
     "agent": "fundraising"
   },
   {
@@ -1070,16 +520,16 @@
     "confidence": 0.55,
     "source": "coingecko_trending",
     "details": {
-      "mcap": "$21,586,787",
+      "mcap": "$16,982,905",
       "vol": null,
       "age_days": null,
       "reasons": [
         "trending on CoinGecko right now"
       ],
-      "price": 0.021583786417610447,
+      "price": 0.016982905452258414,
       "coin_id": "super-inu-3"
     },
-    "timestamp": "2026-10-31T20:43:40.652610+00:00",
+    "timestamp": "2026-11-01T12:08:32.396320+00:00",
     "agent": "microcap"
   },
   {
@@ -1193,13 +643,13 @@
     "source": "macro",
     "details": {
       "reasons": [
-        "Fear&Greed=34 BTC.D=59.3%"
+        "Fear&Greed=34 BTC.D=59.9%"
       ],
       "regime": "neutral",
       "fear_greed": 34,
-      "btc_dominance": 59.273791539579136
+      "btc_dominance": 59.90166791838178
     },
-    "timestamp": "2026-11-01T02:46:39.636468+00:00",
+    "timestamp": "2026-11-01T12:08:32.078244+00:00",
     "agent": "macro"
   },
   {
@@ -1262,16 +712,16 @@
     "confidence": 0.55,
     "source": "coingecko_trending",
     "details": {
-      "mcap": "$20,260,062",
+      "mcap": "$21,851,407",
       "vol": null,
       "age_days": null,
       "reasons": [
         "trending on CoinGecko right now"
       ],
-      "price": 0.04898190043142109,
+      "price": 0.05285000253804716,
       "coin_id": "rhea-2"
     },
-    "timestamp": "2026-11-01T02:46:39.831969+00:00",
+    "timestamp": "2026-11-01T12:08:32.396366+00:00",
     "agent": "microcap"
   },
   {
@@ -1300,9 +750,9 @@
         "dev activity 1.8x its 3-week pace (Santiment)"
       ],
       "slug": "monero",
-      "price": 608.67
+      "price": 605.24
     },
-    "timestamp": "2026-11-01T02:46:44.233776+00:00",
+    "timestamp": "2026-11-01T12:08:37.770502+00:00",
     "agent": "santiment"
   },
   {
@@ -1315,219 +765,538 @@
         "dev activity 1.5x its 3-week pace (Santiment)"
       ],
       "slug": "zcash",
-      "price": 1245.95
+      "price": 1243.69
     },
-    "timestamp": "2026-11-01T02:46:44.233781+00:00",
+    "timestamp": "2026-11-01T12:08:37.770524+00:00",
+    "agent": "santiment"
+  },
+  {
+    "coin": "AIN",
+    "signal": "microcap_opportunity",
+    "confidence": 0.55,
+    "source": "coingecko_trending",
+    "details": {
+      "mcap": "$51,978,148",
+      "vol": null,
+      "age_days": null,
+      "reasons": [
+        "trending on CoinGecko right now"
+      ],
+      "price": 0.28050808503070374,
+      "coin_id": "infinity-ground"
+    },
+    "timestamp": "2026-11-01T12:08:32.396359+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "CARDS",
+    "signal": "microcap_opportunity",
+    "confidence": 0.55,
+    "source": "coingecko_trending",
+    "details": {
+      "mcap": "$221,501,118",
+      "vol": null,
+      "age_days": null,
+      "reasons": [
+        "trending on CoinGecko right now"
+      ],
+      "price": 0.2502036343445686,
+      "coin_id": "collector-crypt"
+    },
+    "timestamp": "2026-11-01T12:08:32.396361+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "ZEC",
+    "signal": "microcap_opportunity",
+    "confidence": 0.55,
+    "source": "coingecko_trending",
+    "details": {
+      "mcap": "$21,145,347,429",
+      "vol": null,
+      "age_days": null,
+      "reasons": [
+        "trending on CoinGecko right now"
+      ],
+      "price": 1242.7670418502742,
+      "coin_id": "zcash"
+    },
+    "timestamp": "2026-11-01T12:08:32.396368+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "ORIN",
+    "signal": "microcap_opportunity",
+    "confidence": 0.85,
+    "source": "dexscreener",
+    "details": {
+      "mcap": 9182792,
+      "vol": 32366.46,
+      "age_days": 19.3,
+      "reasons": [
+        "listed 19d ago on uniswap",
+        "liquidity > $200k",
+        "small FDV"
+      ],
+      "price": 9.182e-05,
+      "coin_id": null
+    },
+    "timestamp": "2026-11-01T12:08:32.396370+00:00",
+    "agent": "microcap"
+  },
+  {
+    "coin": "XPL",
+    "signal": "oi_flush",
+    "confidence": 0.665,
+    "source": "hyperliquid",
+    "details": {
+      "reasons": [
+        "open interest -33% with price -11.7% \u2014 liquidation flush (Hyperliquid)"
+      ],
+      "price": 0.072892,
+      "funding_hourly": 1.25e-05,
+      "open_interest_usd": 67514172
+    },
+    "timestamp": "2026-11-01T12:08:35.470697+00:00",
+    "agent": "derivatives"
+  },
+  {
+    "coin": "CASHCAT",
+    "signal": "funding_overheated",
+    "confidence": 0.571,
+    "source": "hyperliquid",
+    "details": {
+      "reasons": [
+        "longs paying 106% APR funding \u2014 crowded (Hyperliquid)"
+      ],
+      "price": 0.096823,
+      "funding_hourly": 0.000121431,
+      "open_interest_usd": 21575053
+    },
+    "timestamp": "2026-11-01T12:08:35.470709+00:00",
+    "agent": "derivatives"
+  },
+  {
+    "coin": "CC",
+    "signal": "dev_activity_up",
+    "confidence": 0.8,
+    "source": "santiment",
+    "details": {
+      "reasons": [
+        "dev activity 10.0x its 3-week pace (Santiment)"
+      ],
+      "slug": "canton-network",
+      "price": 0.097743
+    },
+    "timestamp": "2026-11-01T12:08:37.770528+00:00",
     "agent": "santiment"
   },
   {
     "coin": "XRP",
-    "signal": "kronos_forecast_up",
-    "confidence": 0.721,
+    "signal": "kronos_forecast_down",
+    "confidence": 0.823,
     "source": "kronos",
     "details": {
       "reasons": [
-        "Kronos 24h forecast +1.1% (7/8 paths agree, 10-90% range -0.0..+2.0%)"
+        "Kronos 24h forecast -1.6% (8/8 paths agree, 10-90% range -2.5..-0.2%)"
       ],
       "price": 1.25,
-      "expected_move_pct": 1.08,
+      "expected_move_pct": -1.63,
       "range_pct": [
-        -0.02,
-        2.0
+        -2.55,
+        -0.23
+      ],
+      "path_agreement": 1.0,
+      "target_time": "2026-11-02T08:00:00Z"
+    },
+    "timestamp": "2026-11-01T12:13:42.910563+00:00",
+    "agent": "kronos"
+  },
+  {
+    "coin": "XPL",
+    "signal": "kronos_forecast_up",
+    "confidence": 0.843,
+    "source": "kronos",
+    "details": {
+      "reasons": [
+        "Kronos 24h forecast +4.1% (8/8 paths agree, 10-90% range +0.4..+7.8%)"
+      ],
+      "price": 0.0729,
+      "expected_move_pct": 4.1,
+      "range_pct": [
+        0.39,
+        7.84
+      ],
+      "path_agreement": 1.0,
+      "target_time": "2026-11-02T08:00:00Z"
+    },
+    "timestamp": "2026-11-01T12:13:42.910573+00:00",
+    "agent": "kronos"
+  },
+  {
+    "coin": "PENGU",
+    "signal": "kronos_forecast_down",
+    "confidence": 0.714,
+    "source": "kronos",
+    "details": {
+      "reasons": [
+        "Kronos 24h forecast -1.7% (7/8 paths agree, 10-90% range -3.4..-0.5%)"
+      ],
+      "price": 0.007329,
+      "expected_move_pct": -1.72,
+      "range_pct": [
+        -3.38,
+        -0.46
       ],
       "path_agreement": 0.88,
-      "target_time": "2026-11-01T20:00:00Z"
+      "target_time": "2026-11-02T08:00:00Z"
     },
-    "timestamp": "2026-11-01T02:51:40.016249+00:00",
+    "timestamp": "2026-11-01T12:13:42.910577+00:00",
     "agent": "kronos"
   },
   {
     "coin": "AAVE",
     "signal": "kronos_forecast_down",
-    "confidence": 0.85,
+    "confidence": 0.834,
     "source": "kronos",
     "details": {
       "reasons": [
-        "Kronos 24h forecast -4.4% (8/8 paths agree, 10-90% range -6.1..-1.1%)"
+        "Kronos 24h forecast -3.3% (8/8 paths agree, 10-90% range -5.7..-1.1%)"
       ],
-      "price": 136.25,
-      "expected_move_pct": -4.39,
+      "price": 137.67,
+      "expected_move_pct": -3.34,
       "range_pct": [
-        -6.11,
-        -1.14
+        -5.71,
+        -1.09
       ],
       "path_agreement": 1.0,
-      "target_time": "2026-11-01T20:00:00Z"
+      "target_time": "2026-11-02T08:00:00Z"
     },
-    "timestamp": "2026-11-01T02:51:40.016265+00:00",
+    "timestamp": "2026-11-01T12:13:42.910580+00:00",
     "agent": "kronos"
   },
   {
-    "coin": "INIT",
-    "signal": "kronos_forecast_up",
-    "confidence": 0.645,
-    "source": "kronos",
-    "details": {
-      "reasons": [
-        "Kronos 24h forecast +4.3% (6/8 paths agree, 10-90% range -0.3..+8.6%)"
-      ],
-      "price": 0.31,
-      "expected_move_pct": 4.35,
-      "range_pct": [
-        -0.28,
-        8.63
-      ],
-      "path_agreement": 0.75,
-      "target_time": "2026-11-01T20:00:00Z"
-    },
-    "timestamp": "2026-11-01T02:51:40.016269+00:00",
-    "agent": "kronos"
-  },
-  {
-    "coin": "XMR",
+    "coin": "LIT",
     "signal": "kronos_forecast_down",
-    "confidence": 0.85,
+    "confidence": 0.837,
     "source": "kronos",
     "details": {
       "reasons": [
-        "Kronos 24h forecast -3.6% (8/8 paths agree, 10-90% range -6.2..-1.7%)"
+        "Kronos 24h forecast -5.6% (8/8 paths agree, 10-90% range -8.7..-2.1%)"
       ],
-      "price": 608.67,
-      "expected_move_pct": -3.58,
+      "price": 3.268,
+      "expected_move_pct": -5.58,
       "range_pct": [
-        -6.16,
-        -1.66
+        -8.71,
+        -2.11
       ],
       "path_agreement": 1.0,
-      "target_time": "2026-11-01T20:00:00Z"
+      "target_time": "2026-11-02T08:00:00Z"
     },
-    "timestamp": "2026-11-01T02:51:40.016272+00:00",
+    "timestamp": "2026-11-01T12:13:42.910582+00:00",
     "agent": "kronos"
   },
   {
-    "coin": "TRX",
+    "coin": "SUI",
     "signal": "kronos_forecast_up",
-    "confidence": 0.8,
+    "confidence": 0.823,
     "source": "kronos",
     "details": {
       "reasons": [
-        "Kronos 24h forecast +1.2% (8/8 paths agree, 10-90% range +0.8..+1.9%)"
+        "Kronos 24h forecast +2.7% (8/8 paths agree, 10-90% range +0.2..+6.8%)"
       ],
-      "price": 0.309674,
-      "expected_move_pct": 1.16,
+      "price": 0.902203,
+      "expected_move_pct": 2.65,
       "range_pct": [
-        0.75,
-        1.88
+        0.2,
+        6.85
       ],
       "path_agreement": 1.0,
-      "target_time": "2026-11-01T20:00:00Z"
+      "target_time": "2026-11-02T08:00:00Z"
     },
-    "timestamp": "2026-11-01T02:51:40.016275+00:00",
+    "timestamp": "2026-11-01T12:13:42.910585+00:00",
     "agent": "kronos"
   },
   {
-    "coin": "RUNE",
-    "signal": "kronos_forecast_up",
-    "confidence": 0.85,
-    "source": "kronos",
-    "details": {
-      "reasons": [
-        "Kronos 24h forecast +5.3% (8/8 paths agree, 10-90% range +3.1..+8.3%)"
-      ],
-      "price": 0.618,
-      "expected_move_pct": 5.3,
-      "range_pct": [
-        3.06,
-        8.27
-      ],
-      "path_agreement": 1.0,
-      "target_time": "2026-11-01T20:00:00Z"
-    },
-    "timestamp": "2026-11-01T02:51:40.016277+00:00",
-    "agent": "kronos"
-  },
-  {
-    "coin": "CARDS",
+    "coin": "PONS",
     "signal": "kronos_forecast_down",
-    "confidence": 0.85,
+    "confidence": 0.811,
     "source": "kronos",
     "details": {
       "reasons": [
-        "Kronos 24h forecast -25.1% (8/8 paths agree, 10-90% range -34.4..-17.2%)"
+        "Kronos 24h forecast -5.6% (8/8 paths agree, 10-90% range -8.4..-3.5%)"
       ],
-      "price": 0.2441,
-      "expected_move_pct": -25.12,
+      "price": 0.2427,
+      "expected_move_pct": -5.56,
       "range_pct": [
-        -34.38,
-        -17.24
+        -8.42,
+        -3.47
       ],
       "path_agreement": 1.0,
-      "target_time": "2026-11-01T20:00:00Z"
+      "target_time": "2026-11-02T08:00:00Z"
     },
-    "timestamp": "2026-11-01T02:51:40.016279+00:00",
+    "timestamp": "2026-11-01T12:13:42.910587+00:00",
     "agent": "kronos"
   },
   {
-    "coin": "IRYS",
+    "coin": "BLUR",
     "signal": "kronos_forecast_up",
-    "confidence": 0.768,
+    "confidence": 0.791,
     "source": "kronos",
     "details": {
       "reasons": [
-        "Kronos 24h forecast +5.3% (8/8 paths agree, 10-90% range +1.1..+10.1%)"
+        "Kronos 24h forecast +4.1% (8/8 paths agree, 10-90% range +2.2..+7.5%)"
       ],
-      "price": 0.02176,
-      "expected_move_pct": 5.31,
+      "price": 0.00797,
+      "expected_move_pct": 4.14,
       "range_pct": [
-        1.12,
-        10.07
+        2.18,
+        7.47
       ],
       "path_agreement": 1.0,
-      "target_time": "2026-11-01T20:00:00Z"
+      "target_time": "2026-11-02T08:00:00Z"
     },
-    "timestamp": "2026-11-01T02:51:40.016282+00:00",
+    "timestamp": "2026-11-01T12:13:42.910589+00:00",
     "agent": "kronos"
   },
   {
-    "coin": "REZ",
-    "signal": "kronos_forecast_up",
-    "confidence": 0.85,
-    "source": "kronos",
+    "coin": "ORIN",
+    "signal": "dd_result",
+    "confidence": 0.21,
+    "source": "duediligence",
     "details": {
       "reasons": [
-        "Kronos 24h forecast +6.8% (8/8 paths agree, 10-90% range +3.0..+11.0%)"
+        "liquidity_health: not fully indexed \u2014 liquidity unverified",
+        "holder_concentration: single-pair concentration risk (top pair holds 100% of liq)",
+        "volume_depth: no price \u2014 volume depth unknown",
+        "age_survivorship: unknown to major indexers \u2014 verify contract",
+        "market_traction: 7d +0%"
       ],
-      "price": 0.004185,
-      "expected_move_pct": 6.84,
-      "range_pct": [
-        2.95,
-        11.02
-      ],
-      "path_agreement": 1.0,
-      "target_time": "2026-11-01T20:00:00Z"
+      "score_breakdown": {
+        "mcap": 0,
+        "vol": 0,
+        "ath_change_pct": 0,
+        "price": 0,
+        "rank": null,
+        "change_7d": null,
+        "change_30d": null,
+        "pair_count": 1,
+        "top_pair_liq_share": 1.0,
+        "rag_status": "unknown_to_major_indexers"
+      },
+      "price": 0
     },
-    "timestamp": "2026-11-01T02:51:40.016284+00:00",
-    "agent": "kronos"
+    "timestamp": "2026-11-01T12:13:44.994671+00:00",
+    "agent": "dd"
   },
   {
-    "coin": "VVV",
-    "signal": "kronos_forecast_up",
-    "confidence": 0.773,
-    "source": "kronos",
+    "coin": "XPL",
+    "signal": "dd_result",
+    "confidence": 0.73,
+    "source": "duediligence",
     "details": {
       "reasons": [
-        "Kronos 24h forecast +5.5% (7/8 paths agree, 10-90% range +0.8..+8.9%)"
+        "liquidity_health: mcap > $5M ($347.2M)",
+        "holder_concentration: moderate liquidity spread (25 pairs, top 85%)",
+        "volume_depth: healthy volume/mcap 0.29",
+        "age_survivorship: found on CoinGecko",
+        "market_traction: 7d +1%, rank #123"
       ],
-      "price": 23.589,
-      "expected_move_pct": 5.46,
-      "range_pct": [
-        0.77,
-        8.89
-      ],
-      "path_agreement": 0.88,
-      "target_time": "2026-11-01T20:00:00Z"
+      "score_breakdown": {
+        "mcap": 347214074,
+        "vol": 100657603,
+        "ath_change_pct": -95.66645,
+        "price": 0.072917,
+        "rank": 123,
+        "change_7d": 0.77971,
+        "change_30d": -25.90497,
+        "pair_count": 25,
+        "top_pair_liq_share": 0.848,
+        "rag_status": "indexed"
+      },
+      "price": 0.072917
     },
-    "timestamp": "2026-11-01T02:51:40.016287+00:00",
-    "agent": "kronos"
+    "timestamp": "2026-11-01T12:13:44.994684+00:00",
+    "agent": "dd"
+  },
+  {
+    "coin": "LIT",
+    "signal": "dd_result",
+    "confidence": 0.75,
+    "source": "duediligence",
+    "details": {
+      "reasons": [
+        "liquidity_health: mcap > $5M ($818.0M)",
+        "holder_concentration: moderate liquidity spread (25 pairs, top 72%)",
+        "volume_depth: healthy volume/mcap 0.14",
+        "age_survivorship: found on CoinGecko",
+        "market_traction: 7d +2%, rank #82"
+      ],
+      "score_breakdown": {
+        "mcap": 818023057,
+        "vol": 115722391,
+        "ath_change_pct": -58.3954,
+        "price": 3.27,
+        "rank": 82,
+        "change_7d": 1.75879,
+        "change_30d": -13.39564,
+        "pair_count": 25,
+        "top_pair_liq_share": 0.723,
+        "rag_status": "indexed"
+      },
+      "price": 3.27
+    },
+    "timestamp": "2026-11-01T12:13:44.994688+00:00",
+    "agent": "dd"
+  },
+  {
+    "coin": "AAVE",
+    "signal": "dd_result",
+    "confidence": 0.84,
+    "source": "duediligence",
+    "details": {
+      "reasons": [
+        "liquidity_health: mcap > $5M ($2125.7M)",
+        "holder_concentration: liquidity spread across 25 pairs (top 27%)",
+        "volume_depth: healthy volume/mcap 0.11",
+        "age_survivorship: indexed; only 0% below ATH",
+        "market_traction: 7d +0%, rank #45"
+      ],
+      "score_breakdown": {
+        "mcap": 2125733507,
+        "vol": 236467245,
+        "ath_change_pct": 0,
+        "price": 137.67,
+        "rank": 45,
+        "change_7d": null,
+        "change_30d": null,
+        "pair_count": 25,
+        "top_pair_liq_share": 0.273,
+        "rag_status": "indexed"
+      },
+      "price": 137.67
+    },
+    "timestamp": "2026-11-01T12:13:44.994691+00:00",
+    "agent": "dd"
+  },
+  {
+    "coin": "SUI",
+    "signal": "dd_result",
+    "confidence": 0.76,
+    "source": "duediligence",
+    "details": {
+      "reasons": [
+        "liquidity_health: mcap > $5M ($3717.1M)",
+        "holder_concentration: liquidity spread across 25 pairs (top 25%)",
+        "volume_depth: volume/mcap 0.047",
+        "age_survivorship: indexed; only 0% below ATH",
+        "market_traction: 7d +0%, rank #30"
+      ],
+      "score_breakdown": {
+        "mcap": 3717058276,
+        "vol": 173650179,
+        "ath_change_pct": 0,
+        "price": 0.902203,
+        "rank": 30,
+        "change_7d": null,
+        "change_30d": null,
+        "pair_count": 25,
+        "top_pair_liq_share": 0.248,
+        "rag_status": "indexed"
+      },
+      "price": 0.902203
+    },
+    "timestamp": "2026-11-01T12:13:44.994694+00:00",
+    "agent": "dd"
+  },
+  {
+    "coin": "XRP",
+    "signal": "dd_result",
+    "confidence": 0.76,
+    "source": "duediligence",
+    "details": {
+      "reasons": [
+        "liquidity_health: mcap > $5M ($79391.8M)",
+        "holder_concentration: liquidity spread across 25 pairs (top 24%)",
+        "volume_depth: volume/mcap 0.009",
+        "age_survivorship: indexed; only 0% below ATH",
+        "market_traction: 7d +0%, rank #5"
+      ],
+      "score_breakdown": {
+        "mcap": 79391786960,
+        "vol": 694604938,
+        "ath_change_pct": 0,
+        "price": 1.25,
+        "rank": 5,
+        "change_7d": null,
+        "change_30d": null,
+        "pair_count": 25,
+        "top_pair_liq_share": 0.245,
+        "rag_status": "indexed"
+      },
+      "price": 1.25
+    },
+    "timestamp": "2026-11-01T12:13:44.994697+00:00",
+    "agent": "dd"
+  },
+  {
+    "coin": "PONS",
+    "signal": "dd_result",
+    "confidence": 0.81,
+    "source": "duediligence",
+    "details": {
+      "reasons": [
+        "liquidity_health: mcap > $5M ($163.0M)",
+        "holder_concentration: liquidity spread across 25 pairs (top 26%)",
+        "volume_depth: healthy volume/mcap 0.12",
+        "age_survivorship: found on CoinGecko",
+        "market_traction: 7d +4%, rank #194"
+      ],
+      "score_breakdown": {
+        "mcap": 162957724,
+        "vol": 19048723,
+        "ath_change_pct": -74.99987,
+        "price": 0.24276,
+        "rank": 194,
+        "change_7d": 3.68744,
+        "change_30d": -53.99357,
+        "pair_count": 25,
+        "top_pair_liq_share": 0.262,
+        "rag_status": "indexed"
+      },
+      "price": 0.24276
+    },
+    "timestamp": "2026-11-01T12:13:44.994700+00:00",
+    "agent": "dd"
+  },
+  {
+    "coin": "BTC",
+    "signal": "dd_result",
+    "confidence": 0.76,
+    "source": "duediligence",
+    "details": {
+      "reasons": [
+        "liquidity_health: mcap > $5M ($1566319.4M)",
+        "holder_concentration: liquidity spread across 25 pairs (top 40%)",
+        "volume_depth: volume/mcap 0.032",
+        "age_survivorship: indexed; only 0% below ATH",
+        "market_traction: 7d +0%, rank #1"
+      ],
+      "score_breakdown": {
+        "mcap": 1566319443733,
+        "vol": 50471723774,
+        "ath_change_pct": 0,
+        "price": 77904,
+        "rank": 1,
+        "change_7d": null,
+        "change_30d": null,
+        "pair_count": 25,
+        "top_pair_liq_share": 0.402,
+        "rag_status": "indexed"
+      },
+      "price": 77904
+    },
+    "timestamp": "2026-11-01T12:13:44.994702+00:00",
+    "agent": "dd"
   }
 ]
