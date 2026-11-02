@@ -1,36 +1,35 @@
 {
- "generated_at": "2026-11-02T03:00:14.330628+00:00",
+ "generated_at": "2026-11-02T14:02:21.952320+00:00",
  "overall": "ok",
- "code_version": "94aa7d2",
- "verdict_count": 38,
+ "code_version": "95dc223",
+ "verdict_count": 40,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "67 signals, oldest 15h",
-   "oldest_h": 14.9
+   "detail": "68 signals, oldest 26h",
+   "oldest_h": 25.8
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 9, derivatives 2, fundraising 1, kronos 6, macro 1, microcap 23, santiment 14",
+   "detail": "active: dd 8, derivatives 1, kronos 3, macro 1, microcap 15, santiment 11",
    "counts": {
-    "microcap": 23,
-    "santiment": 14,
-    "fundraising": 1,
-    "dd": 9,
+    "microcap": 15,
+    "santiment": 11,
+    "dd": 8,
     "macro": 1,
-    "derivatives": 2,
-    "kronos": 6
+    "derivatives": 1,
+    "kronos": 3
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "38 verdicts"
+   "detail": "40 verdicts"
   },
   {
    "id": "paper_execution",
@@ -49,21 +48,17 @@
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "24/30 coins forecast, 6 signals \u00b7 direction hit rate 46.8% over 553 graded"
+   "detail": "25/30 coins forecast, 3 signals \u00b7 direction hit rate 46.7% over 553 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "ok",
-   "detail": "equity 87.46, 12.5% below peak",
-   "drawdown_pct": 12.54
+   "detail": "equity 87.26, 12.7% below peak",
+   "drawdown_pct": 12.74
   }
  ],
  "history": [
-  {
-   "t": "2026-10-18T01:46:49.698574+00:00",
-   "overall": "ok"
-  },
   {
    "t": "2026-10-18T10:03:47.185248+00:00",
    "overall": "ok"
@@ -298,6 +293,10 @@
   },
   {
    "t": "2026-11-02T03:00:14.330628+00:00",
+   "overall": "ok"
+  },
+  {
+   "t": "2026-11-02T14:02:21.952320+00:00",
    "overall": "ok"
   }
  ]

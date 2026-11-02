@@ -8058,7 +8058,7 @@
       "price": 1.29,
       "timestamp": "2026-10-26T11:42:32.376045+00:00",
       "outcome_24h": 1.55,
-      "outcome_7d": null
+      "outcome_7d": -3.1
     },
     {
       "coin": "IRYS",
@@ -8068,7 +8068,7 @@
       "price": 0.02872,
       "timestamp": "2026-10-26T11:42:32.383707+00:00",
       "outcome_24h": -12.52,
-      "outcome_7d": null
+      "outcome_7d": -30.82
     },
     {
       "coin": "CARDS",
@@ -8078,7 +8078,7 @@
       "price": 0.3084,
       "timestamp": "2026-10-26T11:42:32.391375+00:00",
       "outcome_24h": -2.9,
-      "outcome_7d": null
+      "outcome_7d": -26.04
     },
     {
       "coin": "HYPE",
@@ -8088,7 +8088,7 @@
       "price": 77.07,
       "timestamp": "2026-10-26T11:42:32.400657+00:00",
       "outcome_24h": 1.19,
-      "outcome_7d": null
+      "outcome_7d": 11.59
     },
     {
       "coin": "STRK",
@@ -10327,7 +10327,7 @@
       "raw_confidence": 0.823,
       "price": 1.25,
       "timestamp": "2026-11-01T12:13:42.911723+00:00",
-      "outcome_24h": null,
+      "outcome_24h": 0.0,
       "outcome_7d": null
     },
     {
@@ -10337,7 +10337,7 @@
       "raw_confidence": 0.843,
       "price": 0.0729,
       "timestamp": "2026-11-01T12:13:42.928560+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -2.76,
       "outcome_7d": null
     },
     {
@@ -10347,7 +10347,7 @@
       "raw_confidence": 0.714,
       "price": 0.007329,
       "timestamp": "2026-11-01T12:13:42.946037+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -2.43,
       "outcome_7d": null
     },
     {
@@ -10357,7 +10357,7 @@
       "raw_confidence": 0.834,
       "price": 137.67,
       "timestamp": "2026-11-01T12:13:42.963174+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -4.01,
       "outcome_7d": null
     },
     {
@@ -10367,7 +10367,7 @@
       "raw_confidence": 0.837,
       "price": 3.268,
       "timestamp": "2026-11-01T12:13:42.980068+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -4.53,
       "outcome_7d": null
     },
     {
@@ -10377,7 +10377,7 @@
       "raw_confidence": 0.823,
       "price": 0.902203,
       "timestamp": "2026-11-01T12:13:42.996935+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -1.65,
       "outcome_7d": null
     },
     {
@@ -10387,7 +10387,7 @@
       "raw_confidence": 0.811,
       "price": 0.2427,
       "timestamp": "2026-11-01T12:13:43.013954+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -2.63,
       "outcome_7d": null
     },
     {
@@ -10397,7 +10397,7 @@
       "raw_confidence": 0.791,
       "price": 0.00797,
       "timestamp": "2026-11-01T12:13:43.030881+00:00",
-      "outcome_24h": null,
+      "outcome_24h": -5.13,
       "outcome_7d": null
     },
     {
@@ -10509,6 +10509,36 @@
       "timestamp": "2026-11-02T02:59:54.859636+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "ZEC",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.497,
+      "raw_confidence": 0.663,
+      "price": 1261.15,
+      "timestamp": "2026-11-02T14:02:11.140448+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "AIN",
+      "signal": "kronos_forecast_up",
+      "confidence": 0.475,
+      "raw_confidence": 0.633,
+      "price": 0.26647,
+      "timestamp": "2026-11-02T14:02:11.157731+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "PONS",
+      "signal": "kronos_forecast_down",
+      "confidence": 0.637,
+      "raw_confidence": 0.85,
+      "price": 0.2371,
+      "timestamp": "2026-11-02T14:02:11.175262+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -10530,7 +10560,7 @@
     "whale_onchain": 0.5,
     "dex_listing": 0.5,
     "social_spike": 0.5,
-    "kronos_forecast_up": 0.327,
+    "kronos_forecast_up": 0.3274,
     "whale_onchain_down": 0.5,
     "sentiment_shot": 0.5,
     "liquidity_depth": 0.5,
@@ -10554,7 +10584,7 @@
     "holder_healthy": 0.5,
     "news_bearish": 0.5,
     "oi_flush": 0.5,
-    "kronos_forecast_down": 0.3127,
+    "kronos_forecast_down": 0.3132,
     "advisor_watch": 0.5,
     "dev_activity_up": 0.5,
     "microcap_opportunity": 0.5,
@@ -10565,7 +10595,7 @@
     "strong_volume_ratio": 0.5,
     "meta_agent_trusted": 0.5
   },
-  "runs": 1051,
+  "runs": 1054,
   "accuracy_history": [
     {
       "weights": {
@@ -16551,6 +16581,63 @@
         "meta_agent_trusted": 0.5
       },
       "sample_size": 962
+    },
+    {
+      "weights": {
+        "momentum": 0.5,
+        "news_event": 0.5,
+        "liquidity_health": 0.5,
+        "low_liquidity_risk": 0.5,
+        "sustainability": 0.5,
+        "active_addresses_fade": 0.5,
+        "trending_boost": 0.5,
+        "correlation_spike": 0.5,
+        "holder_concentration": 0.5,
+        "advisor_buy": 0.5,
+        "active_addresses_spike": 0.5,
+        "regime_neutral": 0.5,
+        "market_traction": 0.5,
+        "regime_risk_on": 0.5,
+        "funding_overheated": 0.5,
+        "whale_onchain": 0.5,
+        "dex_listing": 0.5,
+        "social_spike": 0.5,
+        "kronos_forecast_up": 0.3274,
+        "whale_onchain_down": 0.5,
+        "sentiment_shot": 0.5,
+        "liquidity_depth": 0.5,
+        "fresh_funding": 0.5,
+        "volume_depth": 0.5,
+        "dd_result": 0.5,
+        "whale_down": 0.5,
+        "news_bullish": 0.5,
+        "oi_buildup": 0.5,
+        "sentiment_bear": 0.5,
+        "pattern_bearish": 0.5,
+        "holder_red_flag": 0.5,
+        "price_move": 0.5,
+        "age_signal": 0.5,
+        "pattern_bullish": 0.5,
+        "advisor_hold": 0.5,
+        "age_survivorship": 0.5,
+        "funding_squeeze": 0.5,
+        "regime_risk_off": 0.5,
+        "advisor_avoid": 0.5,
+        "holder_healthy": 0.5,
+        "news_bearish": 0.5,
+        "oi_flush": 0.5,
+        "kronos_forecast_down": 0.3132,
+        "advisor_watch": 0.5,
+        "dev_activity_up": 0.5,
+        "microcap_opportunity": 0.5,
+        "correlation_dump": 0.5,
+        "meta_agent_deprioritized": 0.5,
+        "whale_up": 0.5,
+        "volume_spike": 0.5,
+        "strong_volume_ratio": 0.5,
+        "meta_agent_trusted": 0.5
+      },
+      "sample_size": 970
     }
   ],
   "calibration": {
@@ -16561,18 +16648,18 @@
         "mean_acc": 0.0938
       },
       "3": {
-        "n": 464,
-        "mean_conf": 0.637,
-        "mean_acc": 0.2328
+        "n": 470,
+        "mean_conf": 0.6368,
+        "mean_acc": 0.2298
       },
       "2": {
-        "n": 466,
-        "mean_conf": 0.5467,
-        "mean_acc": 0.2361
+        "n": 468,
+        "mean_conf": 0.5468,
+        "mean_acc": 0.2329
       }
     },
-    "ece": 0.3698,
-    "n": 962
+    "ece": 0.3728,
+    "n": 970
   },
   "regime_weights": {
     "risk_on": {
@@ -16648,7 +16735,7 @@
       "whale_onchain": 0.5,
       "dex_listing": 0.5,
       "social_spike": 0.5,
-      "kronos_forecast_up": 0.327,
+      "kronos_forecast_up": 0.3274,
       "whale_onchain_down": 0.5,
       "sentiment_shot": 0.5,
       "liquidity_depth": 0.5,
@@ -16672,7 +16759,7 @@
       "holder_healthy": 0.5,
       "news_bearish": 0.5,
       "oi_flush": 0.5,
-      "kronos_forecast_down": 0.3127,
+      "kronos_forecast_down": 0.3132,
       "advisor_watch": 0.5,
       "dev_activity_up": 0.5,
       "microcap_opportunity": 0.5,
@@ -16740,25 +16827,25 @@
   },
   "agent_stats": {
     "unknown": {
-      "samples": 53469,
-      "wins": 13517,
-      "avg_return": -6.607,
-      "win_rate": 0.253
+      "samples": 54439,
+      "wins": 13737,
+      "avg_return": -6.597,
+      "win_rate": 0.252
     }
   },
   "notes": {
     "last_run": {
       "requested": 30,
-      "eligible": 24,
-      "forecast": 24,
-      "signals": 6,
+      "eligible": 25,
+      "forecast": 25,
+      "signals": 3,
       "skipped": {
-        "no_candles": 6
+        "no_candles": 5
       },
-      "seconds": 207.0,
+      "seconds": 218.8,
       "model": "NeoQuasar/Kronos-small",
-      "graded_now": 0,
-      "at": "2026-11-02T02:59:54.734977+00:00"
+      "graded_now": 24,
+      "at": "2026-11-02T14:02:11.102480+00:00"
     }
   }
 }
