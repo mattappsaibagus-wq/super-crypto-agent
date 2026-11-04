@@ -1619,6 +1619,86 @@
       "timestamp": "2026-11-03T22:37:49.334592+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "BTC",
+      "signal": "dev_activity_up",
+      "confidence": 0.584,
+      "raw_confidence": 0.778,
+      "price": 76271,
+      "timestamp": "2026-11-04T03:30:38.919984+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "SOL",
+      "signal": "dev_activity_up",
+      "confidence": 0.577,
+      "raw_confidence": 0.769,
+      "price": 91.04,
+      "timestamp": "2026-11-04T03:30:38.954425+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "NEAR",
+      "signal": "dev_activity_up",
+      "confidence": 0.6,
+      "raw_confidence": 0.8,
+      "price": 3.74,
+      "timestamp": "2026-11-04T03:30:38.960892+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "CC",
+      "signal": "dev_activity_up",
+      "confidence": 0.6,
+      "raw_confidence": 0.8,
+      "price": 0.096113,
+      "timestamp": "2026-11-04T03:30:38.967207+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "SUI",
+      "signal": "dev_activity_up",
+      "confidence": 0.512,
+      "raw_confidence": 0.682,
+      "price": 0.870162,
+      "timestamp": "2026-11-04T03:30:38.973437+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "BNB",
+      "signal": "dev_activity_up",
+      "confidence": 0.6,
+      "raw_confidence": 0.8,
+      "price": 687.32,
+      "timestamp": "2026-11-04T03:30:38.979693+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "TRX",
+      "signal": "dev_activity_up",
+      "confidence": 0.511,
+      "raw_confidence": 0.681,
+      "price": 0.32163,
+      "timestamp": "2026-11-04T03:30:38.985945+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "UNI",
+      "signal": "dev_activity_up",
+      "confidence": 0.518,
+      "raw_confidence": 0.691,
+      "price": 7.09,
+      "timestamp": "2026-11-04T03:30:38.992269+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -1662,7 +1742,7 @@
     "oi_flush": 0.5,
     "sustainability": 0.5,
     "strong_volume_ratio": 0.5,
-    "dev_activity_up": 0.3285,
+    "dev_activity_up": 0.3286,
     "regime_risk_on": 0.5,
     "whale_down": 0.5,
     "volume_depth": 0.5,
@@ -1675,7 +1755,7 @@
     "kronos_forecast_up": 0.5,
     "kronos_forecast_down": 0.5
   },
-  "runs": 162,
+  "runs": 170,
   "accuracy_history": [
     {
       "weights": {
@@ -8899,6 +8979,63 @@
         "kronos_forecast_down": 0.5
       },
       "sample_size": 15
+    },
+    {
+      "weights": {
+        "age_survivorship": 0.5,
+        "news_bearish": 0.5,
+        "price_move": 0.5,
+        "momentum": 0.5,
+        "advisor_watch": 0.5,
+        "pattern_bearish": 0.5,
+        "dex_listing": 0.5,
+        "microcap_opportunity": 0.5,
+        "sentiment_bear": 0.5,
+        "trending_boost": 0.5,
+        "meta_agent_deprioritized": 0.5,
+        "whale_onchain_down": 0.5,
+        "active_addresses_fade": 0.3,
+        "fresh_funding": 0.5,
+        "whale_onchain": 0.5,
+        "news_event": 0.5,
+        "regime_risk_off": 0.5,
+        "correlation_dump": 0.5,
+        "news_bullish": 0.5,
+        "holder_concentration": 0.5,
+        "dd_result": 0.5,
+        "holder_red_flag": 0.5,
+        "social_spike": 0.4,
+        "volume_spike": 0.5,
+        "sentiment_shot": 0.5,
+        "correlation_spike": 0.5,
+        "pattern_bullish": 0.5,
+        "meta_agent_trusted": 0.5,
+        "whale_up": 0.5,
+        "advisor_hold": 0.5,
+        "liquidity_depth": 0.5,
+        "regime_neutral": 0.5,
+        "liquidity_health": 0.5,
+        "advisor_avoid": 0.5,
+        "low_liquidity_risk": 0.5,
+        "active_addresses_spike": 0.45,
+        "oi_buildup": 0.5,
+        "oi_flush": 0.5,
+        "sustainability": 0.5,
+        "strong_volume_ratio": 0.5,
+        "dev_activity_up": 0.3286,
+        "regime_risk_on": 0.5,
+        "whale_down": 0.5,
+        "volume_depth": 0.5,
+        "holder_healthy": 0.5,
+        "market_traction": 0.5,
+        "advisor_buy": 0.5,
+        "funding_squeeze": 0.5,
+        "age_signal": 0.5,
+        "funding_overheated": 0.5,
+        "kronos_forecast_up": 0.5,
+        "kronos_forecast_down": 0.5
+      },
+      "sample_size": 15
     }
   ],
   "calibration": {
@@ -9018,7 +9155,7 @@
       "oi_flush": 0.5,
       "sustainability": 0.5,
       "strong_volume_ratio": 0.5,
-      "dev_activity_up": 0.3285,
+      "dev_activity_up": 0.3286,
       "regime_risk_on": 0.5,
       "whale_down": 0.5,
       "volume_depth": 0.5,
@@ -9088,15 +9225,15 @@
   },
   "agent_stats": {
     "unknown": {
-      "samples": 1324,
-      "wins": 169,
-      "avg_return": -2.41,
-      "win_rate": 0.128
+      "samples": 1339,
+      "wins": 170,
+      "avg_return": -2.419,
+      "win_rate": 0.127
     }
   },
   "api_usage": {
     "month": "2026-11",
-    "calls": 16
+    "calls": 18
   },
   "slug_cache": {
     "t": 1793415233.9864783,

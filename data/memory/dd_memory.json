@@ -6518,7 +6518,7 @@
       "price": 0.00501192,
       "timestamp": "2026-10-28T02:48:09.052769+00:00",
       "outcome_24h": -20.55,
-      "outcome_7d": null
+      "outcome_7d": -24.54
     },
     {
       "coin": "CARDS",
@@ -6528,7 +6528,7 @@
       "price": 0.31829,
       "timestamp": "2026-10-28T02:48:09.063580+00:00",
       "outcome_24h": -28.34,
-      "outcome_7d": null
+      "outcome_7d": -23.08
     },
     {
       "coin": "NEAR",
@@ -6538,7 +6538,7 @@
       "price": 4.71,
       "timestamp": "2026-10-28T02:48:09.097821+00:00",
       "outcome_24h": -13.16,
-      "outcome_7d": null
+      "outcome_7d": -20.81
     },
     {
       "coin": "AAVE",
@@ -6548,7 +6548,7 @@
       "price": 134.68,
       "timestamp": "2026-10-28T02:48:09.109184+00:00",
       "outcome_24h": -1.88,
-      "outcome_7d": null
+      "outcome_7d": -6.96
     },
     {
       "coin": "PUMP",
@@ -6558,7 +6558,7 @@
       "price": 0.00438188,
       "timestamp": "2026-10-28T02:48:09.120278+00:00",
       "outcome_24h": -5.67,
-      "outcome_7d": null
+      "outcome_7d": -5.74
     },
     {
       "coin": "SUI",
@@ -6568,7 +6568,7 @@
       "price": 0.935651,
       "timestamp": "2026-10-28T02:48:09.131335+00:00",
       "outcome_24h": -5.17,
-      "outcome_7d": null
+      "outcome_7d": -7.07
     },
     {
       "coin": "BLUR",
@@ -7409,6 +7409,86 @@
       "timestamp": "2026-11-03T22:41:35.010524+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "BTC",
+      "signal": "dd_result",
+      "confidence": 0.57,
+      "raw_confidence": 0.76,
+      "price": 76113,
+      "timestamp": "2026-11-04T03:34:00.932865+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "BNB",
+      "signal": "dd_result",
+      "confidence": 0.57,
+      "raw_confidence": 0.76,
+      "price": 686.54,
+      "timestamp": "2026-11-04T03:34:00.940130+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "SOL",
+      "signal": "dd_result",
+      "confidence": 0.57,
+      "raw_confidence": 0.76,
+      "price": 90.87,
+      "timestamp": "2026-11-04T03:34:00.947720+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ETH",
+      "signal": "dd_result",
+      "confidence": 0.57,
+      "raw_confidence": 0.76,
+      "price": 2241.64,
+      "timestamp": "2026-11-04T03:34:00.955073+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "XPL",
+      "signal": "dd_result",
+      "confidence": 0.525,
+      "raw_confidence": 0.7,
+      "price": 0.060571,
+      "timestamp": "2026-11-04T03:34:00.962465+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "LIT",
+      "signal": "dd_result",
+      "confidence": 0.562,
+      "raw_confidence": 0.75,
+      "price": 3.19,
+      "timestamp": "2026-11-04T03:34:00.969854+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ZEC",
+      "signal": "dd_result",
+      "confidence": 0.57,
+      "raw_confidence": 0.76,
+      "price": 1174.48,
+      "timestamp": "2026-11-04T03:34:00.977265+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ALGO",
+      "signal": "dd_result",
+      "confidence": 0.517,
+      "raw_confidence": 0.69,
+      "price": 0.090482,
+      "timestamp": "2026-11-04T03:34:00.984684+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -7430,7 +7510,7 @@
     "price_move": 0.5,
     "holder_healthy": 0.5,
     "news_bearish": 0.5,
-    "dd_result": 0.2797,
+    "dd_result": 0.2786,
     "regime_risk_off": 0.5,
     "correlation_spike": 0.5,
     "strong_volume_ratio": 0.5,
@@ -7465,7 +7545,7 @@
     "kronos_forecast_up": 0.5,
     "kronos_forecast_down": 0.5
   },
-  "runs": 741,
+  "runs": 749,
   "accuracy_history": [
     {
       "weights": {
@@ -12881,6 +12961,63 @@
         "kronos_forecast_down": 0.5
       },
       "sample_size": 701
+    },
+    {
+      "weights": {
+        "liquidity_depth": 0.5,
+        "meta_agent_trusted": 0.5,
+        "market_traction": 0.15,
+        "meta_agent_deprioritized": 0.5,
+        "trending_boost": 0.5,
+        "momentum": 0.5,
+        "news_bullish": 0.5,
+        "sustainability": 0.5,
+        "whale_onchain": 0.5,
+        "age_survivorship": 0.15,
+        "volume_depth": 0.2,
+        "holder_red_flag": 0.5,
+        "regime_neutral": 0.5,
+        "advisor_buy": 0.5,
+        "whale_onchain_down": 0.5,
+        "price_move": 0.5,
+        "holder_healthy": 0.5,
+        "news_bearish": 0.5,
+        "dd_result": 0.2786,
+        "regime_risk_off": 0.5,
+        "correlation_spike": 0.5,
+        "strong_volume_ratio": 0.5,
+        "whale_up": 0.5,
+        "pattern_bullish": 0.5,
+        "age_signal": 0.5,
+        "liquidity_health": 0.25,
+        "low_liquidity_risk": 0.5,
+        "pattern_bearish": 0.5,
+        "correlation_dump": 0.5,
+        "volume_spike": 0.5,
+        "microcap_opportunity": 0.5,
+        "dex_listing": 0.5,
+        "whale_down": 0.5,
+        "news_event": 0.5,
+        "holder_concentration": 0.25,
+        "advisor_hold": 0.5,
+        "sentiment_bear": 0.5,
+        "advisor_watch": 0.5,
+        "regime_risk_on": 0.5,
+        "advisor_avoid": 0.5,
+        "sentiment_shot": 0.5,
+        "active_addresses_fade": 0.5,
+        "fresh_funding": 0.5,
+        "social_spike": 0.5,
+        "active_addresses_spike": 0.5,
+        "oi_buildup": 0.5,
+        "oi_flush": 0.5,
+        "dev_activity_up": 0.5,
+        "funding_squeeze": 0.5,
+        "funding_overheated": 0.5,
+        "kronos_forecast_up": 0.5,
+        "kronos_forecast_down": 0.5
+      },
+      "sample_size": 701
     }
   ],
   "calibration": {
@@ -12978,7 +13115,7 @@
       "price_move": 0.5,
       "holder_healthy": 0.5,
       "news_bearish": 0.5,
-      "dd_result": 0.2797,
+      "dd_result": 0.2786,
       "regime_risk_off": 0.5,
       "correlation_spike": 0.5,
       "strong_volume_ratio": 0.5,
@@ -13070,10 +13207,10 @@
   },
   "agent_stats": {
     "unknown": {
-      "samples": 29721,
-      "wins": 8769,
-      "avg_return": -7.002,
-      "win_rate": 0.295
+      "samples": 30422,
+      "wins": 8885,
+      "avg_return": -7.053,
+      "win_rate": 0.292
     }
   }
 }
