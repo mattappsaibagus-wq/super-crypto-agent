@@ -7338,7 +7338,7 @@
       "price": 0.264254,
       "timestamp": "2026-11-03T22:41:34.956702+00:00",
       "outcome_24h": 5.76,
-      "outcome_7d": null
+      "outcome_7d": -18.51
     },
     {
       "coin": "AAVE",
@@ -7348,7 +7348,7 @@
       "price": 126.95,
       "timestamp": "2026-11-03T22:41:34.964635+00:00",
       "outcome_24h": 2.72,
-      "outcome_7d": null
+      "outcome_7d": -1.35
     },
     {
       "coin": "SUI",
@@ -7358,7 +7358,7 @@
       "price": 0.894885,
       "timestamp": "2026-11-03T22:41:34.972444+00:00",
       "outcome_24h": 1.86,
-      "outcome_7d": null
+      "outcome_7d": -6.88
     },
     {
       "coin": "NEAR",
@@ -7368,7 +7368,7 @@
       "price": 3.83,
       "timestamp": "2026-11-03T22:41:34.980064+00:00",
       "outcome_24h": 2.87,
-      "outcome_7d": null
+      "outcome_7d": -2.87
     },
     {
       "coin": "IRYS",
@@ -7378,7 +7378,7 @@
       "price": 0.02151202,
       "timestamp": "2026-11-03T22:41:34.987738+00:00",
       "outcome_24h": -8.74,
-      "outcome_7d": null
+      "outcome_7d": -19.81
     },
     {
       "coin": "BNB",
@@ -7388,7 +7388,7 @@
       "price": 699.09,
       "timestamp": "2026-11-03T22:41:34.995331+00:00",
       "outcome_24h": 1.64,
-      "outcome_7d": null
+      "outcome_7d": -2.31
     },
     {
       "coin": "SOL",
@@ -7398,7 +7398,7 @@
       "price": 93.26,
       "timestamp": "2026-11-03T22:41:35.002903+00:00",
       "outcome_24h": 2.16,
-      "outcome_7d": null
+      "outcome_7d": -10.49
     },
     {
       "coin": "CC",
@@ -7408,7 +7408,7 @@
       "price": 0.096638,
       "timestamp": "2026-11-03T22:41:35.010524+00:00",
       "outcome_24h": 3.79,
-      "outcome_7d": null
+      "outcome_7d": -6.28
     },
     {
       "coin": "BTC",
@@ -8979,6 +8979,86 @@
       "timestamp": "2026-11-10T22:40:50.266227+00:00",
       "outcome_24h": null,
       "outcome_7d": null
+    },
+    {
+      "coin": "HYPE",
+      "signal": "dd_result",
+      "confidence": 0.63,
+      "raw_confidence": 0.84,
+      "price": 72.29,
+      "timestamp": "2026-11-11T03:24:18.798983+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "AVAX",
+      "signal": "dd_result",
+      "confidence": 0.63,
+      "raw_confidence": 0.84,
+      "price": 8.49,
+      "timestamp": "2026-11-11T03:24:18.812177+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "INIT",
+      "signal": "dd_result",
+      "confidence": 0.645,
+      "raw_confidence": 0.86,
+      "price": 0.279347,
+      "timestamp": "2026-11-11T03:24:18.825292+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "GRAM",
+      "signal": "dd_result",
+      "confidence": 0.465,
+      "raw_confidence": 0.62,
+      "price": 1.15,
+      "timestamp": "2026-11-11T03:24:18.838204+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "AAVE",
+      "signal": "dd_result",
+      "confidence": 0.63,
+      "raw_confidence": 0.84,
+      "price": 125.23,
+      "timestamp": "2026-11-11T03:24:18.851191+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "NEAR",
+      "signal": "dd_result",
+      "confidence": 0.63,
+      "raw_confidence": 0.84,
+      "price": 3.72,
+      "timestamp": "2026-11-11T03:24:18.864065+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "ZEC",
+      "signal": "dd_result",
+      "confidence": 0.63,
+      "raw_confidence": 0.84,
+      "price": 1036.1,
+      "timestamp": "2026-11-11T03:24:18.877133+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
+    },
+    {
+      "coin": "LIT",
+      "signal": "dd_result",
+      "confidence": 0.615,
+      "raw_confidence": 0.82,
+      "price": 3.5,
+      "timestamp": "2026-11-11T03:24:18.893713+00:00",
+      "outcome_24h": null,
+      "outcome_7d": null
     }
   ],
   "weights": {
@@ -9035,7 +9115,7 @@
     "kronos_forecast_up": 0.5,
     "kronos_forecast_down": 0.5
   },
-  "runs": 898,
+  "runs": 906,
   "accuracy_history": [
     {
       "weights": {
@@ -15591,6 +15671,63 @@
         "kronos_forecast_down": 0.5
       },
       "sample_size": 857
+    },
+    {
+      "weights": {
+        "liquidity_depth": 0.5,
+        "meta_agent_trusted": 0.5,
+        "market_traction": 0.15,
+        "meta_agent_deprioritized": 0.5,
+        "trending_boost": 0.5,
+        "momentum": 0.5,
+        "news_bullish": 0.5,
+        "sustainability": 0.5,
+        "whale_onchain": 0.5,
+        "age_survivorship": 0.15,
+        "volume_depth": 0.2,
+        "holder_red_flag": 0.5,
+        "regime_neutral": 0.5,
+        "advisor_buy": 0.5,
+        "whale_onchain_down": 0.5,
+        "price_move": 0.5,
+        "holder_healthy": 0.5,
+        "news_bearish": 0.5,
+        "dd_result": 0.2927,
+        "regime_risk_off": 0.5,
+        "correlation_spike": 0.5,
+        "strong_volume_ratio": 0.5,
+        "whale_up": 0.5,
+        "pattern_bullish": 0.5,
+        "age_signal": 0.5,
+        "liquidity_health": 0.25,
+        "low_liquidity_risk": 0.5,
+        "pattern_bearish": 0.5,
+        "correlation_dump": 0.5,
+        "volume_spike": 0.5,
+        "microcap_opportunity": 0.5,
+        "dex_listing": 0.5,
+        "whale_down": 0.5,
+        "news_event": 0.5,
+        "holder_concentration": 0.25,
+        "advisor_hold": 0.5,
+        "sentiment_bear": 0.5,
+        "advisor_watch": 0.5,
+        "regime_risk_on": 0.5,
+        "advisor_avoid": 0.5,
+        "sentiment_shot": 0.5,
+        "active_addresses_fade": 0.5,
+        "fresh_funding": 0.5,
+        "social_spike": 0.5,
+        "active_addresses_spike": 0.5,
+        "oi_buildup": 0.5,
+        "oi_flush": 0.5,
+        "dev_activity_up": 0.5,
+        "funding_squeeze": 0.5,
+        "funding_overheated": 0.5,
+        "kronos_forecast_up": 0.5,
+        "kronos_forecast_down": 0.5
+      },
+      "sample_size": 857
     }
   ],
   "calibration": {
@@ -15603,15 +15740,15 @@
       "3": {
         "n": 529,
         "mean_conf": 0.6385,
-        "mean_acc": 0.1456
+        "mean_acc": 0.1437
       },
       "2": {
         "n": 228,
         "mean_conf": 0.5516,
-        "mean_acc": 0.2193
+        "mean_acc": 0.2061
       }
     },
-    "ece": 0.4605,
+    "ece": 0.4652,
     "n": 857
   },
   "regime_weights": {
@@ -15780,10 +15917,10 @@
   },
   "agent_stats": {
     "unknown": {
-      "samples": 45036,
-      "wins": 11677,
-      "avg_return": -7.021,
-      "win_rate": 0.259
+      "samples": 45893,
+      "wins": 11826,
+      "avg_return": -6.824,
+      "win_rate": 0.258
     }
   }
 }
