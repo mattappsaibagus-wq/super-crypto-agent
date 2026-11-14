@@ -1,68 +1,65 @@
 {
- "generated_at": "2026-11-14T03:48:59.100302+00:00",
+ "generated_at": "2026-11-14T12:40:25.342258+00:00",
  "overall": "warn",
- "code_version": "d76c8f3",
- "verdict_count": 42,
+ "code_version": "7182d7c",
+ "verdict_count": 46,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "90 signals, oldest 47h",
-   "oldest_h": 47.2
+   "detail": "75 signals, oldest 56h",
+   "oldest_h": 56.1
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 12, derivatives 3, kronos 23, macro 1, microcap 21, santiment 7",
+   "detail": "active: dd 8, derivatives 1, fundraising 1, kronos 5, macro 1, microcap 15, santiment 3",
    "counts": {
-    "microcap": 21,
-    "santiment": 7,
-    "dd": 12,
+    "microcap": 15,
+    "dd": 8,
+    "santiment": 3,
     "macro": 1,
-    "derivatives": 3,
-    "kronos": 23
+    "derivatives": 1,
+    "fundraising": 1,
+    "kronos": 5
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "42 verdicts"
+   "detail": "46 verdicts"
   },
   {
    "id": "paper_execution",
    "name": "BUY verdicts executed",
    "status": "ok",
-   "detail": "1 BUY executed, 4 positions open"
+   "detail": "0 BUY executed, 4 positions open"
   },
   {
    "id": "price_coverage",
    "name": "Prices found",
    "status": "ok",
-   "detail": "5/5 priced",
+   "detail": "4/4 priced",
    "coverage": 1.0
   },
   {
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "27/30 coins forecast, 23 signals \u00b7 direction hit rate 46.6% over 549 graded"
+   "detail": "27/30 coins forecast, 5 signals \u00b7 direction hit rate 48.6% over 547 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "warn",
-   "detail": "equity 84.44, 15.6% below peak",
-   "drawdown_pct": 15.56
+   "detail": "equity 84.34, 15.7% below peak",
+   "drawdown_pct": 15.66
   }
  ],
  "history": [
-  {
-   "t": "2026-10-26T22:02:25.240921+00:00",
-   "overall": "ok"
-  },
   {
    "t": "2026-10-27T02:38:54.313350+00:00",
    "overall": "ok"
@@ -297,6 +294,10 @@
   },
   {
    "t": "2026-11-14T03:48:59.100302+00:00",
+   "overall": "warn"
+  },
+  {
+   "t": "2026-11-14T12:40:25.342258+00:00",
    "overall": "warn"
   }
  ]
