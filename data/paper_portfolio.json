@@ -1,19 +1,9 @@
 {
-  "equity": 83.3384,
+  "equity": 82.7998,
   "peak_equity": 100.0,
   "starting_equity": 100.0,
-  "cash": 68.11780156397344,
+  "cash": 70.87056337690372,
   "positions": {
-    "HYPE": {
-      "entry_price": 72.19,
-      "qty": 0.044921047861133656,
-      "size_pct": 3.8,
-      "stop_loss_pct": 15.0,
-      "take_profit_pct": 45.0,
-      "opened_at": "2026-11-12T23:01:20.186147+00:00",
-      "last_price": 63.69,
-      "coingecko_id": "hyperliquid"
-    },
     "SOL": {
       "entry_price": 77.65,
       "qty": 0.04149469180442935,
@@ -21,7 +11,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-11-13T23:02:10.763564+00:00",
-      "last_price": 71.56,
+      "last_price": 69.29,
       "coingecko_id": "solana"
     },
     "AAVE": {
@@ -31,7 +21,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-11-14T03:48:59.096759+00:00",
-      "last_price": 102.02,
+      "last_price": 97.99,
       "coingecko_id": "aave"
     },
     "HBAR": {
@@ -41,7 +31,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-11-14T21:47:51.636693+00:00",
-      "last_price": 0.05339,
+      "last_price": 0.0516,
       "coingecko_id": "hedera"
     },
     "ONDO": {
@@ -51,7 +41,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-11-15T03:25:15.126434+00:00",
-      "last_price": 0.2929
+      "last_price": 0.2829
     }
   },
   "closed": [
@@ -318,6 +308,17 @@
       "exit_reason": "stop_loss",
       "opened_at": "2026-11-10T22:40:58.710762+00:00",
       "closed_at": "2026-11-14T21:47:51.636665+00:00"
+    },
+    {
+      "coin": "HYPE",
+      "entry_price": 72.19,
+      "exit_price": 61.28,
+      "qty": 0.044921047861133656,
+      "size_pct": 3.8,
+      "pnl_pct": -15.113,
+      "exit_reason": "stop_loss",
+      "opened_at": "2026-11-12T23:01:20.186147+00:00",
+      "closed_at": "2026-11-20T23:30:35.626874+00:00"
     }
   ],
   "equity_curve": [
@@ -1768,6 +1769,14 @@
     {
       "t": "2026-11-20T14:31:06.372916+00:00",
       "equity": 83.3384
+    },
+    {
+      "t": "2026-11-20T23:30:35.626927+00:00",
+      "equity": 82.7998
+    },
+    {
+      "t": "2026-11-20T23:30:35.626943+00:00",
+      "equity": 82.7998
     }
   ]
 }
