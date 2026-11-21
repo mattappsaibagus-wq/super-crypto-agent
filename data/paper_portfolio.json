@@ -1,29 +1,9 @@
 {
-  "equity": 82.7998,
+  "equity": 82.0214,
   "peak_equity": 100.0,
   "starting_equity": 100.0,
-  "cash": 70.87056337690372,
+  "cash": 73.04967557357045,
   "positions": {
-    "SOL": {
-      "entry_price": 77.65,
-      "qty": 0.04149469180442935,
-      "size_pct": 3.8000000000000007,
-      "stop_loss_pct": 15.0,
-      "take_profit_pct": 45.0,
-      "opened_at": "2026-11-13T23:02:10.763564+00:00",
-      "last_price": 69.29,
-      "coingecko_id": "solana"
-    },
-    "AAVE": {
-      "entry_price": 109.12,
-      "qty": 0.03172607917582268,
-      "size_pct": 4.099999999999998,
-      "stop_loss_pct": 15.0,
-      "take_profit_pct": 45.0,
-      "opened_at": "2026-11-14T03:48:59.096759+00:00",
-      "last_price": 97.99,
-      "coingecko_id": "aave"
-    },
     "HBAR": {
       "entry_price": 0.05596,
       "qty": 56.61552686681429,
@@ -31,7 +11,7 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-11-14T21:47:51.636693+00:00",
-      "last_price": 0.0516,
+      "last_price": 0.04857,
       "coingecko_id": "hedera"
     },
     "ONDO": {
@@ -41,7 +21,16 @@
       "stop_loss_pct": 15.0,
       "take_profit_pct": 45.0,
       "opened_at": "2026-11-15T03:25:15.126434+00:00",
-      "last_price": 0.2829
+      "last_price": 0.2598
+    },
+    "IRYS": {
+      "entry_price": 0.02043,
+      "qty": 168.61958358071703,
+      "size_pct": 4.2,
+      "stop_loss_pct": 15.0,
+      "take_profit_pct": 45.0,
+      "opened_at": "2026-11-21T04:30:33.866044+00:00",
+      "last_price": 0.02043
     }
   },
   "closed": [
@@ -319,6 +308,28 @@
       "exit_reason": "stop_loss",
       "opened_at": "2026-11-12T23:01:20.186147+00:00",
       "closed_at": "2026-11-20T23:30:35.626874+00:00"
+    },
+    {
+      "coin": "SOL",
+      "entry_price": 77.65,
+      "exit_price": 65.37,
+      "qty": 0.04149469180442935,
+      "size_pct": 3.8000000000000007,
+      "pnl_pct": -15.815,
+      "exit_reason": "stop_loss",
+      "opened_at": "2026-11-13T23:02:10.763564+00:00",
+      "closed_at": "2026-11-21T04:30:33.866010+00:00"
+    },
+    {
+      "coin": "AAVE",
+      "entry_price": 109.12,
+      "exit_price": 91.77,
+      "qty": 0.03172607917582268,
+      "size_pct": 4.099999999999998,
+      "pnl_pct": -15.9,
+      "exit_reason": "stop_loss",
+      "opened_at": "2026-11-14T03:48:59.096759+00:00",
+      "closed_at": "2026-11-21T04:30:33.866029+00:00"
     }
   ],
   "equity_curve": [
@@ -1777,6 +1788,14 @@
     {
       "t": "2026-11-20T23:30:35.626943+00:00",
       "equity": 82.7998
+    },
+    {
+      "t": "2026-11-21T04:30:33.866037+00:00",
+      "equity": 82.0214
+    },
+    {
+      "t": "2026-11-21T04:30:33.866055+00:00",
+      "equity": 82.0214
     }
   ]
 }
