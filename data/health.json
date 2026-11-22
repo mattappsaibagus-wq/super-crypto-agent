@@ -1,36 +1,35 @@
 {
- "generated_at": "2026-11-22T03:45:39.311991+00:00",
+ "generated_at": "2026-11-22T13:45:23.985779+00:00",
  "overall": "warn",
- "code_version": "55e8f04",
- "verdict_count": 49,
+ "code_version": "71cc1e9",
+ "verdict_count": 45,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "84 signals, oldest 71h",
-   "oldest_h": 71.0
+   "detail": "68 signals, oldest 57h",
+   "oldest_h": 56.8
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 10, derivatives 4, fundraising 1, kronos 16, macro 1, microcap 24, santiment 4",
+   "detail": "active: dd 8, fundraising 1, kronos 6, macro 1, microcap 15, santiment 3",
    "counts": {
-    "microcap": 24,
-    "dd": 10,
+    "microcap": 15,
+    "dd": 8,
     "macro": 1,
-    "santiment": 4,
+    "santiment": 3,
     "fundraising": 1,
-    "derivatives": 4,
-    "kronos": 16
+    "kronos": 6
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "49 verdicts"
+   "detail": "45 verdicts"
   },
   {
    "id": "paper_execution",
@@ -49,21 +48,17 @@
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "27/30 coins forecast, 16 signals \u00b7 direction hit rate 50.9% over 548 graded"
+   "detail": "27/30 coins forecast, 6 signals \u00b7 direction hit rate 52.5% over 547 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "warn",
-   "detail": "equity 82.15, 17.8% below peak",
-   "drawdown_pct": 17.85
+   "detail": "equity 82.24, 17.8% below peak",
+   "drawdown_pct": 17.76
   }
  ],
  "history": [
-  {
-   "t": "2026-11-01T12:13:59.031929+00:00",
-   "overall": "ok"
-  },
   {
    "t": "2026-11-01T21:29:27.081886+00:00",
    "overall": "ok"
@@ -298,6 +293,10 @@
   },
   {
    "t": "2026-11-22T03:45:39.311991+00:00",
+   "overall": "warn"
+  },
+  {
+   "t": "2026-11-22T13:45:23.985779+00:00",
    "overall": "warn"
   }
  ]
