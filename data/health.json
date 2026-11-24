@@ -1,41 +1,42 @@
 {
- "generated_at": "2026-11-23T16:43:22.197656+00:00",
+ "generated_at": "2026-11-24T03:36:39.969939+00:00",
  "overall": "warn",
- "code_version": "9588601",
- "verdict_count": 46,
+ "code_version": "5ec6b32",
+ "verdict_count": 49,
  "checks": [
   {
    "id": "bus_freshness",
    "name": "Signal freshness",
    "status": "ok",
-   "detail": "77 signals, oldest 65h",
-   "oldest_h": 65.2
+   "detail": "90 signals, oldest 71h",
+   "oldest_h": 71.1
   },
   {
    "id": "agents_active",
    "name": "Agents producing signals",
    "status": "ok",
-   "detail": "active: dd 8, derivatives 4, kronos 10, macro 1, microcap 15, santiment 2",
+   "detail": "active: dd 8, derivatives 3, fundraising 2, kronos 22, macro 1, microcap 15, santiment 3",
    "counts": {
     "microcap": 15,
     "dd": 8,
     "macro": 1,
-    "santiment": 2,
-    "derivatives": 4,
-    "kronos": 10
+    "santiment": 3,
+    "fundraising": 2,
+    "derivatives": 3,
+    "kronos": 22
    }
   },
   {
    "id": "verdicts",
    "name": "Verdicts produced",
    "status": "ok",
-   "detail": "46 verdicts"
+   "detail": "49 verdicts"
   },
   {
    "id": "paper_execution",
    "name": "BUY verdicts executed",
    "status": "ok",
-   "detail": "0 BUY executed, 4 positions open"
+   "detail": "1 BUY executed, 5 positions open"
   },
   {
    "id": "price_coverage",
@@ -48,21 +49,17 @@
    "id": "kronos",
    "name": "Kronos forecasts",
    "status": "ok",
-   "detail": "25/30 coins forecast, 10 signals \u00b7 direction hit rate 55.5% over 575 graded"
+   "detail": "26/30 coins forecast, 22 signals \u00b7 direction hit rate 54.3% over 575 graded"
   },
   {
    "id": "drawdown",
    "name": "Paper drawdown",
    "status": "warn",
-   "detail": "equity 82.51, 17.5% below peak",
-   "drawdown_pct": 17.49
+   "detail": "equity 81.91, 18.1% below peak",
+   "drawdown_pct": 18.09
   }
  ],
  "history": [
-  {
-   "t": "2026-11-03T00:11:11.664510+00:00",
-   "overall": "ok"
-  },
   {
    "t": "2026-11-03T13:10:58.407354+00:00",
    "overall": "ok"
@@ -297,6 +294,10 @@
   },
   {
    "t": "2026-11-23T16:43:22.197656+00:00",
+   "overall": "warn"
+  },
+  {
+   "t": "2026-11-24T03:36:39.969939+00:00",
    "overall": "warn"
   }
  ]
