@@ -1,96 +1,69 @@
 {
- "generated_at": "2026-11-27T00:56:43+09:00",
+ "generated_at": "2026-11-27T10:17:22+09:00",
  "regime": "risk_off",
  "verdicts": [
   {
-   "coin": "FET",
-   "action": "HOLD",
-   "score": 0.167,
-   "base_bias": 0.28,
-   "signals": 1,
-   "dd": 0.75,
+   "coin": "MOVE",
+   "action": "WATCH",
+   "score": 0.187,
+   "base_bias": 0.3,
+   "signals": 3,
+   "dd": 0.82,
    "pending_dd": false,
    "in_portfolio": false,
    "on_watchlist": false,
    "reasons": [
-    "liquidity_health: mcap > $5M ($235.9M)",
-    "holder_concentration: liquidity spread across 25 pairs (top 36%)",
-    "volume_depth: healthy volume/mcap 0.20",
-    "dev activity 74.2x its 3-week pace (Santiment)"
+    "trending on CoinGecko right now",
+    "shorts paying 4380% APR while price +10.6% \u2014 squeeze setup (Hyperliquid)",
+    "active addresses 5.0x 2-week median (Santiment)",
+    "liquidity_health: mcap > $5M ($28.1M)",
+    "holder_concentration: liquidity spread across 17 pairs (top 70%)",
+    "volume_depth: healthy volume/mcap 1.06"
    ],
    "holder_red_flag": false,
    "regime": "risk_off",
    "suggested_size_pct": 0.0,
    "agents": [
     "dd",
+    "derivatives",
+    "microcap",
     "santiment"
    ],
    "evidence": [
     {
-     "agent": "dd",
-     "signal": "dd_result",
-     "confidence": 0.75,
+     "agent": "microcap",
+     "signal": "microcap_opportunity",
+     "confidence": 0.55,
      "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($235.9M)",
-     "timestamp": "2026-11-25T16:20:52.974648+00:00"
+     "reason": "trending on CoinGecko right now",
+     "timestamp": "2026-11-26T01:13:44.227559+00:00"
+    },
+    {
+     "agent": "derivatives",
+     "signal": "funding_squeeze",
+     "confidence": 0.8,
+     "bearish": false,
+     "reason": "shorts paying 4380% APR while price +10.6% \u2014 squeeze setup (Hyperliquid)",
+     "timestamp": "2026-11-26T15:53:20.742599+00:00"
     },
     {
      "agent": "santiment",
-     "signal": "dev_activity_up",
+     "signal": "active_addresses_spike",
      "confidence": 0.8,
      "bearish": false,
-     "reason": "dev activity 74.2x its 3-week pace (Santiment)",
-     "timestamp": "2026-11-26T15:53:22.605110+00:00"
-    }
-   ],
-   "coingecko_id": null,
-   "ticker_conflict": null,
-   "risk_notes": [
-    "held in paper portfolio"
-   ]
-  },
-  {
-   "coin": "LIT",
-   "action": "WATCH",
-   "score": 0.163,
-   "base_bias": 0.263,
-   "signals": 1,
-   "dd": 0.81,
-   "pending_dd": false,
-   "in_portfolio": false,
-   "on_watchlist": false,
-   "reasons": [
-    "liquidity_health: mcap > $5M ($617.3M)",
-    "holder_concentration: liquidity spread across 24 pairs (top 22%)",
-    "volume_depth: healthy volume/mcap 0.07",
-    "Kronos 24h forecast +6.5% (7/8 paths agree, 10-90% range +0.9..+11.5%)"
-   ],
-   "holder_red_flag": false,
-   "regime": "risk_off",
-   "suggested_size_pct": 0.0,
-   "agents": [
-    "dd",
-    "kronos"
-   ],
-   "evidence": [
+     "reason": "active addresses 5.0x 2-week median (Santiment)",
+     "timestamp": "2026-11-27T01:12:24.980724+00:00"
+    },
     {
      "agent": "dd",
      "signal": "dd_result",
-     "confidence": 0.81,
+     "confidence": 0.82,
      "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($617.3M)",
-     "timestamp": "2026-11-26T01:18:16.982826+00:00"
-    },
-    {
-     "agent": "kronos",
-     "signal": "kronos_forecast_up",
-     "confidence": 0.752,
-     "bearish": false,
-     "reason": "Kronos 24h forecast +6.5% (7/8 paths agree, 10-90% range +0.9..+11.5%)",
-     "timestamp": "2026-11-26T15:56:28.485398+00:00"
+     "reason": "liquidity_health: mcap > $5M ($28.1M)",
+     "timestamp": "2026-11-26T15:56:29.545299+00:00"
     }
    ],
-   "coingecko_id": null,
+   "coingecko_id": "movement",
    "ticker_conflict": null,
    "risk_notes": [
     "concurrent-buy cap (5) reached"
@@ -99,17 +72,16 @@
   {
    "coin": "BIGTIME",
    "action": "WATCH",
-   "score": 0.162,
-   "base_bias": 0.333,
-   "signals": 3,
+   "score": 0.156,
+   "base_bias": 0.321,
+   "signals": 2,
    "dd": 0.49,
    "pending_dd": false,
    "in_portfolio": false,
    "on_watchlist": false,
    "reasons": [
     "shorts paying 2485% APR while price +44.2% \u2014 squeeze setup (Hyperliquid)",
-    "open interest +886% with price +46.2% since last scan (Hyperliquid)",
-    "active addresses 10.9x 2-week median (Santiment)",
+    "active addresses 3.6x 2-week median (Santiment)",
     "liquidity_health: not fully indexed \u2014 liquidity unverified",
     "holder_concentration: liquidity spread across 12 pairs (top 50%)",
     "volume_depth: no price \u2014 volume depth unknown"
@@ -132,20 +104,12 @@
      "timestamp": "2026-11-26T01:13:47.083920+00:00"
     },
     {
-     "agent": "derivatives",
-     "signal": "oi_buildup",
-     "confidence": 0.8,
-     "bearish": false,
-     "reason": "open interest +886% with price +46.2% since last scan (Hyperliquid)",
-     "timestamp": "2026-11-25T16:16:35.937850+00:00"
-    },
-    {
      "agent": "santiment",
      "signal": "active_addresses_spike",
-     "confidence": 0.8,
+     "confidence": 0.714,
      "bearish": false,
-     "reason": "active addresses 10.9x 2-week median (Santiment)",
-     "timestamp": "2026-11-26T15:53:22.605088+00:00"
+     "reason": "active addresses 3.6x 2-week median (Santiment)",
+     "timestamp": "2026-11-27T01:12:24.980736+00:00"
     },
     {
      "agent": "dd",
@@ -173,9 +137,9 @@
    "in_portfolio": false,
    "on_watchlist": false,
    "reasons": [
-    "liquidity_health: mcap > $5M ($1314.1M)",
-    "holder_concentration: liquidity spread across 25 pairs (top 20%)",
-    "volume_depth: healthy volume/mcap 0.11",
+    "liquidity_health: mcap > $5M ($1295.9M)",
+    "holder_concentration: liquidity spread across 25 pairs (top 24%)",
+    "volume_depth: healthy volume/mcap 0.07",
     "trending on CoinGecko right now",
     "open interest +30% with price +20.0% since last scan (Hyperliquid)"
    ],
@@ -193,8 +157,8 @@
      "signal": "dd_result",
      "confidence": 0.87,
      "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($1314.1M)",
-     "timestamp": "2026-11-26T15:56:29.545270+00:00"
+     "reason": "liquidity_health: mcap > $5M ($1295.9M)",
+     "timestamp": "2026-11-27T01:17:08.425661+00:00"
     },
     {
      "agent": "microcap",
@@ -202,7 +166,7 @@
      "confidence": 0.55,
      "bearish": false,
      "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-26T15:53:17.708918+00:00"
+     "timestamp": "2026-11-27T01:12:20.920123+00:00"
     },
     {
      "agent": "derivatives",
@@ -218,80 +182,6 @@
    "risk_notes": [
     "concurrent-buy cap (5) reached"
    ]
-  },
-  {
-   "coin": "ZEC",
-   "action": "HOLD",
-   "score": 0.149,
-   "base_bias": 0.235,
-   "signals": 4,
-   "dd": 0.84,
-   "pending_dd": false,
-   "in_portfolio": false,
-   "on_watchlist": false,
-   "reasons": [
-    "liquidity_health: mcap > $5M ($11927.8M)",
-    "holder_concentration: liquidity spread across 25 pairs (top 16%)",
-    "volume_depth: healthy volume/mcap 0.08",
-    "trending on CoinGecko right now",
-    "open interest +23% with price +11.4% since last scan (Hyperliquid)",
-    "dev activity 1.5x its 3-week pace (Santiment)"
-   ],
-   "holder_red_flag": false,
-   "regime": "risk_off",
-   "suggested_size_pct": 0.0,
-   "agents": [
-    "dd",
-    "derivatives",
-    "kronos",
-    "microcap",
-    "santiment"
-   ],
-   "evidence": [
-    {
-     "agent": "dd",
-     "signal": "dd_result",
-     "confidence": 0.84,
-     "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($11927.8M)",
-     "timestamp": "2026-11-26T15:56:29.545283+00:00"
-    },
-    {
-     "agent": "microcap",
-     "signal": "microcap_opportunity",
-     "confidence": 0.55,
-     "bearish": false,
-     "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-26T15:53:17.708921+00:00"
-    },
-    {
-     "agent": "derivatives",
-     "signal": "oi_buildup",
-     "confidence": 0.615,
-     "bearish": false,
-     "reason": "open interest +23% with price +11.4% since last scan (Hyperliquid)",
-     "timestamp": "2026-11-26T01:13:47.083947+00:00"
-    },
-    {
-     "agent": "santiment",
-     "signal": "dev_activity_up",
-     "confidence": 0.505,
-     "bearish": false,
-     "reason": "dev activity 1.5x its 3-week pace (Santiment)",
-     "timestamp": "2026-11-26T15:53:22.605107+00:00"
-    },
-    {
-     "agent": "kronos",
-     "signal": "kronos_forecast_up",
-     "confidence": 0.85,
-     "bearish": false,
-     "reason": "Kronos 24h forecast +12.3% (8/8 paths agree, 10-90% range +8.3..+15.5%)",
-     "timestamp": "2026-11-26T15:56:28.485375+00:00"
-    }
-   ],
-   "coingecko_id": "zcash",
-   "ticker_conflict": null,
-   "risk_notes": []
   },
   {
    "coin": "ZRO",
@@ -339,191 +229,122 @@
    "risk_notes": []
   },
   {
-   "coin": "BLUR",
+   "coin": "PENGU",
    "action": "HOLD",
-   "score": 0.143,
-   "base_bias": 0.238,
+   "score": 0.137,
+   "base_bias": 0.252,
    "signals": 2,
-   "dd": 0.77,
+   "dd": 0.63,
    "pending_dd": false,
    "in_portfolio": false,
    "on_watchlist": false,
    "reasons": [
-    "open interest +22% with price +13.3% since last scan (Hyperliquid)",
-    "shorts paying 55% APR while price +28.4% \u2014 squeeze setup (Hyperliquid)",
-    "liquidity_health: mcap > $5M ($28.0M)",
-    "holder_concentration: moderate liquidity spread (10 pairs, top 76%)",
-    "volume_depth: healthy volume/mcap 0.97"
+    "trending on CoinGecko right now",
+    "liquidity_health: mcap > $5M ($262.4M)",
+    "holder_concentration: liquidity concentrated (86% in top pair)",
+    "volume_depth: healthy volume/mcap 0.21",
+    "Kronos 24h forecast +3.5% (8/8 paths agree, 10-90% range +1.4..+5.8%)"
    ],
    "holder_red_flag": false,
    "regime": "risk_off",
    "suggested_size_pct": 0.0,
    "agents": [
     "dd",
-    "derivatives"
+    "kronos",
+    "microcap"
    ],
    "evidence": [
+    {
+     "agent": "microcap",
+     "signal": "microcap_opportunity",
+     "confidence": 0.55,
+     "bearish": false,
+     "reason": "trending on CoinGecko right now",
+     "timestamp": "2026-11-27T01:12:20.920085+00:00"
+    },
+    {
+     "agent": "dd",
+     "signal": "dd_result",
+     "confidence": 0.63,
+     "bearish": false,
+     "reason": "liquidity_health: mcap > $5M ($262.4M)",
+     "timestamp": "2026-11-25T01:45:49.796392+00:00"
+    },
+    {
+     "agent": "kronos",
+     "signal": "kronos_forecast_up",
+     "confidence": 0.813,
+     "bearish": false,
+     "reason": "Kronos 24h forecast +3.5% (8/8 paths agree, 10-90% range +1.4..+5.8%)",
+     "timestamp": "2026-11-27T01:17:06.984107+00:00"
+    }
+   ],
+   "coingecko_id": "pudgy-penguins",
+   "ticker_conflict": null,
+   "risk_notes": []
+  },
+  {
+   "coin": "ZEC",
+   "action": "HOLD",
+   "score": 0.136,
+   "base_bias": 0.214,
+   "signals": 3,
+   "dd": 0.84,
+   "pending_dd": false,
+   "in_portfolio": false,
+   "on_watchlist": false,
+   "reasons": [
+    "liquidity_health: mcap > $5M ($11998.7M)",
+    "holder_concentration: liquidity spread across 25 pairs (top 16%)",
+    "volume_depth: healthy volume/mcap 0.07",
+    "trending on CoinGecko right now",
+    "open interest +23% with price +11.4% since last scan (Hyperliquid)",
+    "dev activity 1.5x its 3-week pace (Santiment)"
+   ],
+   "holder_red_flag": false,
+   "regime": "risk_off",
+   "suggested_size_pct": 0.0,
+   "agents": [
+    "dd",
+    "derivatives",
+    "microcap",
+    "santiment"
+   ],
+   "evidence": [
+    {
+     "agent": "dd",
+     "signal": "dd_result",
+     "confidence": 0.84,
+     "bearish": false,
+     "reason": "liquidity_health: mcap > $5M ($11998.7M)",
+     "timestamp": "2026-11-27T01:17:08.425686+00:00"
+    },
+    {
+     "agent": "microcap",
+     "signal": "microcap_opportunity",
+     "confidence": 0.55,
+     "bearish": false,
+     "reason": "trending on CoinGecko right now",
+     "timestamp": "2026-11-27T01:12:20.920127+00:00"
+    },
     {
      "agent": "derivatives",
      "signal": "oi_buildup",
-     "confidence": 0.612,
+     "confidence": 0.615,
      "bearish": false,
-     "reason": "open interest +22% with price +13.3% since last scan (Hyperliquid)",
-     "timestamp": "2026-11-25T16:16:35.937855+00:00"
+     "reason": "open interest +23% with price +11.4% since last scan (Hyperliquid)",
+     "timestamp": "2026-11-26T01:13:47.083947+00:00"
     },
     {
-     "agent": "derivatives",
-     "signal": "funding_squeeze",
-     "confidence": 0.576,
+     "agent": "santiment",
+     "signal": "dev_activity_up",
+     "confidence": 0.505,
      "bearish": false,
-     "reason": "shorts paying 55% APR while price +28.4% \u2014 squeeze setup (Hyperliquid)",
-     "timestamp": "2026-11-26T01:13:47.083952+00:00"
-    },
-    {
-     "agent": "dd",
-     "signal": "dd_result",
-     "confidence": 0.77,
-     "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($28.0M)",
-     "timestamp": "2026-11-26T15:56:29.545297+00:00"
+     "reason": "dev activity 1.5x its 3-week pace (Santiment)",
+     "timestamp": "2026-11-26T15:53:22.605107+00:00"
     }
    ],
-   "coingecko_id": null,
-   "ticker_conflict": null,
-   "risk_notes": []
-  },
-  {
-   "coin": "NEAR",
-   "action": "HOLD",
-   "score": 0.139,
-   "base_bias": 0.22,
-   "signals": 1,
-   "dd": 0.84,
-   "pending_dd": false,
-   "in_portfolio": false,
-   "on_watchlist": false,
-   "reasons": [
-    "liquidity_health: mcap > $5M ($4002.8M)",
-    "holder_concentration: liquidity spread across 25 pairs (top 16%)",
-    "volume_depth: healthy volume/mcap 0.18",
-    "trending on CoinGecko right now"
-   ],
-   "holder_red_flag": false,
-   "regime": "risk_off",
-   "suggested_size_pct": 0.0,
-   "agents": [
-    "dd",
-    "microcap"
-   ],
-   "evidence": [
-    {
-     "agent": "dd",
-     "signal": "dd_result",
-     "confidence": 0.84,
-     "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($4002.8M)",
-     "timestamp": "2026-11-26T15:56:29.545287+00:00"
-    },
-    {
-     "agent": "microcap",
-     "signal": "microcap_opportunity",
-     "confidence": 0.55,
-     "bearish": false,
-     "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-25T16:16:32.962768+00:00"
-    }
-   ],
-   "coingecko_id": "near",
-   "ticker_conflict": null,
-   "risk_notes": []
-  },
-  {
-   "coin": "HYPE",
-   "action": "HOLD",
-   "score": 0.139,
-   "base_bias": 0.22,
-   "signals": 1,
-   "dd": 0.84,
-   "pending_dd": false,
-   "in_portfolio": false,
-   "on_watchlist": false,
-   "reasons": [
-    "liquidity_health: mcap > $5M ($14358.7M)",
-    "holder_concentration: liquidity spread across 24 pairs (top 8%)",
-    "volume_depth: healthy volume/mcap 0.06",
-    "trending on CoinGecko right now"
-   ],
-   "holder_red_flag": false,
-   "regime": "risk_off",
-   "suggested_size_pct": 0.0,
-   "agents": [
-    "dd",
-    "microcap"
-   ],
-   "evidence": [
-    {
-     "agent": "dd",
-     "signal": "dd_result",
-     "confidence": 0.84,
-     "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($14358.7M)",
-     "timestamp": "2026-11-26T15:56:29.545290+00:00"
-    },
-    {
-     "agent": "microcap",
-     "signal": "microcap_opportunity",
-     "confidence": 0.55,
-     "bearish": false,
-     "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-26T01:13:44.227541+00:00"
-    }
-   ],
-   "coingecko_id": "hyperliquid",
-   "ticker_conflict": null,
-   "risk_notes": []
-  },
-  {
-   "coin": "ETH",
-   "action": "HOLD",
-   "score": 0.139,
-   "base_bias": 0.22,
-   "signals": 1,
-   "dd": 0.84,
-   "pending_dd": false,
-   "in_portfolio": true,
-   "on_watchlist": false,
-   "reasons": [
-    "liquidity_health: mcap > $5M ($206360.4M)",
-    "holder_concentration: liquidity spread across 25 pairs (top 23%)",
-    "volume_depth: healthy volume/mcap 0.05",
-    "trending on CoinGecko right now"
-   ],
-   "holder_red_flag": false,
-   "regime": "risk_off",
-   "suggested_size_pct": 0.0,
-   "agents": [
-    "dd",
-    "microcap"
-   ],
-   "evidence": [
-    {
-     "agent": "dd",
-     "signal": "dd_result",
-     "confidence": 0.84,
-     "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($206360.4M)",
-     "timestamp": "2026-11-26T15:56:29.545295+00:00"
-    },
-    {
-     "agent": "microcap",
-     "signal": "microcap_opportunity",
-     "confidence": 0.55,
-     "bearish": false,
-     "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-26T15:53:17.708929+00:00"
-    }
-   ],
-   "coingecko_id": "ethereum",
+   "coingecko_id": "zcash",
    "ticker_conflict": null,
    "risk_notes": []
   },
@@ -557,7 +378,7 @@
      "confidence": 0.55,
      "bearish": false,
      "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-26T15:53:17.708923+00:00"
+     "timestamp": "2026-11-27T01:12:20.920139+00:00"
     },
     {
      "agent": "dd",
@@ -569,6 +390,51 @@
     }
    ],
    "coingecko_id": "bitcoin",
+   "ticker_conflict": null,
+   "risk_notes": []
+  },
+  {
+   "coin": "HYPE",
+   "action": "HOLD",
+   "score": 0.132,
+   "base_bias": 0.22,
+   "signals": 1,
+   "dd": 0.76,
+   "pending_dd": false,
+   "in_portfolio": false,
+   "on_watchlist": false,
+   "reasons": [
+    "liquidity_health: mcap > $5M ($14993.8M)",
+    "holder_concentration: liquidity spread across 25 pairs (top 8%)",
+    "volume_depth: volume/mcap 0.046",
+    "trending on CoinGecko right now"
+   ],
+   "holder_red_flag": false,
+   "regime": "risk_off",
+   "suggested_size_pct": 0.0,
+   "agents": [
+    "dd",
+    "microcap"
+   ],
+   "evidence": [
+    {
+     "agent": "dd",
+     "signal": "dd_result",
+     "confidence": 0.76,
+     "bearish": false,
+     "reason": "liquidity_health: mcap > $5M ($14993.8M)",
+     "timestamp": "2026-11-27T01:17:08.425677+00:00"
+    },
+    {
+     "agent": "microcap",
+     "signal": "microcap_opportunity",
+     "confidence": 0.55,
+     "bearish": false,
+     "reason": "trending on CoinGecko right now",
+     "timestamp": "2026-11-27T01:12:20.920150+00:00"
+    }
+   ],
+   "coingecko_id": "hyperliquid",
    "ticker_conflict": null,
    "risk_notes": []
   },
@@ -618,47 +484,57 @@
    "risk_notes": []
   },
   {
-   "coin": "PENGU",
+   "coin": "ETH",
    "action": "HOLD",
    "score": 0.12,
-   "base_bias": 0.22,
-   "signals": 1,
-   "dd": 0.63,
+   "base_bias": 0.2,
+   "signals": 2,
+   "dd": 0.76,
    "pending_dd": false,
-   "in_portfolio": false,
+   "in_portfolio": true,
    "on_watchlist": false,
    "reasons": [
+    "liquidity_health: mcap > $5M ($207944.2M)",
+    "holder_concentration: liquidity spread across 25 pairs (top 22%)",
+    "volume_depth: volume/mcap 0.034",
     "trending on CoinGecko right now",
-    "liquidity_health: mcap > $5M ($262.4M)",
-    "holder_concentration: liquidity concentrated (86% in top pair)",
-    "volume_depth: healthy volume/mcap 0.21"
+    "dev activity 1.6x its 3-week pace (Santiment)"
    ],
    "holder_red_flag": false,
    "regime": "risk_off",
    "suggested_size_pct": 0.0,
    "agents": [
     "dd",
-    "microcap"
+    "microcap",
+    "santiment"
    ],
    "evidence": [
+    {
+     "agent": "dd",
+     "signal": "dd_result",
+     "confidence": 0.76,
+     "bearish": false,
+     "reason": "liquidity_health: mcap > $5M ($207944.2M)",
+     "timestamp": "2026-11-27T01:17:08.425683+00:00"
+    },
     {
      "agent": "microcap",
      "signal": "microcap_opportunity",
      "confidence": 0.55,
      "bearish": false,
      "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-26T15:53:17.708914+00:00"
+     "timestamp": "2026-11-26T15:53:17.708929+00:00"
     },
     {
-     "agent": "dd",
-     "signal": "dd_result",
-     "confidence": 0.63,
+     "agent": "santiment",
+     "signal": "dev_activity_up",
+     "confidence": 0.512,
      "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($262.4M)",
-     "timestamp": "2026-11-25T01:45:49.796392+00:00"
+     "reason": "dev activity 1.6x its 3-week pace (Santiment)",
+     "timestamp": "2026-11-27T01:12:24.980744+00:00"
     }
    ],
-   "coingecko_id": "pudgy-penguins",
+   "coingecko_id": "ethereum",
    "ticker_conflict": null,
    "risk_notes": []
   },
@@ -708,76 +584,54 @@
    "risk_notes": []
   },
   {
-   "coin": "MOVE",
-   "action": "HOLD",
-   "score": 0.078,
-   "base_bias": 0.125,
-   "signals": 4,
-   "dd": 0.82,
-   "pending_dd": false,
+   "coin": "INIT",
+   "action": "WATCH",
+   "score": 0.069,
+   "base_bias": 0.281,
+   "signals": 3,
+   "dd": null,
+   "pending_dd": true,
    "in_portfolio": false,
    "on_watchlist": false,
    "reasons": [
-    "trending on CoinGecko right now",
-    "shorts paying 4380% APR while price +10.6% \u2014 squeeze setup (Hyperliquid)",
-    "active addresses 2.1x 2-week median (Santiment)",
-    "Kronos 24h forecast -5.8% (8/8 paths agree, 10-90% range -10.3..-0.7%)",
-    "liquidity_health: mcap > $5M ($28.1M)",
-    "holder_concentration: liquidity spread across 17 pairs (top 70%)"
+    "shorts paying 338% APR while price +58.6% \u2014 squeeze setup (Hyperliquid)",
+    "open interest +51% with price +3.0% since last scan (Hyperliquid)",
+    "trending on CoinGecko right now"
    ],
    "holder_red_flag": false,
    "regime": "risk_off",
    "suggested_size_pct": 0.0,
    "agents": [
-    "dd",
     "derivatives",
-    "kronos",
-    "microcap",
-    "santiment"
+    "microcap"
    ],
    "evidence": [
+    {
+     "agent": "derivatives",
+     "signal": "funding_squeeze",
+     "confidence": 0.8,
+     "bearish": false,
+     "reason": "shorts paying 338% APR while price +58.6% \u2014 squeeze setup (Hyperliquid)",
+     "timestamp": "2026-11-27T01:12:23.657626+00:00"
+    },
+    {
+     "agent": "derivatives",
+     "signal": "oi_buildup",
+     "confidence": 0.754,
+     "bearish": false,
+     "reason": "open interest +51% with price +3.0% since last scan (Hyperliquid)",
+     "timestamp": "2026-11-27T01:12:23.657638+00:00"
+    },
     {
      "agent": "microcap",
      "signal": "microcap_opportunity",
      "confidence": 0.55,
      "bearish": false,
      "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-26T01:13:44.227559+00:00"
-    },
-    {
-     "agent": "derivatives",
-     "signal": "funding_squeeze",
-     "confidence": 0.8,
-     "bearish": false,
-     "reason": "shorts paying 4380% APR while price +10.6% \u2014 squeeze setup (Hyperliquid)",
-     "timestamp": "2026-11-26T15:53:20.742599+00:00"
-    },
-    {
-     "agent": "santiment",
-     "signal": "active_addresses_spike",
-     "confidence": 0.563,
-     "bearish": false,
-     "reason": "active addresses 2.1x 2-week median (Santiment)",
-     "timestamp": "2026-11-26T15:53:22.605113+00:00"
-    },
-    {
-     "agent": "kronos",
-     "signal": "kronos_forecast_down",
-     "confidence": 0.838,
-     "bearish": true,
-     "reason": "Kronos 24h forecast -5.8% (8/8 paths agree, 10-90% range -10.3..-0.7%)",
-     "timestamp": "2026-11-26T15:56:28.485396+00:00"
-    },
-    {
-     "agent": "dd",
-     "signal": "dd_result",
-     "confidence": 0.82,
-     "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($28.1M)",
-     "timestamp": "2026-11-26T15:56:29.545299+00:00"
+     "timestamp": "2026-11-27T01:12:20.920141+00:00"
     }
    ],
-   "coingecko_id": "movement",
+   "coingecko_id": "initia",
    "ticker_conflict": null,
    "risk_notes": []
   },
@@ -858,8 +712,8 @@
    "in_portfolio": false,
    "on_watchlist": false,
    "reasons": [
-    "trending on CoinGecko right now",
-    "open interest +41% with price +9.3% since last scan (Hyperliquid)"
+    "open interest +41% with price +9.3% since last scan (Hyperliquid)",
+    "trending on CoinGecko right now"
    ],
    "holder_red_flag": false,
    "regime": "risk_off",
@@ -870,20 +724,20 @@
    ],
    "evidence": [
     {
-     "agent": "microcap",
-     "signal": "microcap_opportunity",
-     "confidence": 0.55,
-     "bearish": false,
-     "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-25T16:16:32.962775+00:00"
-    },
-    {
      "agent": "derivatives",
      "signal": "oi_buildup",
      "confidence": 0.705,
      "bearish": false,
      "reason": "open interest +41% with price +9.3% since last scan (Hyperliquid)",
      "timestamp": "2026-11-26T01:13:47.083938+00:00"
+    },
+    {
+     "agent": "microcap",
+     "signal": "microcap_opportunity",
+     "confidence": 0.55,
+     "bearish": false,
+     "reason": "trending on CoinGecko right now",
+     "timestamp": "2026-11-27T01:12:20.920146+00:00"
     }
    ],
    "coingecko_id": "pons",
@@ -967,39 +821,6 @@
    "risk_notes": []
   },
   {
-   "coin": "SOL",
-   "action": "WATCH",
-   "score": 0.054,
-   "base_bias": 0.22,
-   "signals": 1,
-   "dd": null,
-   "pending_dd": true,
-   "in_portfolio": false,
-   "on_watchlist": true,
-   "reasons": [
-    "trending on CoinGecko right now"
-   ],
-   "holder_red_flag": false,
-   "regime": "risk_off",
-   "suggested_size_pct": 0.0,
-   "agents": [
-    "microcap"
-   ],
-   "evidence": [
-    {
-     "agent": "microcap",
-     "signal": "microcap_opportunity",
-     "confidence": 0.55,
-     "bearish": false,
-     "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-26T15:53:17.708925+00:00"
-    }
-   ],
-   "coingecko_id": "solana",
-   "ticker_conflict": null,
-   "risk_notes": []
-  },
-  {
    "coin": "PEARL",
    "action": "WATCH",
    "score": 0.054,
@@ -1025,7 +846,7 @@
      "confidence": 0.55,
      "bearish": false,
      "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-26T15:53:17.708927+00:00"
+     "timestamp": "2026-11-27T01:12:20.920118+00:00"
     }
    ],
    "coingecko_id": "pearl-2",
@@ -1066,39 +887,6 @@
    "risk_notes": []
   },
   {
-   "coin": "VAR",
-   "action": "WATCH",
-   "score": 0.054,
-   "base_bias": 0.22,
-   "signals": 1,
-   "dd": null,
-   "pending_dd": true,
-   "in_portfolio": false,
-   "on_watchlist": false,
-   "reasons": [
-    "trending on CoinGecko right now"
-   ],
-   "holder_red_flag": false,
-   "regime": "risk_off",
-   "suggested_size_pct": 0.0,
-   "agents": [
-    "microcap"
-   ],
-   "evidence": [
-    {
-     "agent": "microcap",
-     "signal": "microcap_opportunity",
-     "confidence": 0.55,
-     "bearish": false,
-     "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-25T16:16:32.962751+00:00"
-    }
-   ],
-   "coingecko_id": "variational-x",
-   "ticker_conflict": null,
-   "risk_notes": []
-  },
-  {
    "coin": "NPS",
    "action": "WATCH",
    "score": 0.054,
@@ -1128,39 +916,6 @@
     }
    ],
    "coingecko_id": "non-playable-shiba",
-   "ticker_conflict": null,
-   "risk_notes": []
-  },
-  {
-   "coin": "AERO",
-   "action": "WATCH",
-   "score": 0.054,
-   "base_bias": 0.22,
-   "signals": 1,
-   "dd": null,
-   "pending_dd": true,
-   "in_portfolio": false,
-   "on_watchlist": false,
-   "reasons": [
-    "trending on CoinGecko right now"
-   ],
-   "holder_red_flag": false,
-   "regime": "risk_off",
-   "suggested_size_pct": 0.0,
-   "agents": [
-    "microcap"
-   ],
-   "evidence": [
-    {
-     "agent": "microcap",
-     "signal": "microcap_opportunity",
-     "confidence": 0.55,
-     "bearish": false,
-     "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-25T16:16:32.962762+00:00"
-    }
-   ],
-   "coingecko_id": "aero",
    "ticker_conflict": null,
    "risk_notes": []
   },
@@ -1227,39 +982,6 @@
     }
    ],
    "coingecko_id": "bittensor",
-   "ticker_conflict": null,
-   "risk_notes": []
-  },
-  {
-   "coin": "MANTRA",
-   "action": "WATCH",
-   "score": 0.054,
-   "base_bias": 0.22,
-   "signals": 1,
-   "dd": null,
-   "pending_dd": true,
-   "in_portfolio": false,
-   "on_watchlist": false,
-   "reasons": [
-    "trending on CoinGecko right now"
-   ],
-   "holder_red_flag": false,
-   "regime": "risk_off",
-   "suggested_size_pct": 0.0,
-   "agents": [
-    "microcap"
-   ],
-   "evidence": [
-    {
-     "agent": "microcap",
-     "signal": "microcap_opportunity",
-     "confidence": 0.55,
-     "bearish": false,
-     "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-25T16:16:32.962773+00:00"
-    }
-   ],
-   "coingecko_id": "mantra",
    "ticker_conflict": null,
    "risk_notes": []
   },
@@ -1355,7 +1077,7 @@
      "confidence": 0.55,
      "bearish": false,
      "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-26T15:53:17.708888+00:00"
+     "timestamp": "2026-11-27T01:12:20.920137+00:00"
     }
    ],
    "coingecko_id": "pepe-wojak",
@@ -1388,7 +1110,7 @@
      "confidence": 0.55,
      "bearish": false,
      "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-26T15:53:17.708902+00:00"
+     "timestamp": "2026-11-27T01:12:20.920120+00:00"
     }
    ],
    "coingecko_id": "monero",
@@ -1421,7 +1143,7 @@
      "confidence": 0.55,
      "bearish": false,
      "reason": "trending on CoinGecko right now",
-     "timestamp": "2026-11-26T15:53:17.708904+00:00"
+     "timestamp": "2026-11-27T01:12:20.920114+00:00"
     }
    ],
    "coingecko_id": "zylo-ecosystem",
@@ -1495,61 +1217,195 @@
    "risk_notes": []
   },
   {
-   "coin": "INIT",
+   "coin": "UNI",
    "action": "WATCH",
-   "score": 0.039,
-   "base_bias": 0.16,
-   "signals": 4,
+   "score": 0.054,
+   "base_bias": 0.22,
+   "signals": 1,
    "dd": null,
    "pending_dd": true,
    "in_portfolio": false,
    "on_watchlist": false,
    "reasons": [
-    "dev activity 2.9x its 3-week pace (Santiment)",
-    "shorts paying 502% APR while price +52.0% \u2014 squeeze setup (Hyperliquid)",
-    "open interest +106% with price +54.0% since last scan (Hyperliquid)",
-    "Kronos 24h forecast -17.7% (7/8 paths agree, 10-90% range -25.4..-7.9%)"
+    "trending on CoinGecko right now"
    ],
    "holder_red_flag": false,
    "regime": "risk_off",
    "suggested_size_pct": 0.0,
    "agents": [
-    "derivatives",
+    "microcap"
+   ],
+   "evidence": [
+    {
+     "agent": "microcap",
+     "signal": "microcap_opportunity",
+     "confidence": 0.55,
+     "bearish": false,
+     "reason": "trending on CoinGecko right now",
+     "timestamp": "2026-11-27T01:12:20.920131+00:00"
+    }
+   ],
+   "coingecko_id": "uniswap",
+   "ticker_conflict": null,
+   "risk_notes": []
+  },
+  {
+   "coin": "MONTRA",
+   "action": "WATCH",
+   "score": 0.054,
+   "base_bias": 0.22,
+   "signals": 1,
+   "dd": null,
+   "pending_dd": true,
+   "in_portfolio": false,
+   "on_watchlist": false,
+   "reasons": [
+    "trending on CoinGecko right now"
+   ],
+   "holder_red_flag": false,
+   "regime": "risk_off",
+   "suggested_size_pct": 0.0,
+   "agents": [
+    "microcap"
+   ],
+   "evidence": [
+    {
+     "agent": "microcap",
+     "signal": "microcap_opportunity",
+     "confidence": 0.55,
+     "bearish": false,
+     "reason": "trending on CoinGecko right now",
+     "timestamp": "2026-11-27T01:12:20.920134+00:00"
+    }
+   ],
+   "coingecko_id": "montra",
+   "ticker_conflict": null,
+   "risk_notes": []
+  },
+  {
+   "coin": "KAS",
+   "action": "WATCH",
+   "score": 0.054,
+   "base_bias": 0.22,
+   "signals": 1,
+   "dd": null,
+   "pending_dd": true,
+   "in_portfolio": false,
+   "on_watchlist": false,
+   "reasons": [
+    "trending on CoinGecko right now"
+   ],
+   "holder_red_flag": false,
+   "regime": "risk_off",
+   "suggested_size_pct": 0.0,
+   "agents": [
+    "microcap"
+   ],
+   "evidence": [
+    {
+     "agent": "microcap",
+     "signal": "microcap_opportunity",
+     "confidence": 0.55,
+     "bearish": false,
+     "reason": "trending on CoinGecko right now",
+     "timestamp": "2026-11-27T01:12:20.920144+00:00"
+    }
+   ],
+   "coingecko_id": "kaspa",
+   "ticker_conflict": null,
+   "risk_notes": []
+  },
+  {
+   "coin": "SEI",
+   "action": "WATCH",
+   "score": 0.054,
+   "base_bias": 0.22,
+   "signals": 1,
+   "dd": null,
+   "pending_dd": true,
+   "in_portfolio": false,
+   "on_watchlist": false,
+   "reasons": [
+    "trending on CoinGecko right now"
+   ],
+   "holder_red_flag": false,
+   "regime": "risk_off",
+   "suggested_size_pct": 0.0,
+   "agents": [
+    "microcap"
+   ],
+   "evidence": [
+    {
+     "agent": "microcap",
+     "signal": "microcap_opportunity",
+     "confidence": 0.55,
+     "bearish": false,
+     "reason": "trending on CoinGecko right now",
+     "timestamp": "2026-11-27T01:12:20.920148+00:00"
+    }
+   ],
+   "coingecko_id": "sei-network",
+   "ticker_conflict": null,
+   "risk_notes": []
+  },
+  {
+   "coin": "FET",
+   "action": "WATCH",
+   "score": 0.041,
+   "base_bias": 0.069,
+   "signals": 3,
+   "dd": 0.75,
+   "pending_dd": false,
+   "in_portfolio": false,
+   "on_watchlist": false,
+   "reasons": [
+    "liquidity_health: mcap > $5M ($235.9M)",
+    "holder_concentration: liquidity spread across 25 pairs (top 36%)",
+    "volume_depth: healthy volume/mcap 0.20",
+    "dev activity 2.3x its 3-week pace (Santiment)",
+    "active addresses 2.2x 2-week median (Santiment)",
+    "Kronos 24h forecast -2.2% (8/8 paths agree, 10-90% range -3.8..-0.5%)"
+   ],
+   "holder_red_flag": false,
+   "regime": "risk_off",
+   "suggested_size_pct": 0.0,
+   "agents": [
+    "dd",
     "kronos",
     "santiment"
    ],
    "evidence": [
     {
+     "agent": "dd",
+     "signal": "dd_result",
+     "confidence": 0.75,
+     "bearish": false,
+     "reason": "liquidity_health: mcap > $5M ($235.9M)",
+     "timestamp": "2026-11-25T16:20:52.974648+00:00"
+    },
+    {
      "agent": "santiment",
      "signal": "dev_activity_up",
-     "confidence": 0.773,
+     "confidence": 0.656,
      "bearish": false,
-     "reason": "dev activity 2.9x its 3-week pace (Santiment)",
-     "timestamp": "2026-11-25T16:16:38.570193+00:00"
+     "reason": "dev activity 2.3x its 3-week pace (Santiment)",
+     "timestamp": "2026-11-27T01:12:24.980739+00:00"
     },
     {
-     "agent": "derivatives",
-     "signal": "funding_squeeze",
-     "confidence": 0.8,
+     "agent": "santiment",
+     "signal": "active_addresses_spike",
+     "confidence": 0.566,
      "bearish": false,
-     "reason": "shorts paying 502% APR while price +52.0% \u2014 squeeze setup (Hyperliquid)",
-     "timestamp": "2026-11-26T15:53:20.742616+00:00"
-    },
-    {
-     "agent": "derivatives",
-     "signal": "oi_buildup",
-     "confidence": 0.8,
-     "bearish": false,
-     "reason": "open interest +106% with price +54.0% since last scan (Hyperliquid)",
-     "timestamp": "2026-11-26T15:53:20.742618+00:00"
+     "reason": "active addresses 2.2x 2-week median (Santiment)",
+     "timestamp": "2026-11-27T01:12:24.980741+00:00"
     },
     {
      "agent": "kronos",
      "signal": "kronos_forecast_down",
-     "confidence": 0.773,
+     "confidence": 0.791,
      "bearish": true,
-     "reason": "Kronos 24h forecast -17.7% (7/8 paths agree, 10-90% range -25.4..-7.9%)",
-     "timestamp": "2026-11-26T15:56:28.485393+00:00"
+     "reason": "Kronos 24h forecast -2.2% (8/8 paths agree, 10-90% range -3.8..-0.5%)",
+     "timestamp": "2026-11-27T01:17:06.984089+00:00"
     }
    ],
    "coingecko_id": null,
@@ -1582,7 +1438,7 @@
      "confidence": 0.5,
      "bearish": false,
      "reason": "M&A round undisclosed (Nov 2026) \u2014 investors: Unova",
-     "timestamp": "2026-11-26T15:53:21.925281+00:00"
+     "timestamp": "2026-11-27T01:12:24.431376+00:00"
     }
    ],
    "coingecko_id": null,
@@ -1590,19 +1446,19 @@
    "risk_notes": []
   },
   {
-   "coin": "KAVA",
+   "coin": "NEAR",
    "action": "WATCH",
    "score": 0.0,
    "base_bias": 0.0,
    "signals": 0,
-   "dd": 0.77,
+   "dd": 0.84,
    "pending_dd": false,
    "in_portfolio": false,
    "on_watchlist": false,
    "reasons": [
-    "liquidity_health: mcap > $5M ($26.6M)",
-    "holder_concentration: liquidity spread across 16 pairs (top 51%)",
-    "volume_depth: healthy volume/mcap 0.29"
+    "liquidity_health: mcap > $5M ($4044.6M)",
+    "holder_concentration: liquidity spread across 25 pairs (top 15%)",
+    "volume_depth: healthy volume/mcap 0.13"
    ],
    "holder_red_flag": false,
    "regime": "risk_off",
@@ -1614,10 +1470,10 @@
     {
      "agent": "dd",
      "signal": "dd_result",
-     "confidence": 0.77,
+     "confidence": 0.84,
      "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($26.6M)",
-     "timestamp": "2026-11-23T16:43:06.486533+00:00"
+     "reason": "liquidity_health: mcap > $5M ($4044.6M)",
+     "timestamp": "2026-11-27T01:17:08.425673+00:00"
     }
    ],
    "coingecko_id": null,
@@ -1635,9 +1491,9 @@
    "in_portfolio": false,
    "on_watchlist": false,
    "reasons": [
-    "liquidity_health: mcap > $5M ($2741.5M)",
-    "holder_concentration: liquidity spread across 25 pairs (top 17%)",
-    "volume_depth: healthy volume/mcap 0.13"
+    "liquidity_health: mcap > $5M ($2779.5M)",
+    "holder_concentration: liquidity spread across 25 pairs (top 18%)",
+    "volume_depth: healthy volume/mcap 0.10"
    ],
    "holder_red_flag": false,
    "regime": "risk_off",
@@ -1651,8 +1507,8 @@
      "signal": "dd_result",
      "confidence": 0.84,
      "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($2741.5M)",
-     "timestamp": "2026-11-26T15:56:29.545292+00:00"
+     "reason": "liquidity_health: mcap > $5M ($2779.5M)",
+     "timestamp": "2026-11-27T01:17:08.425681+00:00"
     }
    ],
    "coingecko_id": null,
@@ -1665,14 +1521,14 @@
    "score": 0.0,
    "base_bias": 0.0,
    "signals": 0,
-   "dd": 0.82,
+   "dd": 0.75,
    "pending_dd": false,
    "in_portfolio": false,
    "on_watchlist": false,
    "reasons": [
-    "liquidity_health: mcap > $5M ($36.4M)",
-    "holder_concentration: liquidity spread across 24 pairs (top 34%)",
-    "volume_depth: healthy volume/mcap 0.62"
+    "liquidity_health: mcap > $5M ($32.0M)",
+    "holder_concentration: liquidity spread across 21 pairs (top 34%)",
+    "volume_depth: healthy volume/mcap 0.09"
    ],
    "holder_red_flag": false,
    "regime": "risk_off",
@@ -1684,10 +1540,45 @@
     {
      "agent": "dd",
      "signal": "dd_result",
-     "confidence": 0.82,
+     "confidence": 0.75,
      "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($36.4M)",
-     "timestamp": "2026-11-25T01:45:49.796410+00:00"
+     "reason": "liquidity_health: mcap > $5M ($32.0M)",
+     "timestamp": "2026-11-27T01:17:08.425691+00:00"
+    }
+   ],
+   "coingecko_id": null,
+   "ticker_conflict": null,
+   "risk_notes": []
+  },
+  {
+   "coin": "LIT",
+   "action": "WATCH",
+   "score": 0.0,
+   "base_bias": 0.0,
+   "signals": 0,
+   "dd": 0.81,
+   "pending_dd": false,
+   "in_portfolio": false,
+   "on_watchlist": false,
+   "reasons": [
+    "liquidity_health: mcap > $5M ($617.3M)",
+    "holder_concentration: liquidity spread across 24 pairs (top 22%)",
+    "volume_depth: healthy volume/mcap 0.07"
+   ],
+   "holder_red_flag": false,
+   "regime": "risk_off",
+   "suggested_size_pct": 0.0,
+   "agents": [
+    "dd"
+   ],
+   "evidence": [
+    {
+     "agent": "dd",
+     "signal": "dd_result",
+     "confidence": 0.81,
+     "bearish": false,
+     "reason": "liquidity_health: mcap > $5M ($617.3M)",
+     "timestamp": "2026-11-26T01:18:16.982826+00:00"
     }
    ],
    "coingecko_id": null,
@@ -1730,20 +1621,118 @@
    "risk_notes": []
   },
   {
-   "coin": "EVAA",
+   "coin": "SOL",
    "action": "AVOID",
-   "score": -0.147,
-   "base_bias": -0.261,
-   "signals": 1,
-   "dd": 0.68,
+   "score": -0.002,
+   "base_bias": -0.008,
+   "signals": 2,
+   "dd": null,
+   "pending_dd": true,
+   "in_portfolio": false,
+   "on_watchlist": true,
+   "reasons": [
+    "trending on CoinGecko right now",
+    "Kronos 24h forecast -2.6% (6/8 paths agree, 10-90% range -5.2..+1.0%)"
+   ],
+   "holder_red_flag": false,
+   "regime": "risk_off",
+   "suggested_size_pct": 0.0,
+   "agents": [
+    "kronos",
+    "microcap"
+   ],
+   "evidence": [
+    {
+     "agent": "microcap",
+     "signal": "microcap_opportunity",
+     "confidence": 0.55,
+     "bearish": false,
+     "reason": "trending on CoinGecko right now",
+     "timestamp": "2026-11-26T15:53:17.708925+00:00"
+    },
+    {
+     "agent": "kronos",
+     "signal": "kronos_forecast_down",
+     "confidence": 0.677,
+     "bearish": true,
+     "reason": "Kronos 24h forecast -2.6% (6/8 paths agree, 10-90% range -5.2..+1.0%)",
+     "timestamp": "2026-11-27T01:17:06.984080+00:00"
+    }
+   ],
+   "coingecko_id": "solana",
+   "ticker_conflict": null,
+   "risk_notes": []
+  },
+  {
+   "coin": "BLUR",
+   "action": "AVOID",
+   "score": -0.007,
+   "base_bias": -0.012,
+   "signals": 2,
+   "dd": 0.77,
    "pending_dd": false,
    "in_portfolio": false,
    "on_watchlist": false,
    "reasons": [
-    "liquidity_health: mcap > $5M ($17.9M)",
-    "holder_concentration: liquidity concentrated (97% in top pair)",
-    "volume_depth: healthy volume/mcap 3.13",
-    "Kronos 24h forecast -20.2% (7/8 paths agree, 10-90% range -34.6..-1.9%)"
+    "shorts paying 55% APR while price +28.4% \u2014 squeeze setup (Hyperliquid)",
+    "liquidity_health: mcap > $5M ($28.0M)",
+    "holder_concentration: moderate liquidity spread (10 pairs, top 76%)",
+    "volume_depth: healthy volume/mcap 0.97",
+    "Kronos 24h forecast -3.8% (7/8 paths agree, 10-90% range -6.1..-1.8%)"
+   ],
+   "holder_red_flag": false,
+   "regime": "risk_off",
+   "suggested_size_pct": 0.0,
+   "agents": [
+    "dd",
+    "derivatives",
+    "kronos"
+   ],
+   "evidence": [
+    {
+     "agent": "derivatives",
+     "signal": "funding_squeeze",
+     "confidence": 0.576,
+     "bearish": false,
+     "reason": "shorts paying 55% APR while price +28.4% \u2014 squeeze setup (Hyperliquid)",
+     "timestamp": "2026-11-26T01:13:47.083952+00:00"
+    },
+    {
+     "agent": "dd",
+     "signal": "dd_result",
+     "confidence": 0.77,
+     "bearish": false,
+     "reason": "liquidity_health: mcap > $5M ($28.0M)",
+     "timestamp": "2026-11-26T15:56:29.545297+00:00"
+    },
+    {
+     "agent": "kronos",
+     "signal": "kronos_forecast_down",
+     "confidence": 0.726,
+     "bearish": true,
+     "reason": "Kronos 24h forecast -3.8% (7/8 paths agree, 10-90% range -6.1..-1.8%)",
+     "timestamp": "2026-11-27T01:17:06.984110+00:00"
+    }
+   ],
+   "coingecko_id": null,
+   "ticker_conflict": null,
+   "risk_notes": []
+  },
+  {
+   "coin": "EVAA",
+   "action": "AVOID",
+   "score": -0.181,
+   "base_bias": -0.291,
+   "signals": 1,
+   "dd": 0.81,
+   "pending_dd": false,
+   "in_portfolio": false,
+   "on_watchlist": false,
+   "reasons": [
+    "liquidity_health: mcap > $5M ($16.7M)",
+    "holder_concentration: liquidity spread across 25 pairs (top 50%)",
+    "volume_depth: healthy volume/mcap 1.52",
+    "Kronos 24h forecast -22.9% (8/8 paths agree, 10-90% range -39.9..-11.6%)"
    ],
    "holder_red_flag": false,
    "regime": "risk_off",
@@ -1756,18 +1745,18 @@
     {
      "agent": "dd",
      "signal": "dd_result",
-     "confidence": 0.68,
+     "confidence": 0.81,
      "bearish": false,
-     "reason": "liquidity_health: mcap > $5M ($17.9M)",
-     "timestamp": "2026-11-25T16:20:52.974658+00:00"
+     "reason": "liquidity_health: mcap > $5M ($16.7M)",
+     "timestamp": "2026-11-27T01:17:08.425689+00:00"
     },
     {
      "agent": "kronos",
      "signal": "kronos_forecast_down",
-     "confidence": 0.745,
+     "confidence": 0.832,
      "bearish": true,
-     "reason": "Kronos 24h forecast -20.2% (7/8 paths agree, 10-90% range -34.6..-1.9%)",
-     "timestamp": "2026-11-26T15:56:28.485400+00:00"
+     "reason": "Kronos 24h forecast -22.9% (8/8 paths agree, 10-90% range -39.9..-11.6%)",
+     "timestamp": "2026-11-27T01:17:06.984112+00:00"
     }
    ],
    "coingecko_id": null,
